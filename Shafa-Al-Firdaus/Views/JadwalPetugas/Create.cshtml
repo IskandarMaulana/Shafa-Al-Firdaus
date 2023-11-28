@@ -40,20 +40,45 @@
     </div>
 </div>
 <script>
+    // Memuat opsi NIM dari API saat halaman dimuat
+    $(document).ready(function () {
+        loadNIMOptions();
+    });
+
+    function loadNIMOptions() {
+        // Mengambil data NIM dari API
+        $.ajax({
+            url: "https://localhost:44307/GetNIMOptions", // Ganti URL dengan endpoint API yang sesuai
+            method: "GET",
+            success: function (data) {
+                // Mengisi opsi NIM ke dalam combobox
+                var nimDropdown = $("#nim");
+                nimDropdown.empty(); // Mengosongkan opsi sebelum mengisi yang baru
+
+                // Menambahkan opsi dari data yang diterima dari API
+                $.each(data, function (index, item) {
+                    nimDropdown.append($("<option>").val(item.value).text(item.text));
+                });
+            },
+        });
+    }
+
     function simpan() {
         var nim = document.getElementById("nim").value;
-        var tanggal = document.getElementById("tanggal").value;
-        var waktu = document.getElementById("waktu").value;
-        var tugas = document.getElementById("tugas").value;
+        var nama = document.getElementById("nama").value;
+        var prodi = document.getElementById("prodi").value;
+        var nomor_telepon = document.getElementById("nomor_telepon").value;
+        var status = document.getElementById("status").value;
 
         var hostname = "https://localhost:44307/";
-        var url = hostname + "InsertJadwalPetugasHarian";
+        var url = hostname + "InsertPetugasHarian";
         var method = "POST";
         var input = {
             nim: nim,
-            tanggal: tanggal,
-            waktu: waktu,
-            tugas: tugas
+            nama: nama,
+            prodi: prodi,
+            nomor_telepon: nomor_telepon,
+            status: status
         };
         var data = JSON.stringify(input);
 
@@ -63,10 +88,11 @@
             data: data,
             contentType: "application/json",
             success: function (data) {
-                alert("Data Berhasil Ditambahkan");
-                // Optionally, you can redirect or perform other actions after success
+                alert("Data Petugas Harian Berhasil Ditambahkan");
             },
+            error: function () {
+                alert("Gagal menyimpan data Petugas Harian.");
+            }
         });
     }
-
 </script>
