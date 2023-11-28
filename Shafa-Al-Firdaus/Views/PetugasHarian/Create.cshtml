@@ -24,8 +24,13 @@
                         </div>
                         <div class="form-group">
                             <label name="prodi" class="control-label">Prodi</label>
-                            <input name="prodi" id="prodi" class="form-control" />
+                            <select id="prodi" class="form-control">
+                                <option value="1">Manajemen Informatika</option>
+                                <option value="2">TPM</option>
+                            </select>
                         </div>
+
+
                         <div class="form-group">
                             <label name="nomor_telepon" class="control-label">Nomor Telepon</label>
                             <input name="nomor_telepon" id="nomor_telepon" class="form-control" />
@@ -45,24 +50,48 @@
     </div>
 </div>
 <script>
-    function simpan() {
-        var nim = document.getElementById("nim").value
-        var nama = document.getElementById("nama").value
-        var prodi = document.getElementById("prodi").value
-        var nomor_telepon = document.getElementById("nomor_telepon").value
-        var status = document.getElementById("status").value
+    // Memuat opsi Prodi dari API saat halaman dimuat
+    $(document).ready(function () {
+        loadProdiOptions();
+    });
 
-        var hostname = "https://localhost:5000/"
-        var url = hostname + "InsertPetugasHarian"
-        var method = "POST"
+    function loadProdiOptions() {
+        // Mengambil data Prodi dari API
+        $.ajax({
+            url: "https://localhost:44307/GetProdiOptions", // Ganti URL dengan endpoint API yang sesuai
+            method: "GET",
+            success: function (data) {
+                // Mengisi opsi Prodi ke dalam combobox
+                var prodiDropdown = $("#prodi");
+                prodiDropdown.empty(); // Mengosongkan opsi sebelum mengisi yang baru
+
+                // Menambahkan opsi dari data yang diterima dari API
+                $.each(data, function (index, item) {
+                    prodiDropdown.append($("<option>").val(item.value).text(item.text));
+                });
+            },
+            
+        });
+    }
+
+    function simpan() {
+        var nim = document.getElementById("nim").value;
+        var nama = document.getElementById("nama").value;
+        var prodi = document.getElementById("prodi").value;
+        var nomor_telepon = document.getElementById("nomor_telepon").value;
+        var status = document.getElementById("status").value;
+
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "InsertPetugasHarian";
+        var method = "POST";
         var input = {
-           nim: nim,
-           nama: nama,
-           prodi: prodi,
-           nomor_telepon: nomor_telepon,
-           status: status
-        }
-        var data = JSON.stringify(input)
+            nim: nim,
+            nama: nama,
+            prodi: prodi,
+            nomor_telepon: nomor_telepon,
+            status: status
+        };
+        var data = JSON.stringify(input);
 
         $.ajax({
             url: url,
@@ -70,8 +99,11 @@
             data: data,
             contentType: "application/json",
             success: function (data) {
-                alert("Data Berhasil Ditambahkan")
+                alert("Data Petugas Harian Berhasil Ditambahkan");
             },
+            error: function () {
+                alert("Gagal menyimpan data Petugas Harian.");
+            }
         });
     }
 </script>
