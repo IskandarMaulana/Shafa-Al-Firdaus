@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="my-3" style="margin-top: 40px;">
+            <a class="btn btn-primary" asp-controller="Pengumuman" asp-action="Create">Tambah Data Pengumuman</a>
+        </div>
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th scope="col">Judul Pengumuman</th>
+                    <th scope="col">Jenis Pengumuman</th>
+                    <th scope="col">Isi Pengumuman</th>
+                    <th scope="col">TanggaL Mulai Pengumuman</th>
+                    <th scope="col">Tanggal Selesai Pengumuman</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+</div>
+<script>
+    loadTable()
+
+    function loadTable() {
+        var hostname = "https://localhost:44307/"
+        var url = hostname + "GetAllPengumuman"
+        var method = "GET"
+        
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                var list = data.data
+                list.forEach(function (item) {
+                    var newRow = '<tr>' +
+                        '<td>' + item.id_pengumuman + '</td>' +
+                        '<td>' + item.judul + '</td>' +
+                        '<td>' + item.jenis + '</td>' +
+                        '<td>' + item.isi + '</td>' +
+                        '<td>' + item.tanggal_mulai + '</td>' +
+                        '<td>' + item.tanggal_selesai + '</td>' +
+                        '<td>' +
+                        '<a class="btn btn-secondary" href="/DataPengumuman/Update?id=' + item.id_pengumuman + '">Update</a>' +
+                        '<button class="btn btn-danger" value="' + item.id_pengumuman + '" onclick="hapus(this.value)">Delete</button>' +
+                        '</td>' +
+                        '</tr>';
+                    $('#tbody').append(newRow);
+                });
+            },
+        });
+    }
+
+    function hapus(id) {
+        var hostname = "https://localhost:44307/"
+        var url = hostname + "DeletePengumuman?id_pengumuman=" + id_pengumuman
+        var method = "DELETE"
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) { 
+                alert("Data Berhasil Dihapus")
+                location.reload();
+            }
+        })
+    }
+</script>
