@@ -4,23 +4,27 @@
 
 <div class="card-body">
     <a class="btn-primary" asp-controller="JadwalPetugas" asp-action="Create">Tambah Data</a>
+    </br>
 
-    <table>
-        <thead>
-            <tr scope="col">ID JADWAL</tr>
-            <tr scope="col">NIM</tr>
-            <tr scope="col">Tanggal</tr>
-            <tr scope="col">Waktu</tr>
-            <tr scope="col">Tugas</tr>
-            <tr scope="col">Aksi</tr>
-        </thead>
-    </table>
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th scope="col">NIM</th>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Waktu</th>
+                    <th scope="col">Tugas</th>
+                    <th scope="col">Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+
 </div>
 <script>
     loadTable()
 
     function loadTable() {
-        var hostname = "https://localhost:5000/"
+        var hostname = "https://localhost:44307/"
         var url = hostname + "GetAllJadwalPetugasHarian"
         var method = "GET"
 
@@ -32,13 +36,12 @@
                 var list = data.data
                 list.forEach(function (item) {
                     var newRow = '<tr>' +
-                        '<td>' + item.id + '</td>' +
                         '<td>' + item.nim + '</td>' +
                         '<td>' + item.tanggal + '</td>' +
                         '<td>' + item.waktu + '</td>' +
                         '<td>' + item.tugas + '</td>' +
                         '<td>' +
-                        '<a class="btn btn-secondary" href="/Jadwal_Petugas/Update?Name=' + item.Name + '">Update</a>' +
+                        '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '">Update</a>' +
                         '<button class="btn btn-danger" value="' + item.id_jadwal + '" onclick="hapus(this.value)">Delete</button>' +
                         '</td>' +
                         '</tr>';
@@ -49,7 +52,7 @@
     }
 
     function hapus(id) {
-        var hostname = "https://localhost:5000/"
+        var hostname = "https://localhost:44307/"
         var url = hostname + "DeleteJadwalPetugasHarian?id_jadwal=" + id_jadwal
         var method = "DELETE"
 
