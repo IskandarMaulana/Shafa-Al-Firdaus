@@ -9,12 +9,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Tambah Petugas Harian</h4>
+                        <h4 class="card-title">Tambah Jadwal Petugas Harian</h4>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <label name="nim" class="control-label">NIM</label>
-                            <input name="nim" id="nim" class="form-control" />
+                            <select name="nim" id="nim" class="form-control"></select>
+
                         </div>
                         <div class="form-group">
                             <label name="tanggal" class="control-label">Tanggal</label>
@@ -45,7 +46,7 @@
         var waktu = document.getElementById("waktu").value;
         var tugas = document.getElementById("tugas").value;
 
-        var hostname = "https://localhost:5000/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "InsertJadwalPetugasHarian";
         var method = "POST";
         var input = {
@@ -61,13 +62,11 @@
             method: method,
             data: data,
             contentType: "application/json",
-            success: function (response) {
+            success: function (data) {
                 alert("Data Berhasil Ditambahkan");
                 // Optionally, you can redirect or perform other actions after success
             },
-            error: function (error) {
-                console.error("Error:", error);
-            }
         });
     }
+
 </script>
