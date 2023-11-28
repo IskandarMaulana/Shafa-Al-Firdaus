@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Tambah Petugas Harian</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label name="nim" class="control-label">NIM</label>
+                            <input name="nim" id="nim" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label name="tanggal" class="control-label">Tanggal</label>
+                            <input name="tanggal" id="tanggal" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label name="waktu" class="control-label">Waktu</label>
+                            <input name="waktu" id="waktu" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label name="tugas" class="control-label">Tugas</label>
+                            <input name="tugas" id="tugas" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function simpan() {
+        var nim = document.getElementById("nim").value;
+        var tanggal = document.getElementById("tanggal").value;
+        var waktu = document.getElementById("waktu").value;
+        var tugas = document.getElementById("tugas").value;
+
+        var hostname = "https://localhost:5000/";
+        var url = hostname + "InsertJadwalPetugasHarian";
+        var method = "POST";
+        var input = {
+            nim: nim,
+            tanggal: tanggal,
+            waktu: waktu,
+            tugas: tugas
+        };
+        var data = JSON.stringify(input);
+
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            contentType: "application/json",
+            success: function (response) {
+                alert("Data Berhasil Ditambahkan");
+                // Optionally, you can redirect or perform other actions after success
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            }
+        });
+    }
+</script>
