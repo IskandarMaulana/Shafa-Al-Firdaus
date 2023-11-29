@@ -19,7 +19,11 @@
                         </div>
                         <div class="form-group">
                             <label name="jenis" class="control-label">Jenis Pengumuman</label>
-                            <input name="jenis" id="jenis" class="form-control" />
+                            <select id="jenis" class="form-control">
+                                <option value="1">Kegiatan</option>
+                                <option value="2">Pengumuman</option>
+                                <option value="3">Teks Berjalan</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label name="isi" class="control-label">Isi Pengumuman</label>
@@ -27,11 +31,11 @@
                         </div>
                         <div class="form-group">
                             <label name="tanggal_mulai" class="control-label">Tanggal Mulai Pengumuman</label>
-                            <input name="tanggal_mulai" id="tanggal_mulai" class="form-control" />
+                            <input name="tanggal_mulai" type="date" id="tanggal_mulai" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label name="tanggal_selesai" class="control-label">Tanggal Selesai Peengumuman</label>
-                            <input name="tanggal_selesai" id="tangga_selesai" class="form-control" />
+                            <input name="tanggal_selesai" type="date" id="tanggal_selesai" class="form-control" />
                         </div>
                         <br />
                         <div class="form-group">
@@ -43,34 +47,44 @@
         </div>
     </div>
 </div>
-<script>
-    function simpan() {
-        var judul = document.getElementById("judul").value
-        var jenis = document.getElementById("jenis").value
-        var isi = document.getElementById("isi").value
-        var tanggal_mulai = document.getElementById("tanggal_mulai").value
-        var tanggal_selesai = document.getElementById("tanggal_selesai").value
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        var hostname = "http://localhost:44307/"
-        var url = hostname + "InsertPengumuman"
-        var method = "POST"
-        var input = {
-            judul: judul,
-            jenis: jenis,
-            isi: isi,
-            tanggal_mulai: tanggal_mulai,
-            tanggal_selesai: tanggal_selesai
+
+
+    <script>
+        function simpan() {
+            var judul = document.getElementById("judul").value;
+            var jenis = parseInt(document.getElementById("jenis").value); // Assuming jenis is an integer
+            var isi = document.getElementById("isi").value;
+            var tanggal_mulai = document.getElementById("tanggal_mulai").value;
+            var tanggal_selesai = document.getElementById("tanggal_selesai").value;
+
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "InsertPengumuman";
+            var method = "POST";
+            var input = {
+                judul: judul,
+                jenis: jenis,
+                isi: isi,
+                tanggal_mulai: tanggal_mulai,
+                tanggal_selesai: tanggal_selesai
+            };
+            var data = JSON.stringify(input);
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: data,
+                contentType: "application/json",
+                success: function (response) {
+                    alert("Data Berhasil Ditambahkan");
+                    // Optionally, you can redirect or perform other actions after success
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+            });
         }
-        var data = JSON.stringify(input)
-
-        $.ajax({
-            url: url,
-            method: method,
-            data: data,
-            contentType: "application/json",
-            success: function (data) {
-                alert("Data Berhasil Ditambahkan")
-            },
-        });
-    }
 </script>
+
+
