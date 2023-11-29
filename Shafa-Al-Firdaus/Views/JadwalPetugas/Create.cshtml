@@ -1,98 +1,129 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Tambah Jadwal Petugas Harian</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label name="nim" class="control-label">NIM</label>
-                            <select name="nim" id="nim" class="form-control"></select>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Jadwal Petugas Harian</title>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
 
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Tambah Jadwal Petugas Harian</h4>
                         </div>
-                        <div class="form-group">
-                            <label name="tanggal" class="control-label">Tanggal</label>
-                            <input name="tanggal" id="tanggal" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label name="waktu" class="control-label">Waktu</label>
-                            <input name="waktu" id="waktu" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label name="tugas" class="control-label">Tugas</label>
-                            <input name="tugas" id="tugas" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group">
-                            <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="nim" class="control-label">NIM</label>
+                                <select name="nim" id="nim" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal" class="control-label">Tanggal</label>
+                                <input type="text" name="tanggal" id="tanggal" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="waktu" class="control-label">Waktu</label>
+                                <input type="text" name="waktu" id="waktu" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tugas" class="control-label">Tugas</label>
+                                <input type="text" name="tugas" id="tugas" class="form-control" />
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script>
-    // Memuat opsi NIM dari API saat halaman dimuat
-    $(document).ready(function () {
-        loadNIMOptions();
-    });
 
-    function loadNIMOptions() {
-        // Mengambil data NIM dari API
+    <script>
+        /*function loadNIMOptions() {
+            // Mengambil data NIM dari API
+            $.ajax({
+                url: "https://localhost:44307/GetNIMOptions",
+                method: "GET",
+                success: async function (data) {
+                    console.log("Data NIM:", data); // Log the data to the console
+                    var nimDropdown = $("#nim");
+                    nimDropdown.empty();
+                    await populateDropdown(data, nimDropdown);
+                },
+                error: function (error) {
+                    console.error("Error fetching data:", error);
+                },
+            });
+        }
+
+        async function populateDropdown(data, dropdown) {
+            $.each(data, function (index, item) {
+                dropdown.append($("<option>").val(item.nim).text(item.nim));
+            });
+        }*/
+
+        // Fetch NIM data from the API
         $.ajax({
-            url: "https://localhost:44307/GetNIMOptions", // Ganti URL dengan endpoint API yang sesuai
+            url: "https://localhost:44307/GetNIMOptions", // Replace with your API URL
             method: "GET",
             success: function (data) {
-                // Mengisi opsi NIM ke dalam combobox
+                console.log("NIM data:", data);
                 var nimDropdown = $("#nim");
-                nimDropdown.empty(); // Mengosongkan opsi sebelum mengisi yang baru
+                nimDropdown.empty(); // Clear existing options
 
-                // Menambahkan opsi dari data yang diterima dari API
+                // Populate the dropdown with NIM options
                 $.each(data, function (index, item) {
-                    nimDropdown.append($("<option>").val(item.value).text(item.text));
+                    var option = $("<option>").val(item.nim).text(item.nim);
+                    nimDropdown.append(option);
                 });
             },
-        });
-    }
-
-    function simpan() {
-        var nim = document.getElementById("nim").value;
-        var nama = document.getElementById("nama").value;
-        var prodi = document.getElementById("prodi").value;
-        var nomor_telepon = document.getElementById("nomor_telepon").value;
-        var status = document.getElementById("status").value;
-
-        var hostname = "https://localhost:44307/";
-        var url = hostname + "InsertPetugasHarian";
-        var method = "POST";
-        var input = {
-            nim: nim,
-            nama: nama,
-            prodi: prodi,
-            nomor_telepon: nomor_telepon,
-            status: status
-        };
-        var data = JSON.stringify(input);
-
-        $.ajax({
-            url: url,
-            method: method,
-            data: data,
-            contentType: "application/json",
-            success: function (data) {
-                alert("Data Petugas Harian Berhasil Ditambahkan");
-            },
-            error: function () {
-                alert("Gagal menyimpan data Petugas Harian.");
+            error: function (error) {
+                console.error("Error fetching NIM data:", error);
             }
         });
-    }
-</script>
+
+        $(document).ready(function () {
+            loadNIMOptions();
+        });
+
+        function simpan() {
+            var nim = $("#nim").val();
+            var tanggal = $("#tanggal").val();
+            var waktu = $("#waktu").val();
+            var tugas = $("#tugas").val();
+
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "InsertJadwalPetugasHarian"; // Change the endpoint accordingly
+            var method = "POST";
+            var input = {
+                nim: nim,
+                tanggal: tanggal,
+                waktu: waktu,
+                tugas: tugas
+            };
+            var data = JSON.stringify(input);
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: data,
+                contentType: "application/json",
+                success: function (data) {
+                    alert("Data Jadwal Petugas Harian Berhasil Ditambahkan");
+                },
+                error: function () {
+                    alert("Gagal menyimpan data Jadwal Petugas Harian.");
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
