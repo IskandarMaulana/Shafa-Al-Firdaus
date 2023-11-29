@@ -19,8 +19,10 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="nim" class="control-label">NIM</label>
-                                <select name="nim" id="nim" class="form-control"></select>
+                                <label for="nim" class="control-label">Petugas</label>
+                                <select name="nim" id="nim" class="form-control">
+                                    <option value="">-- Pilih Petugas Harian --</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="tanggal" class="control-label">Tanggal</label>
@@ -46,52 +48,27 @@
     </div>
 
     <script>
-        /*function loadNIMOptions() {
-            // Mengambil data NIM dari API
+        loadPetugas()
+
+
+        function loadPetugas() {
+            var hostname = "https://localhost:44307/"
+            var url = hostname + "GetAllPetugasHarian"
+            var method = "GET"
+
             $.ajax({
-                url: "https://localhost:44307/GetNIMOptions",
-                method: "GET",
-                success: async function (data) {
-                    console.log("Data NIM:", data); // Log the data to the console
-                    var nimDropdown = $("#nim");
-                    nimDropdown.empty();
-                    await populateDropdown(data, nimDropdown);
-                },
-                error: function (error) {
-                    console.error("Error fetching data:", error);
+                url: url,
+                method: method,
+                contentType: "application/json",
+                success: function (data) {
+                    var list = data.data
+                    list.forEach(function (item) {
+                        var newOption = '<option value="' + item.nim + '">' + item.nama + '</option>';
+                        $('#nim').append(newOption);
+                    });
                 },
             });
         }
-
-        async function populateDropdown(data, dropdown) {
-            $.each(data, function (index, item) {
-                dropdown.append($("<option>").val(item.nim).text(item.nim));
-            });
-        }*/
-
-        // Fetch NIM data from the API
-        $.ajax({
-            url: "https://localhost:44307/GetNIMOptions", // Replace with your API URL
-            method: "GET",
-            success: function (data) {
-                console.log("NIM data:", data);
-                var nimDropdown = $("#nim");
-                nimDropdown.empty(); // Clear existing options
-
-                // Populate the dropdown with NIM options
-                $.each(data, function (index, item) {
-                    var option = $("<option>").val(item.nim).text(item.nim);
-                    nimDropdown.append(option);
-                });
-            },
-            error: function (error) {
-                console.error("Error fetching NIM data:", error);
-            }
-        });
-
-        $(document).ready(function () {
-            loadNIMOptions();
-        });
 
         function simpan() {
             var nim = $("#nim").val();
