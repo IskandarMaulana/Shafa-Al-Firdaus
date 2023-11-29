@@ -1,0 +1,60 @@
+
+html {
+	font-size:62.5%;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+ul, li {
+	list-style: none;
+}
+input {
+	border: none;
+}
+body {
+  width: 49.7rem;
+}.group-5-Bd3 {
+  width: 100%;
+  height: 7rem;
+  position: relative;
+  border-radius: 2rem;
+}
+.group-5-Bd3 .rectangle-17-juT {
+  width: 48.7rem;
+  height: 7rem;
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  box-shadow: inset 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25)), 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+  background-color: #687eff;
+  border-radius: 2rem;
+}
+.group-5-Bd3 .kalender-qBo {
+  width: 16.8rem;
+  height: 4.9rem;
+  position: absolute;
+  left: 2.1rem;
+  top: 0.8rem;
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 400;
+  line-height: 1.2125;
+  color: #ffffff;
+  font-family: Inter, 'Source Sans Pro';
+  white-space: nowrap;
+}
+.group-5-Bd3 .item-2023-LeM {
+  width: 5rem;
+  height: 2.5rem;
+  position: absolute;
+  left: 44.1rem;
+  top: 4.2rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2125;
+  color: #ffffff;
+  font-family: Inter, 'Source Sans Pro';
+  white-space: nowrap;
+}

@@ -1,0 +1,27 @@
+
+html {
+	font-size:62.5%;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+ul, li {
+	list-style: none;
+}
+input {
+	border: none;
+}
+body {
+  width: 24.8rem;
+}.jadwal-petugas-75b {
+  width: 100%;
+  height: 3.9rem;
+  text-align: center;
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.2125;
+  color: #e7eefa;
+  font-family: Inter, 'Source Sans Pro';
+  white-space: nowrap;
+}

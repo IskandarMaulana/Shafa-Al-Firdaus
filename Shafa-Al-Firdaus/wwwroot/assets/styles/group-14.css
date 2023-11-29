@@ -1,0 +1,75 @@
+
+html {
+	font-size:62.5%;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+ul, li {
+	list-style: none;
+}
+input {
+	border: none;
+}
+body {
+  width: 12.1rem;
+}.group-14-oLV {
+  width: 100%;
+  height: 111.4rem;
+  position: relative;
+}
+.group-14-oLV .rectangle-1-jzq {
+  width: 8.6717rem;
+  height: 111.4rem;
+  position: absolute;
+  left: 1.4117rem;
+  top: 0;
+  background-color: #80b3ff;
+  border-radius: 3rem;
+}
+.group-14-oLV .line-17-rZf {
+  width: 12.1rem;
+  height: 0.5rem;
+  position: absolute;
+  left: 0;
+  top: 1.417rem;
+  background-color: #ffffff;
+}
+.group-14-oLV .megaphone2056523-1-niD {
+  width: 5.4rem;
+  height: 5.4rem;
+  position: absolute;
+  left: 3.4rem;
+  top: 67.8rem;
+  object-fit: cover;
+  vertical-align: top;
+}
+.group-14-oLV .note5837281-1-JRf {
+  width: 3.5291rem;
+  height: 3.7061rem;
+  position: absolute;
+  left: 3.9rem;
+  top: 52.6rem;
+  object-fit: cover;
+  vertical-align: top;
+}
+.group-14-oLV .calendar4818033-1-1qs {
+  width: 5.6rem;
+  height: 5.4rem;
+  position: absolute;
+  left: 3.4rem;
+  top: 35.7rem;
+  object-fit: cover;
+  vertical-align: top;
+}
+.group-14-oLV .home9385258-1-Lt9 {
+  width: 5.8482rem;
+  height: 6.3221rem;
+  position: absolute;
+  left: 3rem;
+  top: 17.9rem;
+  object-fit: cover;
+  vertical-align: top;
+  border-radius: 3rem;
+}
