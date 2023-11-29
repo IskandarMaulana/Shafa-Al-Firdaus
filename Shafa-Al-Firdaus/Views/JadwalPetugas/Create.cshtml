@@ -9,12 +9,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Tambah Petugas Harian</h4>
+                        <h4 class="card-title">Tambah Jadwal Petugas Harian</h4>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <label name="nim" class="control-label">NIM</label>
-                            <input name="nim" id="nim" class="form-control" />
+                            <select name="nim" id="nim" class="form-control"></select>
+
                         </div>
                         <div class="form-group">
                             <label name="tanggal" class="control-label">Tanggal</label>
@@ -39,20 +40,45 @@
     </div>
 </div>
 <script>
+    // Memuat opsi NIM dari API saat halaman dimuat
+    $(document).ready(function () {
+        loadNIMOptions();
+    });
+
+    function loadNIMOptions() {
+        // Mengambil data NIM dari API
+        $.ajax({
+            url: "https://localhost:44307/GetNIMOptions", // Ganti URL dengan endpoint API yang sesuai
+            method: "GET",
+            success: function (data) {
+                // Mengisi opsi NIM ke dalam combobox
+                var nimDropdown = $("#nim");
+                nimDropdown.empty(); // Mengosongkan opsi sebelum mengisi yang baru
+
+                // Menambahkan opsi dari data yang diterima dari API
+                $.each(data, function (index, item) {
+                    nimDropdown.append($("<option>").val(item.value).text(item.text));
+                });
+            },
+        });
+    }
+
     function simpan() {
         var nim = document.getElementById("nim").value;
-        var tanggal = document.getElementById("tanggal").value;
-        var waktu = document.getElementById("waktu").value;
-        var tugas = document.getElementById("tugas").value;
+        var nama = document.getElementById("nama").value;
+        var prodi = document.getElementById("prodi").value;
+        var nomor_telepon = document.getElementById("nomor_telepon").value;
+        var status = document.getElementById("status").value;
 
-        var hostname = "https://localhost:5000/";
-        var url = hostname + "InsertJadwalPetugasHarian";
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "InsertPetugasHarian";
         var method = "POST";
         var input = {
             nim: nim,
-            tanggal: tanggal,
-            waktu: waktu,
-            tugas: tugas
+            nama: nama,
+            prodi: prodi,
+            nomor_telepon: nomor_telepon,
+            status: status
         };
         var data = JSON.stringify(input);
 
@@ -61,12 +87,11 @@
             method: method,
             data: data,
             contentType: "application/json",
-            success: function (response) {
-                alert("Data Berhasil Ditambahkan");
-                // Optionally, you can redirect or perform other actions after success
+            success: function (data) {
+                alert("Data Petugas Harian Berhasil Ditambahkan");
             },
-            error: function (error) {
-                console.error("Error:", error);
+            error: function () {
+                alert("Gagal menyimpan data Petugas Harian.");
             }
         });
     }

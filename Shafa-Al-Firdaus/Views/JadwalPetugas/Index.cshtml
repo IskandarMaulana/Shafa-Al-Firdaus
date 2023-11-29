@@ -4,7 +4,6 @@
 
 <div class="card-body">
     <a class="btn-primary" asp-controller="JadwalPetugas" asp-action="Create">Tambah Data</a>
-    </br>
 
         <table class="table table-stripped">
             <thead>
@@ -61,7 +60,7 @@
             method: method,
             contentType: "application/json",
             success: function (data) {
-                alert("Data Petugas Harian Berhasil Dihapus")
+                alert("Data Jadwal Petugas Harian Berhasil Dihapus")
                 location.reload();
             }
         })
