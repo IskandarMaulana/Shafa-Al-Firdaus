@@ -46,6 +46,29 @@
     </div>
 
     <script>
+        loadPetugas()
+
+
+        function loadPetugas() {
+            var hostname = "https://localhost:44307/"
+            var url = hostname + "GetAllPetugasHarian"
+            var method = "GET"
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                success: function (data) {
+                    var list = data.data
+                    list.forEach(function (item) {
+                        var newOption = '<option value="' + item.nim + '">' + item.nama + '</option>';
+                        $('#nim').append(newOption);
+                    });
+                },
+            });
+        }
+
+
         /*function loadNIMOptions() {
             // Mengambil data NIM dari API
             $.ajax({
