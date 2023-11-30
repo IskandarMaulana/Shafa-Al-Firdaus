@@ -4,7 +4,7 @@
 
 <div class="card">
     <div class="card-body">
-        <div class="my-3" style="margin-top: 40px;">
+        <div class="my-3" style="margin-top: 40px">
             <a class="btn btn-primary" asp-controller="Pengumuman" asp-action="Create">Tambah Data Pengumuman</a>
         </div>
         <table class="table table-stripped">
@@ -42,18 +42,33 @@
                 list.forEach(function (item) {
                     var jenisText = getJenisText(item.jenis);
 
-                    var newRow = '<tr>' +
-                        '<td>' + item.judul + '</td>' +
-                        '<td>' + jenisText + '</td>' +
-                        '<td>' + item.isi + '</td>' +
-                        '<td>' + item.tanggal_mulai + '</td>' +
-                        '<td>' + item.tanggal_selesai + '</td>' +
-                        '<td>' +
-                        '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' + item.id_pengumuman + '">Update</a>' +
-                        '<button class="btn btn-danger" value="' + item.id_pengumuman + '" onclick="hapus(this.value)">Delete</button>' +
-                        '</td>' +
-                        '</tr>';
-                    $('#tbody').append(newRow);
+                    var newRow =
+                        "<tr>" +
+                        "<td>" +
+                        item.judul +
+                        "</td>" +
+                        "<td>" +
+                        jenisText +
+                        "</td>" +
+                        "<td>" +
+                        item.isi +
+                        "</td>" +
+                        "<td>" +
+                        item.tanggal_mulai +
+                        "</td>" +
+                        "<td>" +
+                        item.tanggal_selesai +
+                        "</td>" +
+                        "<td>" +
+                        '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
+                        item.id_pengumuman +
+                        '">Update</a>' +
+                        '<button class="btn btn-danger" value="' +
+                        item.id_pengumuman +
+                        '" onclick="hapus(this.value)">Delete</button>' +
+                        "</td>" +
+                        "</tr>";
+                    $("#tbody").append(newRow);
                 });
             },
         });
@@ -62,13 +77,13 @@
     function getJenisText(jenis) {
         switch (jenis) {
             case 1:
-                return 'Kegiatan';
+                return "Kegiatan";
             case 2:
-                return 'Pengumuman';
+                return "Pengumuman";
             case 3:
-                return 'Teks Berjalan';
+                return "Teks Berjalan";
             default:
-                return 'Unknown';
+                return "Unknown";
         }
     }
 

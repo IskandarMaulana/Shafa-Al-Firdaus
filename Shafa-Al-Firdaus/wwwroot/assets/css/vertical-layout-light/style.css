@@ -30523,8 +30523,8 @@ div.tagsinput span.tag a {
   background: #80b3ff;
   font-family: "Manrope", sans-serif;
   font-weight: 500;
-  padding: 0px;
-  width: 340px;
+  padding: 20px;
+  width: 290px;
   z-index: 11;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
@@ -30915,7 +30915,7 @@ div.tagsinput span.tag a {
   -webkit-transition: width 0.25s ease, background 0.25s ease;
   -moz-transition: width 0.25s ease, background 0.25s ease;
   -ms-transition: width 0.25s ease, background 0.25s ease;
-  width: 313px;
+  width: 290px;
   height: 97px;
   padding: 20px 35px;
   border-top-right-radius: 3rem;
@@ -31028,7 +31028,7 @@ div.tagsinput span.tag a {
   padding-right: 2.187rem;
   padding-top: 30px;
   padding-bottom: 25px;
-  width: calc(100% - 313px);
+  width: calc(100% - 290px);
   height: 97px;
 }
 
