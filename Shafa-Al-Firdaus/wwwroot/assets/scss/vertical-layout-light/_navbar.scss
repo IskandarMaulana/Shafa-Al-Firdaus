@@ -1,11 +1,11 @@
 /* Navbar */
 
 .navbar {
-  font-weight: 400;
-  transition: background $action-transition-duration $action-transition-timing-function;
-  -webkit-transition: background $action-transition-duration $action-transition-timing-function;
-  -moz-transition: background $action-transition-duration $action-transition-timing-function;
-  -ms-transition: background $action-transition-duration $action-transition-timing-function;
+  font-weight: 400; 
+  transition:background $action-transition-duration $action-transition-timing-function;
+  -webkit-transition:background $action-transition-duration $action-transition-timing-function;
+  -moz-transition:background $action-transition-duration $action-transition-timing-function;
+  -ms-transition:background $action-transition-duration $action-transition-timing-function;
   box-shadow: none;
   background: $navbar-default-bg;
   .sidebar-dark & {
@@ -13,21 +13,17 @@
   }
 
   .navbar-brand-wrapper {
-    background: $sidebar-light-bg;
+    background: $sidebar-light-bg; 
     .sidebar-dark & {
       background: $sidebar-dark-bg;
       @media (max-width: 991px) {
-        background: $sidebar-light-bg;
+        background: $sidebar-light-bg; 
       }
     }
-    transition: width $action-transition-duration $action-transition-timing-function,
-      background $action-transition-duration $action-transition-timing-function;
-    -webkit-transition: width $action-transition-duration $action-transition-timing-function,
-      background $action-transition-duration $action-transition-timing-function;
-    -moz-transition: width $action-transition-duration $action-transition-timing-function,
-      background $action-transition-duration $action-transition-timing-function;
-    -ms-transition: width $action-transition-duration $action-transition-timing-function,
-      background $action-transition-duration $action-transition-timing-function;
+    transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
+    -webkit-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
+    -moz-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
+    -ms-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
     width: $sidebar-width-lg;
     height: $navbar-height;
     padding: 20px 35px;
@@ -40,7 +36,7 @@
       margin-right: 0;
       padding: 0;
       line-height: 1;
-
+      
       &.brand-logo-mini {
         display: none;
       }
@@ -63,8 +59,8 @@
     .brand-logo-mini {
       padding-left: 0;
       text-align: center;
-      img {
-        width: calc(#{$sidebar-width-icon} - 30px);
+      img { 
+        width: calc(#{$sidebar-width-icon} - 30px );
         max-width: 100%;
         margin: auto;
       }
@@ -83,13 +79,13 @@
           display: none;
         }
         transform: rotate(0deg);
-        @include transition(transform 0.3s linear);
+        @include transition(transform .3s linear);
         .sidebar-icon-only & {
           transform: rotate(180deg);
         }
       }
-      &.navbar-toggler-right {
-        @media (max-width: 991px) {
+      &.navbar-toggler-right{
+        @media (max-width:991px){
           padding-left: 15px;
           padding-right: 0;
         }
@@ -132,13 +128,13 @@
           display: none;
         }
         transform: rotate(0deg);
-        @include transition(transform 0.3s linear);
+        @include transition(transform .3s linear);
         .sidebar-icon-only & {
           transform: rotate(180deg);
         }
       }
-      &.navbar-toggler-right {
-        @media (max-width: 991px) {
+      &.navbar-toggler-right{
+        @media (max-width:991px){
           padding-left: 15px;
           padding-right: 0;
           &:focus {
@@ -157,10 +153,10 @@
       @extend .align-items-center;
       .nav-item {
         margin-left: 1.25rem;
-        @media (max-width: 992px) {
-          margin-left: 10px;
-          margin-right: 0px;
-        }
+          @media (max-width: 992px) {
+            margin-left: 10px;
+            margin-right: 0px;
+          }
         &:last-child {
           margin-right: 0;
         }
@@ -190,7 +186,7 @@
           margin-left: 2rem;
           .input-group {
             border-radius: 4px;
-            padding: 0.75rem;
+            padding: .75rem;
             .form-control,
             .input-group-text {
               background: transparent;
@@ -205,7 +201,7 @@
               }
             }
             .form-control {
-              margin-left: 0.7rem;
+              margin-left: .7rem;
               @include placeholder {
                 color: #6c7383;
               }
@@ -229,7 +225,7 @@
         &.nav-profile {
           @extend .d-flex;
           @extend .align-items-center;
-          margin-left: 0.2rem;
+          margin-left: .2rem;
           img {
             width: 40px;
             height: 40px;
@@ -241,17 +237,17 @@
                 display: none;
               }
             }
-          }
+          }  
         }
         &.dropdown {
           .dropdown-menu {
-            @extend .dropdownAnimation;
+            @extend .dropdownAnimation;        
             border: none;
             -webkit-box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
             box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
           }
           .navbar-dropdown {
-            position: absolute;
+            position: absolute;            
             font-size: 0.9rem;
             margin-top: 0;
             right: 0;
@@ -330,7 +326,7 @@
               line-height: 1rem;
               border: 1px solid $white;
               text-align: center;
-            }
+          }
             &:after {
               display: none;
             }
@@ -392,15 +388,16 @@
           }
           .input-group-prepend {
             height: 34px;
-            border-color: transparent;
+            border-color:transparent;
             border-radius: 6px 0 0 6px;
             background: r=transparent;
             border-right: 1px solid $border-color;
             & > .input-group-text {
-              border-color: transparent;
+              border-color:transparent;
               border-right: 1px solid $border-color;
               background: transparent;
               height: 100%;
+
             }
           }
           .form-control {
@@ -441,7 +438,7 @@
             }
           }
 
-          input {
+          input{
             background-color: transparent;
             border: none;
             cursor: pointer;
@@ -451,7 +448,7 @@
             position: relative;
             transition: width 400ms ease, background 400ms ease;
 
-            &:focus {
+            &:focus{
               background-color: transparent;
               border-bottom: 1px solid $navbar-menu-icon-color;
               border-radius: 0;
@@ -513,7 +510,7 @@
                     color: $white;
                   }
                 }
-                .input-group-text {
+                .input-group-text { 
                   i {
                     color: $white;
                   }
@@ -537,7 +534,7 @@
           }
           &.nav-search {
             .input-group {
-              background: rgba($dark, 0.24);
+              background: rgba($dark, .24);
             }
           }
         }
@@ -563,12 +560,12 @@
     }
   }
 }
-@media (max-width: 991px) {
+@media (max-width:991px) {
   .navbar {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
     .navbar-brand-wrapper {
       width: 55px;
       .navbar-brand {
@@ -590,11 +587,11 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width:480px) {
   .navbar {
     .navbar-brand-wrapper {
       width: 55px;
-      .brand-logo-mini {
+      .brand-logo-mini{
         padding-top: 0px;
       }
     }
