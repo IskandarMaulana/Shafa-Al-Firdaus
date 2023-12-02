@@ -1,0 +1,114 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Tambah Data Pengumuman</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label name="judul" class="control-label">Judul Pengumuman</label>
+                            <input name="judul" id="judul" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label name="jenis" class="control-label">Jenis Pengumuman</label>
+                            <select id="jenis" class="form-control">
+                                <option value="1">Kegiatan</option>
+                                <option value="2">Pengumuman</option>
+                                <option value="3">Teks Berjalan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label name="isi" class="control-label">Isi Pengumuman</label>
+                            <input name="isi" id="isi" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label name="tanggal_mulai" class="control-label">Tanggal Mulai Pengumuman</label>
+                            <input name="tanggal_mulai" type="date" id="tanggal_mulai" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label name="tanggal_selesai" class="control-label">Tanggal Selesai Peengumuman</label>
+                            <input name="tanggal_selesai" type="date" id="tanggal_selesai" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    loadData();
+
+    function loadData() {
+        var id_pengumuman = document.getElementById("id_pengumuman")
+        var judul = document.getElementById("judul")
+        var jenis = document.getElementById("jenis")
+        var isi = document.getElementById("isi")
+        var tanggal_mulai = document.getElementById("tanggal_mulai")
+        var tanggal_selesai = document.getElementById("tanggal_selesai")
+
+        var hostname = "https://localhost:44307/"
+        var url = hostname + "GetPengumuman?id_pengumuman=" + id_pengumuman.value
+        var method = "GET"
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                var item = data.data
+                judul.value = item.judul
+                jenis.value = item.jenis
+                isi.value = item.isi
+                tanggal_mulai.value = item.tanggal_mulai
+                tanggal_selesai.value = item.tanggal_selesai
+            },
+        });
+    }
+
+    function simpan() {
+        var judul = document.getElementById("judul").value;
+        var jenis = parseInt(document.getElementById("jenis").value); // Assuming jenis is an integer
+        var isi = document.getElementById("isi").value;
+        var tanggal_mulai = document.getElementById("tanggal_mulai").value;
+        var tanggal_selesai = document.getElementById("tanggal_selesai").value;
+
+
+        var hostname = "https://localhost:44307/"
+        var url = hostname + "UpdatePengumuman"
+        var method = "PUT"
+        var input = {
+         
+            judul: judul,
+            jenis: jenis,
+            isi: isi,
+            tanggal_mulai: tanggal_mulai,
+            tanggal_selesai: tanggal_selesai,
+        }
+        var data = JSON.stringify(input)
+
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            contentType: "application/json",
+            success: function (data) {
+                alert("Data Berhasil Diubah")
+            },
+        });
+    }
+</script>

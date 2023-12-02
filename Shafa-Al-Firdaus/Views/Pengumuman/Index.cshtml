@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="my-3" style="margin-top: 40px">
+            <a class="btn btn-primary" asp-controller="Pengumuman" asp-action="Create">Tambah Data Pengumuman</a>
+        </div>
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th scope="col">Judul Pengumuman</th>
+                    <th scope="col">Jenis Pengumuman</th>
+                    <th scope="col">Isi Pengumuman</th>
+                    <th scope="col">Tanggal Mulai Pengumuman</th>
+                    <th scope="col">Tanggal Selesai Pengumuman</th>
+                    <th scope="col">Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    loadTable();
+
+    function loadTable() {
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetAllPengumuman";
+        var method = "GET";
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                var list = data.data;
+                list.forEach(function (item) {
+                    var jenisText = getJenisText(item.jenis);
+
+                    var newRow =
+                        "<tr>" +
+                        "<td>" +
+                        item.judul +
+                        "</td>" +
+                        "<td>" +
+                        jenisText +
+                        "</td>" +
+                        "<td>" +
+                        item.isi +
+                        "</td>" +
+                        "<td>" +
+                        item.tanggal_mulai +
+                        "</td>" +
+                        "<td>" +
+                        item.tanggal_selesai +
+                        "</td>" +
+                        "<td>" +
+                        '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
+                        item.id_pengumuman +
+                        '">Update</a>' +
+                        '<button class="btn btn-danger" value="' +
+                        item.id_pengumuman +
+                        '" onclick="hapus(this.value)">Delete</button>' +
+                        "</td>" +
+                        "</tr>";
+                    $("#tbody").append(newRow);
+                });
+            },
+        });
+    }
+
+    function getJenisText(jenis) {
+        switch (jenis) {
+            case 1:
+                return "Kegiatan";
+            case 2:
+                return "Pengumuman";
+            case 3:
+                return "Teks Berjalan";
+            default:
+                return "Unknown";
+        }
+    }
+
+    function hapus(id) {
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "DeletePengumuman?id_pengumuman=" + id;
+        var method = "DELETE";
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                alert("Data Berhasil Dihapus");
+                location.reload();
+            },
+        });
+    }
+</script>

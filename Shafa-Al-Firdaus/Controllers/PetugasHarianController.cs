@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Shafa_Al_Firdaus.Models;
 using System.Diagnostics;
 
@@ -6,7 +7,10 @@ namespace Shafa_Al_Firdaus.Controllers
 {
     public class PetugasHarianController : Controller
     {
+        private List<SelectListItem> _list;
+
         private readonly ILogger<HomeController> _logger;
+
 
         public PetugasHarianController(ILogger<HomeController> logger)
         {

@@ -31,9 +31,9 @@ namespace Shafa_Al_Firdaus.Controllers
         {
             return View();
         }
-        public IActionResult Update(string Name)
+        public IActionResult Update(string Id)
         {
-            ViewBag.Name = Name;
+            ViewBag.Id = Id;
             return View();
         }
     }
