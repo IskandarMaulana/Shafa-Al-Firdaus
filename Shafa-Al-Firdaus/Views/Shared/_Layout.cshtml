@@ -108,13 +108,13 @@
                             <span class="menu-title">Halaman Utama</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    @* <li class="nav-item">
                         <a class="nav-link" asp-controller="JadwalPetugas" asp-action="Index">
                             <img class="mdi mdi-grid-large menu-icon" src="~/assets/icons/calendar.png" alt="Jadwal Shalat Icon" />
                             <!-- <i class="mdi mdi-grid-large menu-icon"></i> -->
                             <span class="menu-title">Jadwal Shalat</span>
                         </a>
-                    </li>
+                    </li> *@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="PetugasHarian" asp-action="Index">
                             <img class="mdi mdi-grid-large menu-icon" src="~/assets/icons/profile.png" alt="Petugas Harian Icon" />
@@ -142,9 +142,7 @@
             <div class="main-panel">
                 <div class="content-wrapper">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class="home-tab">@RenderBody()</div>
-                        </div>
+                        @RenderBody()
                     </div>
                 </div>
                 <!-- content-wrapper ends -->

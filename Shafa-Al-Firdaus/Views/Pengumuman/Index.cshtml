@@ -1,28 +1,38 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Pengumuman";
 }
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Pengumuman</h4>
+                    </div>
+                    <div class="card-body">
+                        <a class="btn btn-primary btn-tambah" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
 
-<div class="card">
-    <div class="card-body">
-        <div class="my-3" style="margin-top: 40px">
-            <a class="btn btn-primary" asp-controller="Pengumuman" asp-action="Create">Tambah Data Pengumuman</a>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Judul</th>
+                                        <th scope="col">Jenis</th>
+                                        <th scope="col">Isi</th>
+                                        <th scope="col">Tanggal Mulai</th>
+                                        <th scope="col">Tanggal Selesai</th>
+                                        <th scope="col">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <table class="table table-stripped">
-            <thead>
-                <tr>
-                    <th scope="col">Judul Pengumuman</th>
-                    <th scope="col">Jenis Pengumuman</th>
-                    <th scope="col">Isi Pengumuman</th>
-                    <th scope="col">Tanggal Mulai Pengumuman</th>
-                    <th scope="col">Tanggal Selesai Pengumuman</th>
-                    <th scope="col">Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-        </table>
     </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
@@ -41,6 +51,8 @@
                 var list = data.data;
                 list.forEach(function (item) {
                     var jenisText = getJenisText(item.jenis);
+                    var mulai = new Date(item.tanggal_mulai);
+                    var selesai = new Date(item.tanggal_selesai);
 
                     var newRow =
                         "<tr>" +
@@ -50,14 +62,14 @@
                         "<td>" +
                         jenisText +
                         "</td>" +
-                        "<td>" +
+                        "<td class='wrap-column'>" +
                         item.isi +
                         "</td>" +
                         "<td>" +
-                        item.tanggal_mulai +
+                            mulai.toISOString().split("T")[0] +
                         "</td>" +
                         "<td>" +
-                        item.tanggal_selesai +
+                        selesai.toISOString().split("T")[0] +
                         "</td>" +
                         "<td>" +
                         '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +

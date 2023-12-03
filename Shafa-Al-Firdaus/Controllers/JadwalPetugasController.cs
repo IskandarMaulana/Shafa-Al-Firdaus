@@ -31,9 +31,9 @@ namespace Shafa_Al_Firdaus.Controllers
         {
             return View();
         }
-        public IActionResult Update(string Id)
+        public IActionResult Update(string id_jadwal)
         {
-            ViewBag.Id = Id;
+            ViewBag.IdJadwal = id_jadwal;
             return View();
         }
     }
