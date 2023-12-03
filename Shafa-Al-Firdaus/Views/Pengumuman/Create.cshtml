@@ -3,6 +3,72 @@
 *@
 @{
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create</title>
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+            border-radius: 90px; /* Adjust the value to control the oval shape */
+            
+        }
+
+        .control-label {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #007bff; /* Blue color */
+        }
+
+
+        .frame-child {
+            border-radius: 20px; /* Adjust the value to control the oval shape */
+            background-color: #b3e0ff; /* Light blue background color */
+            padding: 10px; /* Adjust the padding for better appearance */
+        }
+
+        .frame-item {
+            border-radius: 20px; /* Adjust the value to control the oval shape */
+            background-color: #b3e0ff; /* Light blue background color */
+            padding: 10px; /* Adjust the padding for better appearance */
+        }
+
+        .frame-inner {
+            border-radius: 20px; /* Adjust the value to control the oval shape */
+            background-color: #b3e0ff; /* Light blue background color */
+            padding: 10px; /* Adjust the padding for better appearance */
+        }
+
+        .frame-child1 {
+            border-radius: 20px; /* Adjust the value to control the oval shape */
+            background-color: #b3e0ff; /* Light blue background color */
+            padding: 10px; /* Adjust the padding for better appearance */
+        }
+
+        .frame-child2 {
+            border-radius: 20px; /* Adjust the value to control the oval shape */
+            background-color: #b3e0ff; /* Light blue background color */
+            padding: 10px; /* Adjust the padding for better appearance */
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #0056b3; /* Darker blue border color when focused */
+        }
+
+        .form-control::placeholder {
+            color: #000000; /* Blue placeholder color */
+        }
+    </style>
+
+    <!-- Include the global.css and index.css styles -->
+    <link rel="stylesheet" href="~/global.css" />
+    <link rel="stylesheet" href="~/index.css" />
+</head>
 
 <div class="content">
     <div class="container-fluid">
@@ -10,16 +76,16 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Tambah Data Pengumuman</h4>
+                        <h4 class="card-title shafa-al-firdaus">Tambah Data Pengumuman</h4>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <label name="judul" class="control-label">Judul Pengumuman</label>
-                            <input name="judul" id="judul" class="form-control" />
+                            <input name="judul" id="judul" class="form-control frame-child" placeholder="masukkan judul pengumuman" />
                         </div>
                         <div class="form-group">
                             <label name="jenis" class="control-label">Jenis Pengumuman</label>
-                            <select id="jenis" class="form-control">
+                            <select id="jenis" class="form-control frame-item" placeholder="masukkan jenis pengumuman">
                                 <option value="1">Kegiatan</option>
                                 <option value="2">Pengumuman</option>
                                 <option value="3">Teks Berjalan</option>
@@ -27,19 +93,21 @@
                         </div>
                         <div class="form-group">
                             <label name="isi" class="control-label">Isi Pengumuman</label>
-                            <input name="isi" id="isi" class="form-control" />
+                            <input name="isi" id="isi" class="form-control frame-inner" placeholder="masukkan isi pengumuman" />
                         </div>
                         <div class="form-group">
                             <label name="tanggal_mulai" class="control-label">Tanggal Mulai Pengumuman</label>
-                            <input name="tanggal_mulai" type="date" id="tanggal_mulai" class="form-control" />
+                            <input name="tanggal_mulai" type="date" id="tanggal_mulai" class="form-control frame-child1" placeholder="Date for Frame Child 1" />
                         </div>
                         <div class="form-group">
-                            <label name="tanggal_selesai" class="control-label">Tanggal Selesai Peengumuman</label>
-                            <input name="tanggal_selesai" type="date" id="tanggal_selesai" class="form-control" />
+                            <label name="tanggal_selesai" class="control-label">Tanggal Selesai Pengumuman</label>
+                            <input name="tanggal_selesai" type="date" id="tanggal_selesai" class="form-control frame-child2" placeholder="Date for Frame Child 2" />
                         </div>
                         <br />
+                        
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                            <a href="#" class="btn btn-secondary" onclick="batal()">Batal</a>
                         </div>
                     </div>
                 </div>
@@ -85,6 +153,9 @@
                 }
             });
         }
+    function batal() {
+        history.back();
+    }
 </script>
 
 
