@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Shafa-Al-Firdaus/bin/Debug/net7.0/Shafa-Al-Firdaus.dll
