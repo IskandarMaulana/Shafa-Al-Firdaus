@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\k3key\\source\\repos\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus.csproj": {}
+    "G:\\Kuliah\\Semester 3\\Rekayasa Perangkat Lunak\\Project\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus.csproj": {}
   },
   "projects": {
-    "C:\\Users\\k3key\\source\\repos\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus.csproj": {
+    "G:\\Kuliah\\Semester 3\\Rekayasa Perangkat Lunak\\Project\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\k3key\\source\\repos\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus.csproj",
+        "projectUniqueName": "G:\\Kuliah\\Semester 3\\Rekayasa Perangkat Lunak\\Project\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus.csproj",
         "projectName": "Shafa-Al-Firdaus",
-        "projectPath": "C:\\Users\\k3key\\source\\repos\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus.csproj",
-        "packagesPath": "C:\\Users\\k3key\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\k3key\\source\\repos\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\obj\\",
+        "projectPath": "G:\\Kuliah\\Semester 3\\Rekayasa Perangkat Lunak\\Project\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus.csproj",
+        "packagesPath": "C:\\Users\\CIS\\.nuget\\packages\\",
+        "outputPath": "G:\\Kuliah\\Semester 3\\Rekayasa Perangkat Lunak\\Project\\Shafa-Al-Firdaus\\Shafa-Al-Firdaus\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\k3key\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\CIS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
