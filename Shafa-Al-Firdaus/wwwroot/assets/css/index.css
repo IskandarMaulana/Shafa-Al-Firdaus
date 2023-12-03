@@ -1,0 +1,372 @@
+
+
+
+.shafa-al-firdaus {
+  position: absolute;
+  top: 48px;
+  left: 199px;
+  font-size: var(--font-size-base);
+  font-family: var(--font-baloo);
+  display: inline-block;
+  width: 16spx;
+  height: 19px;
+}
+.menu-child {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--br-31xl);
+  background-color: var(--color-royalblue-100);
+}
+.span {
+  font-size: var(--font-size-13xl);
+}
+.dashboard {
+  position: absolute;
+  height: 58.36%;
+  width: 57.42%;
+  top: 20.82%;
+  left: 2.19%;
+  display: inline-block;
+}
+.menu {
+  position: absolute;
+  top: 0;
+  bottom: 84.1%;
+}
+.menu,
+.menu1,
+.menu2 {
+  height: 15.9%;
+  width: 100%;
+  right: 0;
+  left: 0;
+}
+.menu1 {
+  position: absolute;
+  top: 28.04%;
+  bottom: 56.06%;
+}
+.menu2 {
+  top: 56.08%;
+  bottom: 28.02%;
+}
+.menu2,
+.menu3,
+.pilihan {
+  position: absolute;
+}
+.menu3 {
+  height: 15.9%;
+  width: 100%;
+  top: 84.1%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.pilihan {
+  top: 242px;
+  left: 86px;
+  width: 333px;
+  height: 444px;
+  color: var(--color-aliceblue);
+}
+.teks-box-cari-child {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  border-radius: var(--br-xl);
+  background-color: var(--color-white);
+  width: 300px;
+  height: 40px;
+}
+.search {
+  position: absolute;
+  top: 76px;
+  left: 14px;
+  display: inline-block;
+  width: 97px;
+  height: 17px;
+}
+.icon-search-outline {
+  position: absolute;
+  height: 45%;
+  width: 5.47%;
+  top: 78px;
+  right: 5.35%;
+  bottom: 30%;
+  left: 57.18%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.teks-box-cari {
+  position: absolute;
+  top: 14px;
+  left: 447px;
+  width: 428px;
+  height: 40px;
+  font-size: var(--font-size-xl);
+  color: var(--color-darkgray);
+}
+.tambah-petugas-item {
+  position: absolute;
+  top: 25px;
+  left: 1200px;
+  border-radius: var(--br-xl);
+  background-color: var(--color-antiquewhite);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 188px;
+  height: 44px;
+}
+.profile-3135715-1-icon {
+  position: absolute;
+  top: 9px;
+  left: 1200px;
+  width: 65px;
+  height: 69px;
+  object-fit: cover;
+}
+.dkm {
+  position: absolute;
+  top: 32px;
+  left: 1270px;
+  color: var(--color-lightskyblue);
+  display: inline-block;
+  width: 81px;
+  height: 23px;
+}
+.control-7184152-1-icon,
+.plus-7500065-2-icon {
+  position: absolute;
+  top: 31px;
+  left: 1350px;
+  width: 32px;
+  height: 30px;
+  object-fit: cover;
+}
+
+.menambah-data-petugas {
+  position: absolute;
+  top: 30px;
+  left: 130px;
+  font-weight: 500;
+  display: inline-block;
+  width: 502px;
+  height: 58px;
+}
+.nama,
+.nim,
+.notlpon,
+.prodi,
+.status {
+  position: absolute;
+  top: 95px;
+  left: 24px;
+  display: inline-block;
+  width: 152px;
+  height: 34px;
+}
+.nama,
+.notlpon,
+.prodi,
+.status {
+  top: 180px;
+  width: 142px;
+  height: 37px;
+}
+.notlpon,
+.prodi,
+.status {
+  top: 270px;
+  left: 29px;
+}
+.notlpon,
+.status {
+  top: 340px;
+  left: 34px;
+}
+.status {
+  top: 420px;
+  left: 39px;
+}
+.frame-child,
+.frame-child1,
+.frame-child2,
+.frame-child3,
+.frame-child4,
+.frame-inner,
+.frame-item {
+  position: absolute;
+  top: 95px;
+  left: 180px;
+  border-radius: var(--br-xl);
+  background-color: var(--color-lightsteelblue);
+  width: 471px;
+  height: 35px;
+}
+.frame-child1,
+.frame-child2,
+.frame-child3,
+.frame-child4,
+.frame-inner,
+.frame-item {
+  top: 170px;
+}
+.frame-child1,
+.frame-child2,
+.frame-child3,
+.frame-child4,
+.frame-inner {
+  top: 260px;
+}
+.frame-child1,
+.frame-child2,
+.frame-child3,
+.frame-child4 {
+  top: 340px;
+}
+.frame-child2,
+.frame-child3,
+.frame-child4 {
+  top: 420px;
+  width: 471px;
+  height: 35px;
+}
+.frame-child3,
+.frame-child4 {
+  top: 500px;
+  left: 470px;
+  background-color: var(--color-royalblue-200);
+  width: 180px;
+  height: 62px;
+}
+.frame-child4 {
+  left: 64px;
+  background-color: var(--color-red);
+}
+.aktif,
+.batal,
+.masukan-nama-anda,
+.masukan-nama-anda1,
+.masukan-nama-anda2,
+.masukan-nim-anda,
+.simpan {
+  position: absolute;
+  top: 243px;
+  left: 193px;
+  font-weight: 500;
+  color: var(--color-navy-300);
+  display: inline-block;
+  width: 376px;
+  height: 34px;
+}
+.aktif,
+.batal,
+.masukan-nama-anda,
+.masukan-nama-anda1,
+.masukan-nama-anda2,
+.simpan {
+  top: 353px;
+  left: 215px;
+}
+.aktif,
+.batal,
+.masukan-nama-anda1,
+.masukan-nama-anda2,
+.simpan {
+  top: 460px;
+  left: 207px;
+}
+.aktif,
+.batal,
+.masukan-nama-anda2,
+.simpan {
+  top: 567px;
+}
+.aktif,
+.batal,
+.simpan {
+  top: 685px;
+  left: 232px;
+  width: 92px;
+  height: 45px;
+}
+.batal,
+.simpan {
+  top: 500px;
+  left: 500px;
+  font-size: var(--font-size-5xl);
+  color: var(--color-white);
+}
+.batal {
+  top: 500x;
+  left: 98px;
+}
+/* Styles for the "Simpan" and "Batal" buttons */
+.simpan,
+.batal {
+  display: inline-block;
+  padding: 12px 24px;
+  margin: 10px;
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: var(--br-xl);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.simpan {
+  background-color: var(--color-green); /* Ganti dengan warna hijau yang diinginkan */
+  color: var(--color-white);
+  border: 2px solid var(--color-green); /* Sesuaikan warna border jika diperlukan */
+}
+
+.batal {
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border: 2px solid var(--color-red);
+}
+
+.simpan:hover,
+.batal:hover {
+  background-color: var(--color-green-hover); /* Ganti dengan warna hijau hover yang diinginkan */
+  border: 2px solid var(--color-green-hover); /* Sesuaikan warna border hover jika diperlukan */
+}
+
+.menambah-data-petugas-harian-parent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-white);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  width: 1000px;
+  height: 570px;
+  overflow: hidden;
+}
+.tambah-petugas-inner {
+  position: absolute;
+  top: 140px;
+  left: 419px;
+  width: 1541px;
+  height: 974px;
+  font-size: var(--font-size-13xl);
+  color: var(--color-navy-100);
+}
+.tambah-petugas {
+  position: relative;
+  background-color: var(--color-aliceblue);
+  width: 100%;
+  height: 1200px;
+  mix-blend-mode: normal;
+  text-align: center;
+  font-size: var(--font-size-5xl);
+  color: var(--color-white);
+  font-family: var(--font-inter);
+}
