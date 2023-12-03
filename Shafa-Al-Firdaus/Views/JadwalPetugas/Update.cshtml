@@ -94,8 +94,17 @@
             success: function (data) {
                 console.log(data);
                 var item = data.data
+
+                var receivedDate = new Date(item.tanggal);
+
+                var formattedTanggal = receivedDate.getFullYear() + '-' +
+                    ('0' + (receivedDate.getMonth() + 1)).slice(-2) + '-' +
+                    ('0' + receivedDate.getDate()).slice(-2);
+
+                console.log(formattedTanggal)
+
                 nim.value = item.nim
-                tanggal.value = new Date(item.tanggal).toLocaleDateString();
+                tanggal.value = formattedTanggal
                 waktu.value = item.waktu
                 tugas.value = item.tugas
             },

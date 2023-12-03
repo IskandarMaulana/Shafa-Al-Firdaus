@@ -79,6 +79,7 @@
         var waktu = $("#waktu").val();
         var tugas = $("#tugas").val();
 
+        var myHostname = "https://localhost:44355/";
         var hostname = "https://localhost:44307/";
         var url = hostname + "InsertJadwalPetugasHarian"; // Change the endpoint accordingly
         var method = "POST";
@@ -97,6 +98,7 @@
             contentType: "application/json",
             success: function (data) {
                 alert("Data Jadwal Petugas Harian Berhasil Ditambahkan");
+                window.location.href = myHostname + "JadwalPetugas/Index";
             },
             error: function () {
                 alert("Gagal menyimpan data Jadwal Petugas Harian.");
