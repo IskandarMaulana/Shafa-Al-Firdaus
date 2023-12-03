@@ -396,4 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Shafa-Al-Firdaus/bin/Debug/net7.0/Shafa-Al-Firdaus.deps.json
 /Shafa-Al-Firdaus/bin/Debug/net7.0/Shafa-Al-Firdaus.dll
+/Shafa-Al-Firdaus/bin/Debug/net7.0/Shafa-Al-Firdaus.pdb
+/Shafa-Al-Firdaus/bin/Debug/net7.0/Shafa-Al-Firdaus.runtimeconfig.json
+/Shafa-Al-Firdaus/bin/Debug/net7.0/Shafa-Al-Firdaus.staticwebassets.runtime.json
