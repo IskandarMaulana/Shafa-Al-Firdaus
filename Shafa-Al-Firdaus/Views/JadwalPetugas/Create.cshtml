@@ -14,8 +14,8 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="nim" class="control-label">Petugas</label>
-                            <select name="nim" id="nim" class="form-control" required>
+                            <label for="kode" class="control-label">Petugas</label>
+                            <select name="kode" id="kode" class="form-control" required>
                                 <option value="">-- Pilih Petugas Harian --</option>
                             </select>
                         </div>
@@ -27,7 +27,7 @@
                             <label for="waktu" class="control-label">Waktu</label>
                             <select type="text" name="waktu" id="waktu" class="form-control" required>
                                 <option value="">-- Pilih Waktu Bertugas --</option>
-                                <option value="Jum'at'">Jum'at'</option>
+                                <option value="Jum'at">Jum'at</option>
                                 <option value="Subuh">Subuh</option>
                                 <option value="Dzuhur">Dzuhur</option>
                                 <option value="Ashar">Ashar</option>
@@ -66,28 +66,30 @@
             success: function (data) {
                 var list = data.data;
                 list.forEach(function (item) {
-                    var newOption = '<option value="' + item.nim + '">' + item.nama + "</option>";
-                    $("#nim").append(newOption);
+                    var newOption = '<option value="' + item.kode + '">' + item.nama + "</option>";
+                    $("#kode").append(newOption);
                 });
             },
         });
     }
 
     function simpan() {
-        var nim = $("#nim").val();
+        var kode = $("#kode").val();
         var tanggal = $("#tanggal").val();
         var waktu = $("#waktu").val();
         var tugas = $("#tugas").val();
+        var status = 1;
 
         var myHostname = "https://localhost:44355/";
         var hostname = "https://localhost:44307/";
         var url = hostname + "InsertJadwalPetugasHarian"; // Change the endpoint accordingly
         var method = "POST";
         var input = {
-            nim: nim,
+            kode: kode,
             tanggal: tanggal,
             waktu: waktu,
             tugas: tugas,
+            status: status,
         };
         var data = JSON.stringify(input);
 
