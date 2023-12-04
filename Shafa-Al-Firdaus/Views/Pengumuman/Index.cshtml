@@ -50,9 +50,14 @@
             success: function (data) {
                 var list = data.data;
                 list.forEach(function (item) {
+
+                    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    var formatter = new Intl.DateTimeFormat('id-ID', options);
+                    var formattedTanggal = formatter.format(new Date(item.tanggal_mulai));
+                    var formattedTanggaland = formatter.format(new Date(item.tanggal_selesai));
+
                     var jenisText = getJenisText(item.jenis);
-                    var mulai = new Date(item.tanggal_mulai);
-                    var selesai = new Date(item.tanggal_selesai);
+
 
                     var newRow =
                         "<tr>" +
@@ -66,10 +71,10 @@
                         item.isi +
                         "</td>" +
                         "<td>" +
-                            mulai.toISOString().split("T")[0] +
+                        formattedTanggal +
                         "</td>" +
                         "<td>" +
-                        selesai.toISOString().split("T")[0] +
+                        formattedTanggaland +
                         "</td>" +
                         "<td>" +
                         '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
@@ -98,6 +103,8 @@
                 return "Unknown";
         }
     }
+
+
 
     function hapus(id) {
         var hostname = "https://localhost:44307/";
