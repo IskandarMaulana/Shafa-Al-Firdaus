@@ -28,6 +28,7 @@
                         </div>
                         <br />
                         <div class="form-group">
+                            <button type="button" class="btn btn-primary" onclick="loadData()">Muat Data</button>
                             <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
                             <a href="#" class="btn btn-secondary" onclick="batal()">Batal</a>
                         </div>
@@ -38,6 +39,45 @@
     </div>
 </div>
 <script>
+    // Function to load Petugas Harian data by kode
+    function loadData() {
+        var kode = document.getElementById("kode").value;
+
+        if (!kode) {
+            alert("Kode tidak boleh kosong");
+            return;
+        }
+
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetPetugasHarian?kode=" + kode;
+        var method = "GET";
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+
+                if (data && data.data && data.status === 200) {
+                    var item = data.data;
+
+                    document.getElementById("kode").value = item.kode;
+                    document.getElementById("nama").value = item.nama;
+                    document.getElementById("nomor_telepon").value = item.nomor_telepon;
+                    document.getElementById("status").value = item.status.toString();
+                } else {
+                    alert("Data tidak ditemukan");
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.error(xhr);
+                alert("Gagal mengambil data Petugas Harian. Kesalahan: " + textStatus);
+            }
+        });
+    }
+
+    // Function to save or update Petugas Harian data
     function simpan() {
         var kode = document.getElementById("kode").value;
         var nama = document.getElementById("nama").value;
@@ -48,10 +88,10 @@
         var url = hostname + "UpdatePetugasHarian";
         var method = "PUT";
 
-        // Periksa apakah kode sudah ada, jika tidak, lakukan penyisipan data baru
+        // Check if kode already exists, if not, perform data insertion
         if (!kode) {
-            alert("Kode tidak boleh kosong");
-            return;
+            url = hostname + "InsertPetugasHarian";
+            method = "POST";
         }
 
         var input = {
@@ -59,8 +99,7 @@
             nama: nama,
             nomor_telepon: nomor_telepon,
             status: status
-        };
-
+        }
         var data = JSON.stringify(input);
 
         $.ajax({
@@ -82,6 +121,7 @@
         });
     }
 
+    // Function to cancel and go back
     function batal() {
         history.back();
     }

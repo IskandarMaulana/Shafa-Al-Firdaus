@@ -9,85 +9,85 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Shafa_Al_Firdaus
 build_property.RootNamespace = Shafa_Al_Firdaus
-build_property.ProjectDir = G:\Kuliah\Semester 3\Rekayasa Perangkat Lunak\Project\Shafa-Al-Firdaus\Shafa-Al-Firdaus\
+build_property.ProjectDir = C:\Users\student\source\repos\Shafa-Al-Firdaus\Shafa-Al-Firdaus\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = G:\Kuliah\Semester 3\Rekayasa Perangkat Lunak\Project\Shafa-Al-Firdaus\Shafa-Al-Firdaus
+build_property.MSBuildProjectDirectory = C:\Users\student\source\repos\Shafa-Al-Firdaus\Shafa-Al-Firdaus
 build_property._RazorSourceGeneratorDebug = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Home/Index.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Home/Privacy.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/JadwalPetugas/Create.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/JadwalPetugas/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSmFkd2FsUGV0dWdhc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/JadwalPetugas/Index.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/JadwalPetugas/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSmFkd2FsUGV0dWdhc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/JadwalPetugas/Privacy.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/JadwalPetugas/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSmFkd2FsUGV0dWdhc1xQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/JadwalPetugas/Update.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/JadwalPetugas/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSmFkd2FsUGV0dWdhc1xVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Pengumuman/Create.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Pengumuman/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVuZ3VtdW1hblxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Pengumuman/Index.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Pengumuman/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVuZ3VtdW1hblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Pengumuman/Privacy.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Pengumuman/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVuZ3VtdW1hblxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Pengumuman/Update.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Pengumuman/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVuZ3VtdW1hblxVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/PetugasHarian/Create.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/PetugasHarian/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0dWdhc0hhcmlhblxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/PetugasHarian/Index.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/PetugasHarian/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0dWdhc0hhcmlhblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/PetugasHarian/Privacy.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/PetugasHarian/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0dWdhc0hhcmlhblxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/PetugasHarian/Update.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/PetugasHarian/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0dWdhc0hhcmlhblxVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Shared/Error.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/_ViewImports.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/_ViewStart.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Kuliah/Semester 3/Rekayasa Perangkat Lunak/Project/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Shared/_Layout.cshtml]
+[C:/Users/student/source/repos/Shafa-Al-Firdaus/Shafa-Al-Firdaus/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-j98b9hah8w
