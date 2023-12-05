@@ -38,16 +38,12 @@
         </div>
     </div>
 </div>
+
 <script>
-    // Function to load Petugas Harian data by kode
+    loadData()
+
     function loadData() {
         var kode = document.getElementById("kode").value;
-
-        if (!kode) {
-            alert("Kode tidak boleh kosong");
-            return;
-        }
-
         var hostname = "https://localhost:44307/";
         var url = hostname + "GetPetugasHarian?kode=" + kode;
         var method = "GET";
@@ -58,10 +54,8 @@
             contentType: "application/json",
             success: function (data) {
                 console.log(data);
-
                 if (data && data.data && data.status === 200) {
                     var item = data.data;
-
                     document.getElementById("kode").value = item.kode;
                     document.getElementById("nama").value = item.nama;
                     document.getElementById("nomor_telepon").value = item.nomor_telepon;
@@ -70,25 +64,17 @@
                     alert("Data tidak ditemukan");
                 }
             },
-            error: function (xhr, textStatus, errorThrown) {
-                console.error(xhr);
-                alert("Gagal mengambil data Petugas Harian. Kesalahan: " + textStatus);
-            }
         });
     }
 
-    // Function to save or update Petugas Harian data
     function simpan() {
         var kode = document.getElementById("kode").value;
         var nama = document.getElementById("nama").value;
         var nomor_telepon = document.getElementById("nomor_telepon").value;
         var status = document.getElementById("status").value;
-
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdatePetugasHarian";
         var method = "PUT";
-
-        // Check if kode already exists, if not, perform data insertion
         if (!kode) {
             url = hostname + "InsertPetugasHarian";
             method = "POST";
@@ -121,7 +107,6 @@
         });
     }
 
-    // Function to cancel and go back
     function batal() {
         history.back();
     }
