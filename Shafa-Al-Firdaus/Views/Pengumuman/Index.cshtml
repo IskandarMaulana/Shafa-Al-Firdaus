@@ -1,6 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Pengumuman";
 }
+
+
+
+
+<style>
+    .btn-tambah {
+        float: left;
+        margin-bottom: 10px;
+    }
+
+    .btn-sort {
+        float: right;
+        margin-bottom: 10px;
+    }
+</style>
+
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -11,6 +27,15 @@
                     </div>
                     <div class="card-body">
                         <a class="btn btn-primary btn-tambah" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
+                        <div class="col-md-12 filter-container">
+                            <label for="statusFilter">Filter by Status:</label>
+                            <select id="statusFilter">
+                                <option value="">All</option>
+                                <option value="1">Tayang</option>
+                                <option value="2">Tidak Tayang</option>
+                                <option value="3">Dijadwalkan</option>
+                            </select>
+                        </div>
 
                         <div class="table-responsive">
                             <table class="table table-striped">
@@ -21,6 +46,7 @@
                                         <th scope="col">Isi</th>
                                         <th scope="col">Tanggal Mulai</th>
                                         <th scope="col">Tanggal Selesai</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -34,91 +60,114 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- ... (previous HTML code) ... -->
 
 <script>
-    loadTable();
+    $(document).ready(function () {
+        loadTable();
 
-    function loadTable() {
-        var hostname = "https://localhost:44307/";
-        var url = hostname + "GetAllPengumuman";
-        var method = "GET";
-
-        $.ajax({
-            url: url,
-            method: method,
-            contentType: "application/json",
-            success: function (data) {
-                var list = data.data;
-                list.forEach(function (item) {
-
-                    var options = { year: 'numeric', month: 'long', day: 'numeric' };
-                    var formatter = new Intl.DateTimeFormat('id-ID', options);
-                    var formattedTanggal = formatter.format(new Date(item.tanggal_mulai));
-                    var formattedTanggaland = formatter.format(new Date(item.tanggal_selesai));
-
-                    var jenisText = getJenisText(item.jenis);
-
-
-                    var newRow =
-                        "<tr>" +
-                        "<td>" +
-                        item.judul +
-                        "</td>" +
-                        "<td>" +
-                        jenisText +
-                        "</td>" +
-                        "<td class='wrap-column'>" +
-                        item.isi +
-                        "</td>" +
-                        "<td>" +
-                        formattedTanggal +
-                        "</td>" +
-                        "<td>" +
-                        formattedTanggaland +
-                        "</td>" +
-                        "<td>" +
-                        '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
-                        item.id_pengumuman +
-                        '">Update</a>' +
-                        '<button class="btn btn-danger" value="' +
-                        item.id_pengumuman +
-                        '" onclick="hapus(this.value)">Delete</button>' +
-                        "</td>" +
-                        "</tr>";
-                    $("#tbody").append(newRow);
-                });
-            },
+        $("#statusFilter").change(function () {
+            $("#tbody").empty();
+            loadTable();
         });
-    }
 
-    function getJenisText(jenis) {
-        switch (jenis) {
-            case 1:
-                return "Kegiatan";
-            case 2:
-                return "Pengumuman";
-            case 3:
-                return "Teks Berjalan";
-            default:
-                return "Unknown";
+        function loadTable() {
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "GetAllPengumuman";
+            var method = "GET";
+
+            var statusFilter = $("#statusFilter").val();
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                success: function (data) {
+                    var list = data.data;
+                    list.forEach(function (item) {
+
+                        var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
+                        var formatter = new Intl.DateTimeFormat('id-ID', options);
+
+                        var formattedTanggalMulai = formatter.format(new Date(item.tanggal_mulai));
+                        var formattedTanggalSelesai = formatter.format(new Date(item.tanggal_selesai));
+
+                        var jenisText = getJenisText(item.jenis);
+                        var statusText = getStatusText(item.status);
+
+                        var statusLabel = item.status === 3 ? "Dijadwalkan" : statusText;
+
+                        var newRow =
+                            "<tr>" +
+                            "<td>" +
+                            item.judul +
+                            "</td>" +
+                            "<td>" +
+                            jenisText +
+                            "</td>" +
+                            "<td class='wrap-column'>" +
+                            item.isi +
+                            "</td>" +
+                            "<td>" +
+                            formattedTanggalMulai +
+                            "</td>" +
+                            "<td>" +
+                            formattedTanggalSelesai +
+                            "</td>" +
+                            "<td>" +
+                            statusLabel +
+                            "</td>" +
+                            "<td>" +
+                            '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
+                            item.id_pengumuman +
+                            '">Update</a>' +
+                            '<button class="btn btn-danger" value="' +
+                            item.id_pengumuman +
+                            '" onclick="hapus(this.value)">Delete</button>' +
+                            "</td>" +
+                            "</tr>";
+
+                        // Apply status filter
+                        if (statusFilter === "" || item.status.toString() === statusFilter) {
+                            $("#tbody").append(newRow);
+                        }
+                    });
+                },
+            });
         }
-    }
 
+        function getJenisText(jenis) {
+            switch (jenis) {
+                case 1:
+                    return "Kegiatan";
+                case 2:
+                    return "Pemberitahuan";
+                case 3:
+                    return "Teks Berjalan";
+                default:
+                    return "Unknown";
+            }
+        }
 
+        function getStatusText(status) {
+            return status === 1 ? "Tayang" : (status === 2 ? "Tidak Tayang" : "Unknown");
+        }
 
-    function hapus(id) {
-        var hostname = "https://localhost:44307/";
-        var url = hostname + "DeletePengumuman?id_pengumuman=" + id;
-        var method = "DELETE";
+        function hapus(id) {
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "DeletePengumuman?id_pengumuman=" + id;
+            var method = "DELETE";
 
-        $.ajax({
-            url: url,
-            method: method,
-            contentType: "application/json",
-            success: function (data) {
-                alert("Data Berhasil Dihapus");
-                location.reload();
-            },
-        });
-    }
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                success: function (data) {
+                    alert("Data Berhasil Dihapus");
+                    location.reload();
+                },
+            });
+        }
+    });
+
 </script>
