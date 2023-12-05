@@ -16,10 +16,11 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">NIM</th>
+                                        <th scope="col">Petugas Harian</th>
                                         <th scope="col">Tanggal</th>
                                         <th scope="col">Waktu</th>
                                         <th scope="col">Tugas</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -31,26 +32,7 @@
             </div>
         </div>
     </div>
-    <!-- Add this modal at the end of your HTML content -->
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus data ini?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Hapus</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <script>
         loadTable();
@@ -60,6 +42,19 @@
             var url = hostname + "GetAllJadwalPetugasHarian";
             var method = "GET";
 
+            function getStatusDescription(status) {
+                switch (status) {
+                    case 0:
+                        return "Tidak Aktif";
+                    case 1:
+                        return "Aktif";
+                    case 2:
+                        return "Terlaksana";
+                    default:
+                        return "Unknown Status";
+                }
+            }
+
             $.ajax({
                 url: url,
                 method: method,
@@ -67,8 +62,11 @@
                 success: function (data) {
                     var list = data.data;
                     list.forEach(function (item) {
+
+                        var statusDescription = getStatusDescription(item.status);
+
                         // Call loadNamaPetugas with a callback function
-                        loadNamaPetugas(item.nim, function (nama) {
+                        loadNamaPetugas(item.kode, function (nama) {
                             // Continue processing once the nama is obtained
                             console.log(nama);
 
@@ -83,9 +81,11 @@
                                 "<td>" + formattedTanggal + "</td>" +
                                 "<td>" + item.waktu + "</td>" +
                                 "<td>" + item.tugas + "</td>" +
+                                "<td>" + statusDescription + "</td>" +
                                 "<td>" +
                                 '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '">Update</a>' +
-                                '<button class="btn btn-danger" value="' + item.id_jadwal + '" onclick="hapus(this.value)">Delete</button>' +
+                                '<button class="btn btn-warning" value = "' + item.id_jadwal + '" onclick = "ubahStatus(this.value)">Batal</button>' +
+                                '<button class="btn btn-success" value="' + item.id_jadwal + '" onclick="ubahStatusTerlaksana(this.value)">Terlaksana</button>' +
                                 "</td>" +
                                 "</tr>";
                             $("#tbody").append(newRow);
@@ -95,10 +95,12 @@
             });
         }
 
-        function loadNamaPetugas(nim, callback) {
+        function loadNamaPetugas(kode, callback) {
             var hostname = "https://localhost:44307/";
-            var url = hostname + "GetPetugasHarian?nim=" + nim;
+            var url = hostname + "GetPetugasHarian?kode=" + kode;
             var method = "GET";
+
+
 
             $.ajax({
                 url: url,
@@ -114,30 +116,94 @@
             });
         }
 
-        function hapus(id_jadwal) {
-            // Show the confirmation modal
-            $('#deleteConfirmationModal').modal('show');
+        function ubahStatus(id_jadwal) {
+            console.log("Preparing to update status for id_jadwal:", id_jadwal, "to status:", status);
 
-            // Set the click event for the confirm delete button in the modal
-            $('#confirmDeleteBtn').click(function () {
-                var hostname = "https://localhost:44307/";
-                var url = hostname + "DeleteJadwalPetugasHarian?id_jadwal=" + id_jadwal;
-                var method = "DELETE";
+            // Confirm with the user before updating the status
+            var confirmationMessage = status === 0 ? "Apakah Anda yakin ingin membatalkan?" : "Apakah Anda yakin tugas sudah terlaksana?";
+            if (!confirm(confirmationMessage)) {
+                console.log("Status update canceled.");
+                return;
+            }
 
-                $.ajax({
-                    url: url,
-                    method: method,
-                    contentType: "application/json",
-                    success: function (data) {
-                        alert("Data Jadwal Petugas Harian Berhasil Dihapus");
-                        // Close the modal
-                        $('#deleteConfirmationModal').modal('hide');
-                        // Reload the page
-                        location.reload();
-                    },
-                });
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal;
+            var status = 0;
+            var method = "PUT";
+
+            // Data to send in the request body
+            var data = {
+                id_jadwal: id_jadwal,
+                status: status
+            };
+
+            console.log("Sending data:", data);
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                data: JSON.stringify(data), // Convert data to JSON string
+                success: function (data) {
+                    console.log("Status update successful:", data);
+                    alert("Status Jadwal Petugas Harian Berhasil Diubah");
+                    // Reload the page
+                    location.reload();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    // Handle errors appropriately, e.g., show an error message
+                    console.error("Error updating status:", errorThrown);
+                    alert("Gagal mengubah status. Error: " + errorThrown);
+                }
             });
         }
+
+
+        function ubahStatusTerlaksana(id_jadwal) {
+            console.log("Preparing to update status for id_jadwal:", id_jadwal, "to status: Terlaksana");
+
+            // Confirm with the user before updating the status
+            var confirmationMessage = "Apakah Anda yakin tugas sudah terlaksana?";
+            if (!confirm(confirmationMessage)) {
+                console.log("Status update canceled.");
+                return;
+            }
+
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal;
+            var status = "Terlaksana"; // Assuming 2 represents "Terlaksana"
+            var method = "PUT";
+
+            // Data to send in the request body
+            var data = {
+                id_jadwal: id_jadwal,
+                status: status
+            };
+
+            console.log("Sending data:", data);
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                data: JSON.stringify(data), // Convert data to JSON string
+                success: function (data) {
+                    console.log("Status update successful:", data);
+                    alert("Status Jadwal Petugas Harian Berhasil Diubah");
+                    // Reload the page
+                    location.reload();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    // Handle errors appropriately, e.g., show an error message
+                    console.error("Error updating status:", errorThrown);
+                    alert("Gagal mengubah status. Error: " + errorThrown);
+                }
+            });
+        }
+
+
+
+
 
     </script>
 </div>
