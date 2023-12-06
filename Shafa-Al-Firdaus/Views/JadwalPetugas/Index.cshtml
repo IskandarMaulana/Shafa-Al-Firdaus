@@ -48,7 +48,10 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script>
+
         $(document).ready(function () {
             loadTable();
 
@@ -61,7 +64,6 @@
                 $("#tbody").empty();
                 loadTable();
             });
-
 
             function loadTable() {
                 var hostname = "https://localhost:44307/";
@@ -113,8 +115,8 @@
                                     "<td>" + statusDescription + "</td>" +
                                     "<td>" +
                                     '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '">Update</a>' +
-                                    '<button class="btn btn-warning" value = "' + item.id_jadwal + '" onclick = "ubahStatus(this.value, ' + item.status + ')">Batal</button>' +
-                                    '<button class="btn btn-success" value="' + item.id_jadwal + '" onclick="ubahStatusTerlaksana(this.value)">Terlaksana</button>' +
+                                    '<a class="btn btn-danger" onclick="ubahStatus(\'' + item.id_jadwal + '\')">Batal</a>' +
+
                                     "</td>" +
                                     "</tr>";
 
@@ -155,85 +157,40 @@
                 });
             }
 
-            function ubahStatus(id_jadwal, status) {
-                // Confirm with the user before updating the status
-                var confirmationMessage = status === 0 ? "Apakah Anda yakin ingin membatalkan?" : "Apakah Anda yakin tugas sudah terlaksana?";
-                if (!confirm(confirmationMessage)) {
-                    console.log("Status update canceled.");
-                    return;
+            function ubahStatus(id) {
+                var confirmed = confirm("Apakah Anda yakin ingin mengubah status menjadi Tidak Aktif?");
+                if (confirmed) {
+                    updateStatus(id);
                 }
+            }
 
+            function updateStatus(id) {
                 var hostname = "https://localhost:44307/";
-                var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal;
-                var method = "PUT";
-
-                // Data to send in the request body
-                var data = {
-                    id_jadwal: id_jadwal,
-                    status: status
+                var url = hostname + "UpdateStatus?id_jadwal=" + id + "&newStatus=0";
+                var method = "PATCH";
+                var updateData = {
+                    status: '0'
                 };
 
-                console.log("Preparing to update status for id_jadwal:", id_jadwal, "to status:", status);
-                console.log("Sending data:", data);
+                console.log('Update Data:', updateData);
 
                 $.ajax({
                     url: url,
                     method: method,
                     contentType: "application/json",
-                    data: JSON.stringify(data),
+                    data: JSON.stringify(updateData),
                     success: function (data) {
-                        console.log("Status update successful:", data);
-                        alert("Status Jadwal Petugas Harian Berhasil Diubah");
-                        // Reload the page
+                        console.log('Success:', data);
+                        alert("Status berhasil diubah menjadi Tidak Aktif");
                         location.reload();
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        console.error("Error updating status:", errorThrown);
-                        alert("Gagal mengubah status. Error: " + errorThrown);
+                        console.log('Error: ' + textStatus);
+                        alert('Error: ' + textStatus);
                     }
                 });
             }
-
-            function ubahStatusTerlaksana(id_jadwal) {
-                console.log("Preparing to update status for id_jadwal:", id_jadwal, "to status: Terlaksana");
-
-                // Confirm with the user before updating the status
-                var confirmationMessage = "Apakah Anda yakin tugas sudah terlaksana?";
-                if (!confirm(confirmationMessage)) {
-                    console.log("Status update canceled.");
-                    return;
-                }
-
-                var hostname = "https://localhost:44307/";
-                var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal;
-                var status = "Terlaksana"; // Assuming 2 represents "Terlaksana"
-                var method = "PUT";
-
-                // Data to send in the request body
-                var data = {
-                    id_jadwal: id_jadwal,
-                    status: status
-                };
-
-                console.log("Sending data:", data);
-
-                $.ajax({
-                    url: url,
-                    method: method,
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (data) {
-                        console.log("Status update successful:", data);
-                        alert("Status Jadwal Petugas Harian Berhasil Diubah");
-                        // Reload the page
-                        location.reload();
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.error("Error updating status:", errorThrown);
-                        alert("Gagal mengubah status. Error: " + errorThrown);
-                    }
-                });
-            }
+            
         });
     </script>
 </div>
