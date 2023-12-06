@@ -28,6 +28,7 @@
                         </div>
                         <br />
                         <div class="form-group">
+                            <button type="button" class="btn btn-primary" onclick="loadData()">Muat Data</button>
                             <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
                             <a href="#" class="btn btn-secondary" onclick="batal()">Batal</a>
                         </div>
@@ -37,21 +38,46 @@
         </div>
     </div>
 </div>
+
 <script>
+    loadData()
+
+    function loadData() {
+        var kode = document.getElementById("kode").value;
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetPetugasHarian?kode=" + kode;
+        var method = "GET";
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+                if (data && data.data && data.status === 200) {
+                    var item = data.data;
+                    document.getElementById("kode").value = item.kode;
+                    document.getElementById("nama").value = item.nama;
+                    document.getElementById("nomor_telepon").value = item.nomor_telepon;
+                    document.getElementById("status").value = item.status.toString();
+                } else {
+                    alert("Data tidak ditemukan");
+                }
+            },
+        });
+    }
+
     function simpan() {
         var kode = document.getElementById("kode").value;
         var nama = document.getElementById("nama").value;
         var nomor_telepon = document.getElementById("nomor_telepon").value;
         var status = document.getElementById("status").value;
-
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdatePetugasHarian";
         var method = "PUT";
-
-        // Periksa apakah kode sudah ada, jika tidak, lakukan penyisipan data baru
         if (!kode) {
-            alert("Kode tidak boleh kosong");
-            return;
+            url = hostname + "InsertPetugasHarian";
+            method = "POST";
         }
 
         var input = {
@@ -59,8 +85,7 @@
             nama: nama,
             nomor_telepon: nomor_telepon,
             status: status
-        };
-
+        }
         var data = JSON.stringify(input);
 
         $.ajax({

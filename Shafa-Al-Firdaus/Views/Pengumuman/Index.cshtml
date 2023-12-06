@@ -1,30 +1,19 @@
 ﻿@{
     ViewData["Title"] = "Pengumuman";
 }
+
+
+
+
 <style>
     .btn-tambah {
         float: left;
         margin-bottom: 10px;
-        margin-right: 10px;
     }
 
-    .search-container {
+    .btn-sort {
+        float: right;
         margin-bottom: 10px;
-    }
-
-    .filter-container {
-        margin-bottom: 20px;
-    }
-
-    .table-container {
-        max-height: 400px; /* Adjust the maximum height as needed */
-        overflow-y: auto;
-    }
-
-    #statusFilter {
-        background-color: #5bc0de;
-        color: #fff;
-        border: 1px solid #5bc0de;
     }
 </style>
 
@@ -37,30 +26,18 @@
                         <h4 class="card-title">Pengumuman</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <a class="btn btn-primary btn-tambah" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
-                            </div>
-                            
-                            <div class="col-md-6 text-right">
-                                <label for="searchInput"> Search:</label>
-                                <input type="text" id="searchInput" class="form-control" />
-                                
-                                    <label for="statusFilter">Filter by Status:</label>
-                                    <select id="statusFilter" class="form-select">
-                                        <option value="">All</option>
-                                        <option value="1">Tayang</option>
-                                        <option value="2">Tidak Tayang</option>
-                                        <option value="3">Dijadwalkan</option>
-                                    </select>
-                            </div>
+                        <a class="btn btn-primary btn-tambah" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
+                        <div class="col-md-12 filter-container">
+                            <label for="statusFilter">Filter by Status:</label>
+                            <select id="statusFilter">
+                                <option value="">All</option>
+                                <option value="1">Tayang</option>
+                                <option value="2">Tidak Tayang</option>
+                                <option value="3">Dijadwalkan</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-12 search-container">
-                            
-                        </div>
-
-                        <div class="table-responsive table-container">
+                        <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -82,7 +59,6 @@
         </div>
     </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- ... (previous HTML code) ... -->
 
@@ -90,7 +66,7 @@
     $(document).ready(function () {
         loadTable();
 
-        $("#statusFilter, #searchInput").on("input", function () {
+        $("#statusFilter").change(function () {
             $("#tbody").empty();
             loadTable();
         });
@@ -101,7 +77,6 @@
             var method = "GET";
 
             var statusFilter = $("#statusFilter").val();
-            var searchInput = $("#searchInput").val(); // Get the value from the search input
 
             $.ajax({
                 url: url,
@@ -152,18 +127,8 @@
                             "</td>" +
                             "</tr>";
 
-                        // Apply status and search filters
-                        if (
-                            (statusFilter === "" || item.status.toString() === statusFilter) &&
-                            (searchInput === "" ||
-                                item.judul.toLowerCase().includes(searchInput.toLowerCase()) ||
-                                item.isi.toLowerCase().includes(searchInput.toLowerCase()) ||
-                                formattedTanggalMulai.toLowerCase().includes(searchInput.toLowerCase()) ||
-                                formattedTanggalSelesai.toLowerCase().includes(searchInput.toLowerCase()) ||
-                                jenisText.toLowerCase().includes(searchInput.toLowerCase()) ||
-                                statusLabel.toLowerCase().includes(searchInput.toLowerCase())
-                            )
-                        ) {
+                        // Apply status filter
+                        if (statusFilter === "" || item.status.toString() === statusFilter) {
                             $("#tbody").append(newRow);
                         }
                     });
