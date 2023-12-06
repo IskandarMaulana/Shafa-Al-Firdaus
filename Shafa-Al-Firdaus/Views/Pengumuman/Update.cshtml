@@ -4,43 +4,47 @@
 @{
 }
 
+
 <div class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Tambah Data Pengumuman</h4>
+                        <h4 class="card-title">Ubah Data Pengumuman</h4>
                     </div>
-
                     <div class="card-body">
                         <div class="form-group">
-                            <label name="judul" class="control-label">Judul Pengumuman</label>
-                            <input name="judul" id="judul" class="form-control" />
+                            <input type="hidden" name="id_pengumuman" id="id_pengumuman" value="@ViewBag.IdPengumuman" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label name="jenis" class="control-label">Jenis Pengumuman</label>
-                            <select id="jenis" class="form-control">
+                            <label for="judul" class="control-label">judul Pengumuman</label>
+                            <input type="text" name="judul" id="judul" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="jenis" class="control-label">Jenis Pengumuman</label>
+                            <select type="text" name="jenis" id="jenis" class="form-control" required>
+                                <option value="">-- Pilih Jenis Pengumuman --</option>
                                 <option value="1">Kegiatan</option>
-                                <option value="2">Pengumuman</option>
+                                <option value="2">Pemberitahuan</option>
                                 <option value="3">Teks Berjalan</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label name="isi" class="control-label">Isi Pengumuman</label>
-                            <input name="isi" id="isi" class="form-control" />
+                            <label for="isi" class="control-label">Isi Pengumuman</label>
+                            <input type="text" name="isi" id="isi" class="form-control" required />
                         </div>
                         <div class="form-group">
-                            <label name="tanggal_mulai" class="control-label">Tanggal Mulai Pengumuman</label>
-                            <input name="tanggal_mulai" type="date" id="tanggal_mulai" class="form-control" />
+                            <label name="tanggal_mulai" class="control-label">Tanggal Mulai</label>
+                            <input name="tanggal_mulai" type="datetime-local" id="tanggal_mulai" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label name="tanggal_selesai" class="control-label">Tanggal Selesai Peengumuman</label>
-                            <input name="tanggal_selesai" type="date" id="tanggal_selesai" class="form-control" />
+                            <label name="tanggal_selesai" class="control-label">Tanggal Selesai</label>
+                            <input name="tanggal_selesai" type="datetime-local" id="tanggal_selesai" class="form-control" />
                         </div>
                         <br />
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                            <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
                         </div>
                     </div>
                 </div>
@@ -50,56 +54,88 @@
 </div>
 
 <script>
+    loadPengumuman();
 
-    loadData();
+    function loadPengumuman() {
+        var id_pengumuman = document.getElementById("id_pengumuman").value;
+        var judul = document.getElementById("judul");
+        var jenis = document.getElementById("jenis");
+        var isi = document.getElementById("isi");
+        var tanggal_mulai = document.getElementById("tanggal_mulai");
+        var tanggal_selesai = document.getElementById("tanggal_selesai");
 
-    function loadData() {
-        var id_pengumuman = document.getElementById("id_pengumuman")
-        var judul = document.getElementById("judul")
-        var jenis = document.getElementById("jenis")
-        var isi = document.getElementById("isi")
-        var tanggal_mulai = document.getElementById("tanggal_mulai")
-        var tanggal_selesai = document.getElementById("tanggal_selesai")
-
-        var hostname = "https://localhost:44307/"
-        var url = hostname + "GetPengumuman?id_pengumuman=" + id_pengumuman.value
-        var method = "GET"
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetPengumuman?id_pengumuman=" + id_pengumuman;
+        var method = "GET";
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
             success: function (data) {
-                var item = data.data
-                judul.value = item.judul
-                jenis.value = item.jenis
-                isi.value = item.isi
-                tanggal_mulai.value = item.tanggal_mulai
-                tanggal_selesai.value = item.tanggal_selesai
+                console.log(data);
+                var item = data.data;
+
+                // Convert the date strings to Date objects
+                var startDate = new Date(item.tanggal_mulai);
+                var endDate = new Date(item.tanggal_selesai);
+
+                // Format the dates as strings in a suitable format
+                var formattedTanggal = startDate.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
+                var formattedTanggalend = endDate.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
+
+                console.log(formattedTanggal);
+                console.log(formattedTanggalend);
+
+                // Set the values in the form
+                judul.value = item.judul;
+                jenis.value = item.jenis;
+                isi.value = item.isi;
+                tanggal_mulai.value = formattedTanggal;
+                tanggal_selesai.value = formattedTanggalend;
+
+                // Disable date fields if jenis is 3 (Teks Berjalan)
+                if (item.jenis === 3) {
+                    tanggal_mulai.disabled = true;
+                    tanggal_selesai.disabled = true;
+                }
             },
         });
     }
 
     function simpan() {
+        var id_pengumuman = document.getElementById("id_pengumuman").value;
         var judul = document.getElementById("judul").value;
-        var jenis = parseInt(document.getElementById("jenis").value); // Assuming jenis is an integer
+        var jenis = document.getElementById("jenis").value;
         var isi = document.getElementById("isi").value;
         var tanggal_mulai = document.getElementById("tanggal_mulai").value;
         var tanggal_selesai = document.getElementById("tanggal_selesai").value;
 
 
-        var hostname = "https://localhost:44307/"
-        var url = hostname + "UpdatePengumuman"
-        var method = "PUT"
+
+
+        var today = new Date();
+        var selectedDate = new Date(tanggal_mulai);
+
+        if (selectedDate < today) {
+            alert("Tanggal tidak boleh kurang dari hari ini.");
+            return; // Berhenti jika tanggal tidak valid
+        }
+
+
+        var myHostname = "https://localhost:44355/";
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "UpdatePengumuman"; // Change the endpoint accordingly
+        var method = "PUT";
         var input = {
-         
+            id_pengumuman: id_pengumuman,
             judul: judul,
-            jenis: jenis,
             isi: isi,
+            jenis: jenis,
             tanggal_mulai: tanggal_mulai,
             tanggal_selesai: tanggal_selesai,
-        }
-        var data = JSON.stringify(input)
+        };
+        var data = JSON.stringify(input);
 
         $.ajax({
             url: url,
@@ -107,8 +143,20 @@
             data: data,
             contentType: "application/json",
             success: function (data) {
-                alert("Data Berhasil Diubah")
+                alert("Data Pengumuman Berhasil Diubah");
+                window.location.href = myHostname + "pengumuman/Index";
+            },
+            error: function () {
+                alert("Gagal menyimpan data Pengumuman.");
             },
         });
     }
+
+    // Add an event listener to the jenis select element
+    document.getElementById("jenis").addEventListener("change", function () {
+        // Enable or disable date fields based on the selected jenis value
+        var isTeksBerjalan = parseInt(this.value) === 3;
+        document.getElementById("tanggal_mulai").disabled = isTeksBerjalan;
+        document.getElementById("tanggal_selesai").disabled = isTeksBerjalan;
+    });
 </script>
