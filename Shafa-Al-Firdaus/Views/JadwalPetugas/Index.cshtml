@@ -13,15 +13,19 @@
                     <div class="card-body">
                         <a class="btn btn-primary btn-tambah" asp-controller="JadwalPetugas" asp-action="Create">Tambah Data</a>
 
-                        <div class="col-md-12 filter-container">
-                            <label for="statusFilter">Filter by Status:</label>
+                        <br />
+
+                            
+                        <label for="searchInput">Search:</label>
+                        <input type="text" id="searchInput" />
+                        
+                            <label for="statusFilter">Filter dari Status:</label>
                             <select id="statusFilter">
                                 <option value="">All</option>
                                 <option value="0">Tidak Aktif</option>
                                 <option value="1">Aktif</option>
                                 <option value="2">Terlaksana</option>
                             </select>
-                        </div>
 
                         <div class="table-responsive">
                             <table class="table table-striped">
@@ -53,12 +57,19 @@
                 loadTable();
             });
 
+            $("#searchInput").on("input", function () {
+                $("#tbody").empty();
+                loadTable();
+            });
+
+
             function loadTable() {
                 var hostname = "https://localhost:44307/";
                 var url = hostname + "GetAllJadwalPetugasHarian";
                 var method = "GET";
 
                 var statusFilter = $("#statusFilter").val();
+                var searchInput = $("#searchInput").val();
 
                 function getStatusDescription(status) {
                     switch (status) {
@@ -107,7 +118,16 @@
                                     "</td>" +
                                     "</tr>";
 
-                                if (statusFilter === "" || item.status.toString() === statusFilter) {
+                                if (
+                                    (statusFilter === "" || item.status.toString() === statusFilter) &&
+                                    (searchInput === "" ||
+                                        nama.toLowerCase().includes(searchInput.toLowerCase()) ||
+                                        item.waktu.toLowerCase().includes(searchInput.toLowerCase()) ||
+                                        formattedTanggal.toLowerCase().includes(searchInput.toLowerCase()) ||
+                                        item.tugas.toLowerCase().includes(searchInput.toLowerCase()) ||
+                                        statusDescription.toLowerCase().includes(searchInput.toLowerCase())
+                                    )
+                                ) {
                                     $("#tbody").append(newRow);
                                 }
                             });
