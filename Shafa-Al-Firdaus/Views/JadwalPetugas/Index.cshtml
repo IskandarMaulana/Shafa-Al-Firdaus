@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Jadwal Petugas";
 }
+
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -11,6 +12,16 @@
                     </div>
                     <div class="card-body">
                         <a class="btn btn-primary btn-tambah" asp-controller="JadwalPetugas" asp-action="Create">Tambah Data</a>
+
+                        <div class="col-md-12 filter-container">
+                            <label for="statusFilter">Filter by Status:</label>
+                            <select id="statusFilter">
+                                <option value="">All</option>
+                                <option value="0">Tidak Aktif</option>
+                                <option value="1">Aktif</option>
+                                <option value="2">Terlaksana</option>
+                            </select>
+                        </div>
 
                         <div class="table-responsive">
                             <table class="table table-striped">
@@ -33,177 +44,176 @@
         </div>
     </div>
 
-
     <script>
-        loadTable();
+        $(document).ready(function () {
+            loadTable();
 
-        function loadTable() {
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "GetAllJadwalPetugasHarian";
-            var method = "GET";
+            $("#statusFilter").change(function () {
+                $("#tbody").empty();
+                loadTable();
+            });
 
-            function getStatusDescription(status) {
-                switch (status) {
-                    case 0:
-                        return "Tidak Aktif";
-                    case 1:
-                        return "Aktif";
-                    case 2:
-                        return "Terlaksana";
-                    default:
-                        return "Unknown Status";
+            function loadTable() {
+                var hostname = "https://localhost:44307/";
+                var url = hostname + "GetAllJadwalPetugasHarian";
+                var method = "GET";
+
+                var statusFilter = $("#statusFilter").val();
+
+                function getStatusDescription(status) {
+                    switch (status) {
+                        case 0:
+                            return "Tidak Aktif";
+                        case 1:
+                            return "Aktif";
+                        case 2:
+                            return "Terlaksana";
+                        default:
+                            return "Unknown Status";
+                    }
                 }
-            }
 
-            $.ajax({
-                url: url,
-                method: method,
-                contentType: "application/json",
-                success: function (data) {
-                    var list = data.data;
-                    list.forEach(function (item) {
+                $.ajax({
+                    url: url,
+                    method: method,
+                    contentType: "application/json",
+                    success: function (data) {
+                        var list = data.data;
+                        list.forEach(function (item) {
 
-                        var statusDescription = getStatusDescription(item.status);
+                            var statusDescription = getStatusDescription(item.status);
 
-                        // Call loadNamaPetugas with a callback function
-                        loadNamaPetugas(item.kode, function (nama) {
-                            // Continue processing once the nama is obtained
-                            console.log(nama);
+                            // Call loadNamaPetugas with a callback function
+                            loadNamaPetugas(item.kode, function (nama) {
+                                // Continue processing once the nama is obtained
+                                console.log(nama);
 
-                            // Rest of your code here...
-                            var options = { year: 'numeric', month: 'long', day: 'numeric' };
-                            var formatter = new Intl.DateTimeFormat('id-ID', options);
-                            var formattedTanggal = formatter.format(new Date(item.tanggal));
+                                // Rest of your code here...
+                                var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                                var formatter = new Intl.DateTimeFormat('id-ID', options);
+                                var formattedTanggal = formatter.format(new Date(item.tanggal));
 
-                            var newRow =
-                                "<tr align='center'>" +
-                                "<td>" + nama + "</td>" +
-                                "<td>" + formattedTanggal + "</td>" +
-                                "<td>" + item.waktu + "</td>" +
-                                "<td>" + item.tugas + "</td>" +
-                                "<td>" + statusDescription + "</td>" +
-                                "<td>" +
-                                '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '">Update</a>' +
-                                '<button class="btn btn-warning" value = "' + item.id_jadwal + '" onclick = "ubahStatus(this.value)">Batal</button>' +
-                                '<button class="btn btn-success" value="' + item.id_jadwal + '" onclick="ubahStatusTerlaksana(this.value)">Terlaksana</button>' +
-                                "</td>" +
-                                "</tr>";
-                            $("#tbody").append(newRow);
+                                var newRow =
+                                    "<tr align='center'>" +
+                                    "<td>" + nama + "</td>" +
+                                    "<td>" + formattedTanggal + "</td>" +
+                                    "<td>" + item.waktu + "</td>" +
+                                    "<td>" + item.tugas + "</td>" +
+                                    "<td>" + statusDescription + "</td>" +
+                                    "<td>" +
+                                    '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '">Update</a>' +
+                                    '<button class="btn btn-warning" value = "' + item.id_jadwal + '" onclick = "ubahStatus(this.value, ' + item.status + ')">Batal</button>' +
+                                    '<button class="btn btn-success" value="' + item.id_jadwal + '" onclick="ubahStatusTerlaksana(this.value)">Terlaksana</button>' +
+                                    "</td>" +
+                                    "</tr>";
+
+                                if (statusFilter === "" || item.status.toString() === statusFilter) {
+                                    $("#tbody").append(newRow);
+                                }
+                            });
                         });
-                    });
-                },
-            });
-        }
-
-        function loadNamaPetugas(kode, callback) {
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "GetPetugasHarian?kode=" + kode;
-            var method = "GET";
-
-
-
-            $.ajax({
-                url: url,
-                method: method,
-                contentType: "application/json",
-                success: function (data) {
-                    var item = data.data;
-                    var result = item.nama;
-
-                    // Invoke the callback function with the result
-                    callback(result);
-                },
-            });
-        }
-
-        function ubahStatus(id_jadwal) {
-            console.log("Preparing to update status for id_jadwal:", id_jadwal, "to status:", status);
-
-            // Confirm with the user before updating the status
-            var confirmationMessage = status === 0 ? "Apakah Anda yakin ingin membatalkan?" : "Apakah Anda yakin tugas sudah terlaksana?";
-            if (!confirm(confirmationMessage)) {
-                console.log("Status update canceled.");
-                return;
+                    },
+                });
             }
 
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal;
-            var status = 0;
-            var method = "PUT";
+            function loadNamaPetugas(kode, callback) {
+                var hostname = "https://localhost:44307/";
+                var url = hostname + "GetPetugasHarian?kode=" + kode;
+                var method = "GET";
 
-            // Data to send in the request body
-            var data = {
-                id_jadwal: id_jadwal,
-                status: status
-            };
+                $.ajax({
+                    url: url,
+                    method: method,
+                    contentType: "application/json",
+                    success: function (data) {
+                        var item = data.data;
+                        var result = item.nama;
 
-            console.log("Sending data:", data);
-
-            $.ajax({
-                url: url,
-                method: method,
-                contentType: "application/json",
-                data: JSON.stringify(data), // Convert data to JSON string
-                success: function (data) {
-                    console.log("Status update successful:", data);
-                    alert("Status Jadwal Petugas Harian Berhasil Diubah");
-                    // Reload the page
-                    location.reload();
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    // Handle errors appropriately, e.g., show an error message
-                    console.error("Error updating status:", errorThrown);
-                    alert("Gagal mengubah status. Error: " + errorThrown);
-                }
-            });
-        }
-
-
-        function ubahStatusTerlaksana(id_jadwal) {
-            console.log("Preparing to update status for id_jadwal:", id_jadwal, "to status: Terlaksana");
-
-            // Confirm with the user before updating the status
-            var confirmationMessage = "Apakah Anda yakin tugas sudah terlaksana?";
-            if (!confirm(confirmationMessage)) {
-                console.log("Status update canceled.");
-                return;
+                        // Invoke the callback function with the result
+                        callback(result);
+                    },
+                });
             }
 
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal;
-            var status = "Terlaksana"; // Assuming 2 represents "Terlaksana"
-            var method = "PUT";
-
-            // Data to send in the request body
-            var data = {
-                id_jadwal: id_jadwal,
-                status: status
-            };
-
-            console.log("Sending data:", data);
-
-            $.ajax({
-                url: url,
-                method: method,
-                contentType: "application/json",
-                data: JSON.stringify(data), // Convert data to JSON string
-                success: function (data) {
-                    console.log("Status update successful:", data);
-                    alert("Status Jadwal Petugas Harian Berhasil Diubah");
-                    // Reload the page
-                    location.reload();
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    // Handle errors appropriately, e.g., show an error message
-                    console.error("Error updating status:", errorThrown);
-                    alert("Gagal mengubah status. Error: " + errorThrown);
+            function ubahStatus(id_jadwal, status) {
+                // Confirm with the user before updating the status
+                var confirmationMessage = status === 0 ? "Apakah Anda yakin ingin membatalkan?" : "Apakah Anda yakin tugas sudah terlaksana?";
+                if (!confirm(confirmationMessage)) {
+                    console.log("Status update canceled.");
+                    return;
                 }
-            });
-        }
 
+                var hostname = "https://localhost:44307/";
+                var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal;
+                var method = "PUT";
 
+                // Data to send in the request body
+                var data = {
+                    id_jadwal: id_jadwal,
+                    status: status
+                };
 
+                console.log("Preparing to update status for id_jadwal:", id_jadwal, "to status:", status);
+                console.log("Sending data:", data);
 
+                $.ajax({
+                    url: url,
+                    method: method,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data) {
+                        console.log("Status update successful:", data);
+                        alert("Status Jadwal Petugas Harian Berhasil Diubah");
+                        // Reload the page
+                        location.reload();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error("Error updating status:", errorThrown);
+                        alert("Gagal mengubah status. Error: " + errorThrown);
+                    }
+                });
+            }
 
+            function ubahStatusTerlaksana(id_jadwal) {
+                console.log("Preparing to update status for id_jadwal:", id_jadwal, "to status: Terlaksana");
+
+                // Confirm with the user before updating the status
+                var confirmationMessage = "Apakah Anda yakin tugas sudah terlaksana?";
+                if (!confirm(confirmationMessage)) {
+                    console.log("Status update canceled.");
+                    return;
+                }
+
+                var hostname = "https://localhost:44307/";
+                var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal;
+                var status = "Terlaksana"; // Assuming 2 represents "Terlaksana"
+                var method = "PUT";
+
+                // Data to send in the request body
+                var data = {
+                    id_jadwal: id_jadwal,
+                    status: status
+                };
+
+                console.log("Sending data:", data);
+
+                $.ajax({
+                    url: url,
+                    method: method,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data) {
+                        console.log("Status update successful:", data);
+                        alert("Status Jadwal Petugas Harian Berhasil Diubah");
+                        // Reload the page
+                        location.reload();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error("Error updating status:", errorThrown);
+                        alert("Gagal mengubah status. Error: " + errorThrown);
+                    }
+                });
+            }
+        });
     </script>
 </div>

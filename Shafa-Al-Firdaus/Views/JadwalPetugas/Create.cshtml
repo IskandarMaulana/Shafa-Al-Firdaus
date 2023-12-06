@@ -80,6 +80,14 @@
         var tugas = $("#tugas").val();
         var status = 1;
 
+        var today = new Date();
+        var selectedDate = new Date(tanggal);
+
+        if (selectedDate < today) {
+            alert("Tanggal tidak boleh kurang dari hari ini.");
+            return; // Berhenti jika tanggal tidak valid
+        }
+
         var myHostname = "https://localhost:44355/";
         var hostname = "https://localhost:44307/";
         var url = hostname + "InsertJadwalPetugasHarian"; // Change the endpoint accordingly
