@@ -6,6 +6,12 @@
     <div class="card-body">
         <div class="my-3" style="margin-top: 40px;">
             <a class="btn btn-primary" asp-controller="PetugasHarian" asp-action="Create">Tambah Data</a>
+            </div>
+            <select id="filterStatus" class="form-control" onchange="applyFilter()">
+                <option value="all">All</option>
+                <option value="active">Aktif</option>
+                <option value="inactive">Tidak Aktif</option>
+            </select>
         </div>
         <table class="table table-stripped">
             <thead>
@@ -19,11 +25,10 @@
             <tbody id="tbody"></tbody>
         </table>
     </div>
-</div>
 
 <script>
     loadTable()
-
+    
     function loadTable() {
         var hostname = "https://localhost:44307/"
         var url = hostname + "GetAllPetugasHarian"
@@ -42,14 +47,51 @@
                         '<td>' + item.nomor_telepon + '</td>' +
                         '<td>' + statusText + '</td>' +
                         '<td>' +
-                        '<a class="btn btn-secondary" href="/PetugasHarian/Update?kode=' + item.kode + '">Update</a>' +
-                        '<a class="btn btn-danger" value="' + item.kode + '" onclick="ubahStatus(this.value)">Menonaktifkan</a>' +
+                        '<a class="btn btn-secondary" href="/PetugasHarian/Update/' + item.kode + '">Update</a>' +
+                        '<a class="btn btn-danger" onclick="ubahStatus(\'' + item.kode + '\')">Menonaktifkan</a>' +
                         '</td>' +
                         '</tr>';
+
                     $('#tbody').append(newRow);
                 });
             },
         });
+    }
+
+    function applyFilter() {
+        var filterStatus = $("#filterStatus").val();
+        $("#tbody").empty(); // Clear existing rows
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetAllPetugasHarian";
+        if (filterStatus !== "all") {
+            url += "?status=" + (filterStatus === "active" ? "1" : "0");
+        }
+
+        $.ajax({
+            url: url,
+            method: "GET",
+            contentType: "application/json",
+            success: function (data) {
+                var list = data.data;
+                list.forEach(function (item) {
+                    addRow(item);
+                });
+            },
+        });
+    }
+
+    function addRow(item) {
+        var statusText = item.status === 1 ? 'Aktif' : 'Tidak Aktif';
+        var newRow = '<tr align="center">' +
+            '<td>' + item.nama + '</td>' +
+            '<td>' + item.nomor_telepon + '</td>' +
+            '<td>' + statusText + '</td>' +
+            '<td>' +
+            '<a class="btn btn-secondary" href="/PetugasHarian/Update?kode=' + item.kode + '">Update</a>' +
+            '<a class="btn btn-danger" value="' + item.kode + '" onclick="ubahStatus(this.value)">Menonaktifkan</a>' +
+            '</td>' +
+            '</tr>';
+        $('#tbody').append(newRow);
     }
 
     function ubahStatus(id) {
@@ -59,11 +101,13 @@
         }
 
         var hostname = "https://localhost:44307/";
-        var url = hostname + "UpdateStatusPetugasHarian?kode=" + id;  // Assuming this is the correct endpoint for updating status
-        var method = "PATCH";  // Use PATCH method for updating
+        var url = hostname + "UpdateStatusPetugasHarian?kode=" +id+ "&newStatus=0";
+        var method = "PATCH";
         var updateData = {
-            status: '0'  // Set the status to 0
+            status: '0'
         };
+
+        console.log('Update Data:', updateData); // Add this line for debugging
 
         $.ajax({
             url: url,
@@ -71,6 +115,7 @@
             contentType: "application/json",
             data: JSON.stringify(updateData),
             success: function (data) {
+                console.log('Success:', data); // Add this line for debugging
                 alert("Status berhasil diubah menjadi Tidak Aktif");
                 location.reload();
             },

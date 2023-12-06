@@ -41,7 +41,8 @@
                         </div>
                         <br />
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button type="button" class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                       
                     </div>
@@ -106,5 +107,9 @@
                 alert("Gagal menyimpan data Jadwal Petugas Harian.");
             },
         });
+    }
+
+    function batal() {
+        history.back();
     }
 </script>

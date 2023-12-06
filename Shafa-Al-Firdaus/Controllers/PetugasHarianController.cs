@@ -11,7 +11,6 @@ namespace Shafa_Al_Firdaus.Controllers
 
         private readonly ILogger<HomeController> _logger;
 
-
         public PetugasHarianController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -38,7 +37,7 @@ namespace Shafa_Al_Firdaus.Controllers
         public IActionResult Update(string Name)
         {
             ViewBag.Name = Name;
-            return View();
+            return View(Name);
         }
     }
 }
