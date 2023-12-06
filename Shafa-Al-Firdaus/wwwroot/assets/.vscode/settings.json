@@ -1,3 +1,4 @@
 {
-    "editor.formatOnSave": true
+  "editor.formatOnSave": false,
+  "html-to-css-autocompletion.autocompletionFilesScope": "multi-root"
 }
