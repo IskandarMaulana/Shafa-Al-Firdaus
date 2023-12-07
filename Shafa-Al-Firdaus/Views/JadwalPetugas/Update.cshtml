@@ -60,9 +60,9 @@
 
     function loadPetugas() {
         var hostname = "https://localhost:44307/";
-        var url = hostname + "GetAllPetugasHarian";
+        var url = hostname + "GetPetugasHarian?kode=" + '@name';
         var method = "GET";
-
+        console.log('@name');
         $.ajax({
             url: url,
             method: method,
