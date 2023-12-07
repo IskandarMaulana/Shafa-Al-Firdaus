@@ -46,15 +46,11 @@
     loadPetugas();
 
     function loadPetugas() {
-        var item = data.data;
-        nama.value = item.nama;
-        nomor_telepon.value = item.nomor_telepon;
-        status.value = item.status;
- 
+        
         var hostname = "https://localhost:44307/";
         var url = hostname + "GetPetugasHarian?kode=" + '@name';
         var method = "GET";
-
+        console.log('@name');
         $.ajax({
             url: url,
             method: method,
@@ -62,6 +58,7 @@
             success: function (data) {
                 console.log(data);
                 var item = data.data
+                kode.value = item.kode
                 nama.value = item.nama
                 nomor_telepon.value = item.nomor_telepon
                 status.value = item.status
@@ -77,10 +74,6 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdatePetugasHarian";
         var method = "PUT";
-        if (!kode) {
-            url = hostname + "InsertPetugasHarian";
-            method = "POST";
-        }
 
         var input = {
             kode: kode,
@@ -88,7 +81,9 @@
             nomor_telepon: nomor_telepon,
             status: status
         }
+
         var data = JSON.stringify(input);
+        console.log(data);
 
         $.ajax({
             url: url,
@@ -102,10 +97,6 @@
                     alert("Gagal menyimpan/memperbarui data Petugas Harian. Kode Status: " + xhr.status);
                 }
             },
-            error: function (xhr, textStatus, errorThrown) {
-                console.error("Error:", xhr, textStatus, errorThrown);
-                alert("Gagal menyimpan/memperbarui data Petugas Harian. Kesalahan: " + textStatus);
-            }
         });
     }
 
