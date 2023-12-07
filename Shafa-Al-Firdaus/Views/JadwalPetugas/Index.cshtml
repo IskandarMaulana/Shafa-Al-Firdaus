@@ -52,145 +52,158 @@
 
     <script>
 
-        $(document).ready(function () {
+    $(document).ready(function () {
+        loadTable();
+
+        $("#statusFilter, #searchInput").on("input change", function () {
+            $("#tbody").empty();
             loadTable();
+        });
 
-            $("#statusFilter").change(function () {
-                $("#tbody").empty();
-                loadTable();
-            });
+        function loadTable() {
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "GetAllJadwalPetugasHarian";
+            var method = "GET";
 
-            $("#searchInput").on("input", function () {
-                $("#tbody").empty();
-                loadTable();
-            });
+            var statusFilter = $("#statusFilter").val();
+            var searchInput = $("#searchInput").val();
 
-            function loadTable() {
-                var hostname = "https://localhost:44307/";
-                var url = hostname + "GetAllJadwalPetugasHarian";
-                var method = "GET";
+            function getStatusDescription(status) {
+                switch (status) {
+                    case 0:
+                        return "Tidak Aktif";
+                    case 1:
+                        return "Aktif";
+                    case 2:
+                        return "Terlaksana";
+                    default:
+                        return "Unknown Status";
+                }
+            }
 
-                var statusFilter = $("#statusFilter").val();
-                var searchInput = $("#searchInput").val();
+            function loadNamaPetugasAsync(kode) {
+                return new Promise(function (resolve) {
+                    var url = hostname + "GetPetugasHarian?kode=" + kode;
+                    $.ajax({
+                        url: url,
+                        method: "GET",
+                        contentType: "application/json",
+                        success: function (data) {
+                            var item = data.data;
+                            var result = item.nama;
+                            resolve(result);
+                        }
+                    });
+                });
+            }
 
-                function getStatusDescription(status) {
-                    switch (status) {
-                        case 0:
-                            return "Tidak Aktif";
-                        case 1:
-                            return "Aktif";
-                        case 2:
-                            return "Terlaksana";
-                        default:
-                            return "Unknown Status";
+            function processItem(item) {
+                return loadNamaPetugasAsync(item.kode).then(function (nama) {
+                    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    var formatter = new Intl.DateTimeFormat('id-ID', options);
+                    var formattedTanggal = formatter.format(new Date(item.tanggal));
+
+                    var newRow =
+                        "<tr align='center'>" +
+                        "<td>" + nama + "</td>" +
+                        "<td>" + formattedTanggal + "</td>" +
+                        "<td>" + item.waktu + "</td>" +
+                        "<td>" + item.tugas + "</td>" +
+                        "<td>" + getStatusDescription(item.status) + "</td>" +
+                        "<td>" +
+                        '<a class="btn btn-secondary" href="/JadwalPetugas/Update/' + item.id_jadwal + '">Update</a>' +
+                        '<a class="btn btn-danger btn-batal" data-id-jadwal="' + item.id_jadwal + '">Batal</a>' +
+                        '</td>' +
+                        '</tr>';
+
+                    if (
+                        (statusFilter === "" || item.status.toString() === statusFilter) &&
+                        (searchInput === "" ||
+                            nama.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.waktu.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            formattedTanggal.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.tugas.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            getStatusDescription(item.status).toLowerCase().includes(searchInput.toLowerCase())
+                        )
+                    ) {
+                        $('#tbody').append(newRow);
                     }
-                }
+                });
+            }
 
-                $.ajax({
-                    url: url,
-                    method: method,
-                    contentType: "application/json",
-                    success: function (data) {
-                        var list = data.data;
-                        list.forEach(function (item) {
-
-                            var statusDescription = getStatusDescription(item.status);
-
-                            // Call loadNamaPetugas with a callback function
-                            loadNamaPetugas(item.kode, function (nama) {
-                                // Continue processing once the nama is obtained
-                                console.log(nama);
-
-                                // Rest of your code here...
-                                var options = { year: 'numeric', month: 'long', day: 'numeric' };
-                                var formatter = new Intl.DateTimeFormat('id-ID', options);
-                                var formattedTanggal = formatter.format(new Date(item.tanggal));
-
-                                var newRow =
-                                    "<tr align='center'>" +
-                                    "<td>" + nama + "</td>" +
-                                    "<td>" + formattedTanggal + "</td>" +
-                                    "<td>" + item.waktu + "</td>" +
-                                    "<td>" + item.tugas + "</td>" +
-                                    "<td>" + statusDescription + "</td>" +
-                                    "<td>" +
-                                    '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '">Update</a>' +
-                                    '<a class="btn btn-danger" onclick="ubahStatus(\'' + item.id_jadwal + '\')">Batal</a>' +
-
-                                    "</td>" +
-                                    "</tr>";
-
-                                if (
-                                    (statusFilter === "" || item.status.toString() === statusFilter) &&
-                                    (searchInput === "" ||
-                                        nama.toLowerCase().includes(searchInput.toLowerCase()) ||
-                                        item.waktu.toLowerCase().includes(searchInput.toLowerCase()) ||
-                                        formattedTanggal.toLowerCase().includes(searchInput.toLowerCase()) ||
-                                        item.tugas.toLowerCase().includes(searchInput.toLowerCase()) ||
-                                        statusDescription.toLowerCase().includes(searchInput.toLowerCase())
-                                    )
-                                ) {
-                                    $("#tbody").append(newRow);
-                                }
-                            });
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                success: function (data) {
+                    var list = data.data;
+                    var promises = list.map(processItem);
+                    Promise.all(promises).then(function () {
+                        // Attach the click event to the dynamically created "Batal" button
+                        $('.btn-batal').click(function () {
+                            var idJadwal = $(this).data('id-jadwal');
+                            ubahStatus(idJadwal);
                         });
-                    },
-                });
-            }
-
-            function loadNamaPetugas(kode, callback) {
-                var hostname = "https://localhost:44307/";
-                var url = hostname + "GetPetugasHarian?kode=" + kode;
-                var method = "GET";
-
-                $.ajax({
-                    url: url,
-                    method: method,
-                    contentType: "application/json",
-                    success: function (data) {
-                        var item = data.data;
-                        var result = item.nama;
-
-                        // Invoke the callback function with the result
-                        callback(result);
-                    },
-                });
-            }
-
-            function ubahStatus(id) {
-                var confirmed = confirm("Apakah Anda yakin ingin mengubah status menjadi Tidak Aktif?");
-                if (confirmed) {
-                    updateStatus(id);
+                    });
                 }
-            }
+            });
+        }
 
-            function updateStatus(id) {
-                var hostname = "https://localhost:44307/";
-                var url = hostname + "UpdateStatus?id_jadwal=" + id + "&newStatus=0";
-                var method = "PATCH";
-                var updateData = {
-                    status: '0'
-                };
+        function ubahStatus(id) {
+                $('.btn-batal').click(function () {
+                    var idJadwal = $(this).data('id-jadwal');
+                    var confirmed = confirm("Apakah Anda yakin ingin mengubah status menjadi Tidak Aktif?");
+                    if (confirmed) {
+                        updateStatus(idJadwal);
+                    }
+                });
+        }
 
-                console.log('Update Data:', updateData);
+        function updateStatus(id_jadwal) {
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "UpdateStatus";
+            var method = "PUT";
+            var updateData = {
+                id_jadwal: id_jadwal,
+                status: '0'
+            };
 
-                $.ajax({
-                    url: url,
-                    method: method,
-                    contentType: "application/json",
-                    data: JSON.stringify(updateData),
-                    success: function (data) {
-                        console.log('Success:', data);
+            var data = JSON.stringify(updateData);
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: data,
+                contentType: "application/json",
+                success: function (data) {
                         alert("Status berhasil diubah menjadi Tidak Aktif");
                         location.reload();
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error: ' + textStatus);
-                        alert('Error: ' + textStatus);
-                    }
-                });
-            }
-            
-        });
-    </script>
+                },
+                error: function (data) {
+                    var e = data.errors
+                    alert("Gagal menyimpan data Jadwal Petugas Harian." + e);
+                },
+            });
+            /*console.log('Update Data:', updateData);
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                data: JSON.stringify(updateData),
+                success: function (data) {
+                    console.log('Success:', data);
+                    alert("Status berhasil diubah menjadi Tidak Aktif");
+                    location.reload();
+                },
+                error: function (errors, textStatus, errorThrown) {
+                    var errorList = errors.data
+                    console.log('Error: ' + errorThrown + errorList.status);
+                    alert('Error: ' + textStatus);
+                }
+            });*/
+        }
+    });
+
+</script>
 </div>

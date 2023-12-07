@@ -53,6 +53,7 @@
     </div>
 </div>
 
+
 <script>
     loadPetugas();
     loadJadwalPetugas();
@@ -84,7 +85,7 @@
         var tugas = document.getElementById("tugas")
 
         var hostname = "https://localhost:44307/";
-        var url = hostname + "GetJadwalPetugasHarian?id_jadwal=" + id_jadwal.value;
+        var url = hostname + "GetJadwalPetugasHarian?id_jadwal=" + id_jadwal;
         var method = "GET";
 
         $.ajax({
@@ -103,10 +104,10 @@
 
                 console.log(formattedTanggal)
 
-                nim.value = item.nim
-                tanggal.value = formattedTanggal
-                waktu.value = item.waktu
-                tugas.value = item.tugas
+                nim.value = item.nim;
+                tanggal.value = formattedTanggal;
+                waktu.value = item.waktu;
+                tugas.value = item.tugas;
             },
         });
     }
