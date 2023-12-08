@@ -1,4 +1,8 @@
-﻿<div class="content">
+﻿@{
+    string name = ViewBag.Name;
+}
+
+<div class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -8,8 +12,8 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="kode" class="control-label">Kode</label>
-                            <input type="text" name="kode" id="kode" class="form-control" />
+                            @*<label name="kode" class="control-label">Kode</label>
+                            *@<input type="hidden" name="kode" id="kode" class="form-control" readonly />
                         </div>
                         <div class="form-group">
                             <label for="nama" class="control-label">Nama</label>
@@ -23,14 +27,13 @@
                             <label for="status" class="control-label">Status</label>
                             <select name="status" id="status" class="form-control">
                                 <option value="1">Aktif</option>
-                                <option value="0">Tidak Aktif</option>
+                                
                             </select>
                         </div>
                         <br />
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary" onclick="loadData()">Muat Data</button>
-                            <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
-                            <a href="#" class="btn btn-secondary" onclick="batal()">Batal</a>
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button href="#" class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -40,29 +43,25 @@
 </div>
 
 <script>
-    loadData()
+    loadPetugas();
 
-    function loadData() {
-        var kode = document.getElementById("kode").value;
+    function loadPetugas() {
+        
         var hostname = "https://localhost:44307/";
-        var url = hostname + "GetPetugasHarian?kode=" + kode;
+        var url = hostname + "GetPetugasHarian?kode=" + '@name';
         var method = "GET";
-
+        console.log('@name');
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
             success: function (data) {
                 console.log(data);
-                if (data && data.data && data.status === 200) {
-                    var item = data.data;
-                    document.getElementById("kode").value = item.kode;
-                    document.getElementById("nama").value = item.nama;
-                    document.getElementById("nomor_telepon").value = item.nomor_telepon;
-                    document.getElementById("status").value = item.status.toString();
-                } else {
-                    alert("Data tidak ditemukan");
-                }
+                var item = data.data
+                kode.value = item.kode
+                nama.value = item.nama
+                nomor_telepon.value = item.nomor_telepon
+                status.value = item.status
             },
         });
     }
@@ -75,10 +74,6 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdatePetugasHarian";
         var method = "PUT";
-        if (!kode) {
-            url = hostname + "InsertPetugasHarian";
-            method = "POST";
-        }
 
         var input = {
             kode: kode,
@@ -86,7 +81,9 @@
             nomor_telepon: nomor_telepon,
             status: status
         }
+
         var data = JSON.stringify(input);
+        console.log(data);
 
         $.ajax({
             url: url,
@@ -100,10 +97,6 @@
                     alert("Gagal menyimpan/memperbarui data Petugas Harian. Kode Status: " + xhr.status);
                 }
             },
-            error: function (xhr, textStatus, errorThrown) {
-                console.error(xhr);
-                alert("Gagal menyimpan/memperbarui data Petugas Harian. Kesalahan: " + textStatus);
-            }
         });
     }
 

@@ -2,10 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+
 <div class="card">
     <div class="card-body">
         <div class="my-3" style="margin-top: 40px;">
             <a class="btn btn-primary" asp-controller="PetugasHarian" asp-action="Create">Tambah Data</a>
+        </div>
+        <div class="col-md-12 filter-container">
+            <label for="statusFilter">Filter by Status:</label>
+            <select id="statusFilter">
+                <option value="">All</option>
+                <option value="1">Aktif</option>
+                <option value="0">Tidak Aktif</option>
+            </select>
         </div>
         <table class="table table-stripped">
             <thead>
@@ -22,12 +32,18 @@
 </div>
 
 <script>
-    loadTable()
+    loadTable();
+
+    $("#statusFilter").change(function () {
+        $("#tbody").empty();
+        loadTable();
+    });
 
     function loadTable() {
-        var hostname = "https://localhost:44307/"
-        var url = hostname + "GetAllPetugasHarian"
-        var method = "GET"
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetAllPetugasHarian";
+        var method = "GET";
+        var statusFilter = $("#statusFilter").val();
 
         $.ajax({
             url: url,
@@ -42,11 +58,15 @@
                         '<td>' + item.nomor_telepon + '</td>' +
                         '<td>' + statusText + '</td>' +
                         '<td>' +
-                        '<a class="btn btn-secondary" href="/PetugasHarian/Update?kode=' + item.kode + '">Update</a>' +
-                        '<a class="btn btn-danger" value="' + item.kode + '" onclick="ubahStatus(this.value)">Menonaktifkan</a>' +
+                        '<a class="btn btn-secondary" href="PetugasHarian/Update/' + item.kode + '">Update</a>' +
+                        '<a class="btn btn-danger" onclick="ubahStatus(\'' + item.kode + '\')">Menonaktifkan</a>' +
                         '</td>' +
                         '</tr>';
-                    $('#tbody').append(newRow);
+
+                    // Apply status filter
+                    if (statusFilter === "" || item.status.toString() === statusFilter) {
+                        $('#tbody').append(newRow);
+                    }
                 });
             },
         });
@@ -59,11 +79,13 @@
         }
 
         var hostname = "https://localhost:44307/";
-        var url = hostname + "UpdateStatusPetugasHarian?kode=" + id;  // Assuming this is the correct endpoint for updating status
-        var method = "PATCH";  // Use PATCH method for updating
+        var url = hostname + "UpdateStatusPetugasHarian?kode=" + id + "&newStatus=0";
+        var method = "PATCH";
         var updateData = {
-            status: '0'  // Set the status to 0
+            status: '0'
         };
+
+        console.log('Update Data:', updateData);
 
         $.ajax({
             url: url,
@@ -71,6 +93,7 @@
             contentType: "application/json",
             data: JSON.stringify(updateData),
             success: function (data) {
+                console.log('Success:', data);
                 alert("Status berhasil diubah menjadi Tidak Aktif");
                 location.reload();
             },
