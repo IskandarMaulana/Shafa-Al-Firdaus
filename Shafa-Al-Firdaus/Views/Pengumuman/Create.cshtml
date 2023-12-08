@@ -43,10 +43,7 @@
                             <select id="status" class="form-control">
                                 <option value="">--  --</option>
                                 <option value="1">Tayang</option>
-                                <option value="2">Tidak Tayang</option>
                                 <option value="3">Dijadwalkan</option>
-
-                                
                             </select>
                         </div>
                         <br />
@@ -69,7 +66,7 @@
         var isi = document.getElementById("isi").value;
         var tanggal_mulai = document.getElementById("tanggal_mulai").value;
         var tanggal_selesai = document.getElementById("tanggal_selesai").value;
-        var status = parseInt(document.getElementById("status").value);
+        var status = document.getElementById("status").value;
 
 
         var today = new Date();
@@ -77,10 +74,8 @@
 
         if (selectedDate < today) {
             alert("Tanggal tidak boleh kurang dari hari ini.");
-            return; // Berhenti jika tanggal tidak valid
+            return; // Stop if the date is not valid
         }
-
-
 
         // Disable date fields if jenis is 3 (Teks Berjalan)
         if (jenis === 3) {
@@ -89,6 +84,9 @@
             tanggal_mulai = null; // Set to null if disabled
             tanggal_selesai = null; // Set to null if disabled
         }
+
+        // Disable status dropdown and set value to "Dijadwalkan"
+        document.getElementById("status").disabled = true;
 
         var hostname = "https://localhost:44307/";
         var url = hostname + "InsertPengumuman";
@@ -101,8 +99,6 @@
             tanggal_selesai: tanggal_selesai === "" ? null : tanggal_selesai,
             status: status
         };
-
-
 
         var data = JSON.stringify(input);
         console.log(data);
@@ -128,6 +124,62 @@
         var isTeksBerjalan = parseInt(this.value) === 3;
         document.getElementById("tanggal_mulai").disabled = isTeksBerjalan;
         document.getElementById("tanggal_selesai").disabled = isTeksBerjalan;
+
+        // Reset status and disable status dropdown if jenis is 3
+        if (isTeksBerjalan) {
+            document.getElementById("status").value = "";
+            document.getElementById("status").disabled = true;
+        } else {
+            document.getElementById("status").disabled = false;
+        }
     });
+
+    document.getElementById("tanggal_mulai").addEventListener("change", function () {
+        var selectedDate = new Date(this.value);
+        var today = new Date();
+
+        if (selectedDate.toDateString() === today.toDateString()) {
+            document.getElementById("status").value = "1"; // "Tayang"
+            document.getElementById("status").disabled = true; // Disable status dropdown
+        } else {
+            document.getElementById("status").disabled = false; // Enable status dropdown
+        }
+    });
+
+    document.getElementById("jenis").addEventListener("change", function () {
+        // Enable date fields if jenis is not 3 (Teks Berjalan)
+        var isTeksBerjalan = parseInt(this.value) === 3;
+        document.getElementById("tanggal_mulai").disabled = isTeksBerjalan;
+        document.getElementById("tanggal_selesai").disabled = isTeksBerjalan;
+
+        // Set status to "Tayang" (value 1) if jenis is 3
+        if (isTeksBerjalan) {
+            document.getElementById("status").value = "1"; // "Tayang"
+            document.getElementById("status").disabled = true; // Disable status dropdown
+        } else {
+            document.getElementById("status").disabled = false; // Enable status dropdown
+        }
+    });
+
+    // Add an event listener to the tanggal_mulai input
+    document.getElementById("tanggal_mulai").addEventListener("change", function () {
+        // Set status to "Dijadwalkan" when the user selects a future date
+        var selectedDate = new Date(this.value);
+        var today = new Date();
+
+        // Set the time to midnight for both dates to compare only the date portion
+        today.setHours(0, 0, 0, 0);
+        selectedDate.setHours(0, 0, 0, 0);
+
+        if (selectedDate > today) {
+            document.getElementById("status").value = "3"; // "Dijadwalkan"
+            document.getElementById("status").disabled = true; // Disable status dropdown
+        } else {
+            document.getElementById("status").disabled = false; // Enable status dropdown
+        }
+    });
+
+
 </script>
+
 
