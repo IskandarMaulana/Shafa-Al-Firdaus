@@ -34,10 +34,10 @@ namespace Shafa_Al_Firdaus.Controllers
         {
             return View();
         }
-        public IActionResult Update(string Name)
+        public IActionResult Update(string id)
         {
-            ViewBag.Name = Name;
-            return View(Name);
+            ViewBag.Name = id;
+            return View();
         }
     }
 }
