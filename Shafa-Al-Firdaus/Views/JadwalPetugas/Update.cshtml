@@ -130,6 +130,7 @@
         var tanggal = document.getElementById("tanggal").value
         var waktu = document.getElementById("waktu").value
         var tugas = document.getElementById("tugas").value
+        var status = '1';
 
         var myHostname = "https://localhost:44355/";
         var hostname = "https://localhost:44307/";
@@ -141,6 +142,7 @@
             tanggal: tanggal,
             waktu: waktu,
             tugas: tugas,
+            status: status
         };
         var data = JSON.stringify(input);
 
