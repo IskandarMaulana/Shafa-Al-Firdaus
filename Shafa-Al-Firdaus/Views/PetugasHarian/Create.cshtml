@@ -1,11 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-
-<div class="content">
+﻿<div class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -14,39 +7,21 @@
                         <h4 class="card-title">Tambah Petugas Harian</h4>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label name="nim" class="control-label">NIM</label>
-                            <input name="nim" id="nim" class="form-control" />
+                         <div class="form-group">
+                             @*<label name="kode" class="control-label">Kode</label>
+                             *@<input type="hidden" name="kode" id="kode" class="form-control" readonly />
                         </div>
                         <div class="form-group">
                             <label name="nama" class="control-label">Nama</label>
                             <input name="nama" id="nama" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label name="prodi" class="control-label">Program Studi</label>
-                            <select id="prodi" class="form-control">
-                                <option value="1">Manajemen Informatika</option>
-                                <option value="2">Teknik Perkakas Manufaktur</option>
-                                <option value="3">Mekatronika</option>
-                                <option value="4">Mesin Otomotif</option>
-                                <option value="5">Tenaga Rekayasa Logistik</option>
-                                <option value="6">Teknologo Konstruksi Bangunan Gedung</option>
-                                <option value="7">Teknik Rekayas Pemeliharaan Alat Berat</option>
-                                <option value="8">Pembuatan Peralatan Perkakas Produksi</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label name="nomor_telepon" class="control-label">Nomor Telepon</label>
                             <input name="nomor_telepon" id="nomor_telepon" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="status" class="control-label">Status</label>
-                            <input type="text" name="status" id="status" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary" onclick="simpan()">Simpan</button>
-                            <a href="#" class="btn btn-secondary" onclick="batal()">Batal</a>
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button type="button" class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -54,52 +29,43 @@
         </div>
     </div>
 </div>
+
 <script>
-    // Memuat opsi Prodi dari API saat halaman dimuat
-    $(document).ready(function () {
-        loadProdiOptions();
-    });
+    loadID()
 
-    function loadProdiOptions() {
-        // Mengambil data Prodi dari API
+    function loadID() {
+        var kode = document.getElementById("kode");
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetIdPetugasHarian";
+        var method = "GET";
+
         $.ajax({
-            url: "https://localhost:44307/GetProdiOptions", // Ganti URL dengan endpoint API yang sesuai
-            method: "GET",
+            url: url,
+            method: method,
+            contentType: "application/json",
             success: function (data) {
-                // Mengisi opsi Prodi ke dalam combobox
-                var prodiDropdown = $("#prodi");
-                prodiDropdown.empty(); // Mengosongkan opsi sebelum mengisi yang baru
-
-                // Menambahkan opsi dari data yang diterima dari API
-                $.each(data, function (index, item) {
-                    prodiDropdown.append($("<option>").val(item.value).text(item.text));
-                });
+                console.log(data);
+                kode.value = data.data;
             },
-            
         });
     }
-
-    function simpan() { 
-        var nim = document.getElementById("nim").value;
+    function simpan() {
+        var kode = document.getElementById("kode").value;
         var nama = document.getElementById("nama").value;
-        var prodi = document.getElementById("prodi").value;
         var nomor_telepon = document.getElementById("nomor_telepon").value;
-        function setDefaultStatus() {
-            // Mengatur nilai status ke 1 pada halaman Create
-            document.getElementById('status').value = '1';
-        }
+        var status = '1';
+
         var hostname = "https://localhost:44307/";
         var url = hostname + "InsertPetugasHarian";
         var method = "POST";
         var input = {
-            nim: nim,
+            kode: kode,
             nama: nama,
-            prodi: prodi,
             nomor_telepon: nomor_telepon,
             status: status
         };
         var data = JSON.stringify(input);
-
+        
         $.ajax({
             url: url,
             method: method,
@@ -107,10 +73,12 @@
             contentType: "application/json",
             success: function (data) {
                 alert("Data Petugas Harian Berhasil Ditambahkan");
+                document.getElementById("nama").value = "";
+                document.getElementById("nomor_telepon").value = "";
             },
             error: function () {
                 alert("Gagal menyimpan data Petugas Harian.");
-            }
+            },
         });
     }
 

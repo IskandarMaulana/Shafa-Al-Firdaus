@@ -17,12 +17,12 @@
                             <input type="hidden" name="id_jadwal" id="id_jadwal" value="@ViewBag.IdJadwal" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="nim" class="control-label">Petugas</label>
-                            <select name="nim" id="nim" class="form-control" required>
+                            <label for="kode" class="control-label">Petugas</label>
+                            <select name="kode" id="kode" class="form-control" required>
                                 <option value="">-- Pilih Petugas Harian --</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group">    
                             <label for="tanggal" class="control-label">Tanggal</label>
                             <input type="date" name="tanggal" id="tanggal" class="form-control" required />
                         </div>
@@ -44,7 +44,8 @@
                         </div>
                         <br />
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button href="#" class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -53,14 +54,15 @@
     </div>
 </div>
 
+
 <script>
     loadPetugas();
     loadJadwalPetugas();
 
     function loadPetugas() {
         var hostname = "https://localhost:44307/";
-        var url = hostname + "GetAllPetugasHarian";
-        var method = "GET";
+        var url = hostname + "GetAllPetugasHarian"
+        var method = "GET"
 
         $.ajax({
             url: url,
@@ -69,19 +71,22 @@
             success: function (data) {
                 var list = data.data;
                 list.forEach(function (item) {
-                    var newOption = '<option value="' + item.nim + '">' + item.nama + "</option>";
-                    $("#nim").append(newOption);
+                    var newOption = '<option value="' + item.kode + '">' + item.nama + "</option>";
+                    
+                    $("#kode").append(newOption);
                 });
             },
         });
     }
 
     function loadJadwalPetugas() {
-        var id_jadwal = document.getElementById("id_jadwal")
-        var nim = document.getElementById("nim")
-        var tanggal = document.getElementById("tanggal")
-        var waktu = document.getElementById("waktu")
-        var tugas = document.getElementById("tugas")
+        var id_jadwal = document.getElementById("id_jadwal");
+        var kode = document.getElementById("kode");
+        var tanggal = document.getElementById("tanggal");
+        var waktu = document.getElementById("waktu");
+        var tugas = document.getElementById("tugas");
+
+        console.log(id_jadwal);
 
         var hostname = "https://localhost:44307/";
         var url = hostname + "GetJadwalPetugasHarian?id_jadwal=" + id_jadwal.value;
@@ -92,31 +97,41 @@
             method: method,
             contentType: "application/json",
             success: function (data) {
-                console.log(data);
-                var item = data.data
+                console.log("Jadwal Data:", data);
 
-                var receivedDate = new Date(item.tanggal);
+                
+                    var item = data.data;
 
-                var formattedTanggal = receivedDate.getFullYear() + '-' +
-                    ('0' + (receivedDate.getMonth() + 1)).slice(-2) + '-' +
-                    ('0' + receivedDate.getDate()).slice(-2);
+                    var receivedDate = new Date(item.tanggal);
+                    var formattedTanggal =
+                        receivedDate.getFullYear() +
+                        "-" +
+                        ("0" + (receivedDate.getMonth() + 1)).slice(-2) +
+                        "-" +
+                        ("0" + receivedDate.getDate()).slice(-2);
 
-                console.log(formattedTanggal)
+                    console.log("Formatted Tanggal:", formattedTanggal);
 
-                nim.value = item.nim
-                tanggal.value = formattedTanggal
-                waktu.value = item.waktu
-                tugas.value = item.tugas
+                    kode.value = item.kode;
+                    tanggal.value = formattedTanggal;
+                    waktu.value = item.waktu;
+                    tugas.value = item.tugas;
+
+                 
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error);
             },
         });
     }
 
     function simpan() {
         var id_jadwal = document.getElementById("id_jadwal").value
-        var nim = document.getElementById("nim").value
+        var kode = document.getElementById("kode").value
         var tanggal = document.getElementById("tanggal").value
         var waktu = document.getElementById("waktu").value
         var tugas = document.getElementById("tugas").value
+        var status = '1';
 
         var myHostname = "https://localhost:44355/";
         var hostname = "https://localhost:44307/";
@@ -124,10 +139,11 @@
         var method = "PUT";
         var input = {
             id_jadwal: id_jadwal,
-            nim: nim,
+            kode: kode,
             tanggal: tanggal,
             waktu: waktu,
             tugas: tugas,
+            status: status
         };
         var data = JSON.stringify(input);
 
@@ -144,5 +160,9 @@
                 alert("Gagal menyimpan data Jadwal Petugas Harian.");
             },
         });
+    }
+
+    function batal() {
+        history.back();
     }
 </script>

@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tanggal" class="control-label">Tanggal</label>
-                            <input type="date" name="tanggal" id="tanggal" class="form-control" required />
+                            <input type="datetime-local" name="tanggal" id="tanggal" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="waktu" class="control-label">Waktu</label>
@@ -41,7 +41,8 @@
                         </div>
                         <br />
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button type="button" class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                       
                     </div>
@@ -78,7 +79,15 @@
         var tanggal = $("#tanggal").val();
         var waktu = $("#waktu").val();
         var tugas = $("#tugas").val();
-        var status = 1;
+        var status = '1';
+
+        var today = new Date();
+        var selectedDate = new Date(tanggal);
+
+        if (selectedDate < today) {
+            alert("Tanggal tidak boleh kurang dari hari ini.");
+            return; // Berhenti jika tanggal tidak valid
+        }
 
         var myHostname = "https://localhost:44355/";
         var hostname = "https://localhost:44307/";
@@ -106,5 +115,9 @@
                 alert("Gagal menyimpan data Jadwal Petugas Harian.");
             },
         });
+    }
+
+    function batal() {
+        history.back();
     }
 </script>

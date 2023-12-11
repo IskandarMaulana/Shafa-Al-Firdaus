@@ -2,17 +2,25 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+
 <div class="card">
     <div class="card-body">
         <div class="my-3" style="margin-top: 40px;">
             <a class="btn btn-primary" asp-controller="PetugasHarian" asp-action="Create">Tambah Data</a>
         </div>
+        <div class="col-md-12 filter-container">
+            <label for="statusFilter">Filter by Status:</label>
+            <select id="statusFilter">
+                <option value="">All</option>
+                <option value="1">Aktif</option>
+                <option value="0">Tidak Aktif</option>
+            </select>
+        </div>
         <table class="table table-stripped">
             <thead>
                 <tr>
-                    <th scope="col">NIM</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Program Studi</th>
+                    <th scope="col">Nama Petugas</th>
                     <th scope="col">Nomor Telepon</th>
                     <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
@@ -22,51 +30,77 @@
         </table>
     </div>
 </div>
+
 <script>
-    loadTable()
+    loadTable();
+
+    $("#statusFilter").change(function () {
+        $("#tbody").empty();
+        loadTable();
+    });
 
     function loadTable() {
-        var hostname = "https://localhost:44307/"
-        var url = hostname + "GetAllPetugasHarian"
-        var method = "GET"
-        
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetAllPetugasHarian";
+        var method = "GET";
+        var statusFilter = $("#statusFilter").val();
+
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
             success: function (data) {
-                var list = data.data
+                var list = data.data;
                 list.forEach(function (item) {
-                    var newRow = '<tr>' +
-                        '<td>' + item.nim + '</td>' +
+                    var statusText = item.status === 1 ? 'Aktif' : 'Tidak Aktif';
+                    var newRow = '<tr align="center">' +
                         '<td>' + item.nama + '</td>' +
-                        '<td>' + item.prodi + '</td>' +
                         '<td>' + item.nomor_telepon + '</td>' +
-                        '<td>' + item.status + '</td>' +
+                        '<td>' + statusText + '</td>' +
                         '<td>' +
-                        '<a class="btn btn-secondary" href="/Home/Update?Name=' + item.Name + '">Update</a>' +
-                        '<button class="btn btn-danger" value="' + item.nim + '" onclick="hapus(this.value)">Delete</button>' +
+                        '<a class="btn btn-secondary" href="PetugasHarian/Update/' + item.kode + '">Update</a>' +
+                        '<a class="btn btn-danger" onclick="ubahStatus(\'' + item.kode + '\')">Menonaktifkan</a>' +
                         '</td>' +
                         '</tr>';
-                    $('#tbody').append(newRow);
+
+                    // Apply status filter
+                    if (statusFilter === "" || item.status.toString() === statusFilter) {
+                        $('#tbody').append(newRow);
+                    }
                 });
             },
         });
     }
 
-    function hapus(id) {
-        var hostname = "https://localhost:44307/"
-        var url = hostname + "DeletePetugasHarian?nim=" + nim
-        var method = "DELETE"
+    function ubahStatus(id) {
+        var confirmed = confirm("Apakah Anda yakin ingin mengubah status menjadi Tidak Aktif?");
+        if (!confirmed) {
+            return;
+        }
+
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "UpdateStatusPetugasHarian?kode=" + id + "&newStatus=0";
+        var method = "PATCH";
+        var updateData = {
+            status: '0'
+        };
+
+        console.log('Update Data:', updateData);
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
-            success: function (data) { 
-                alert("Data Berhasil Dihapus")
+            data: JSON.stringify(updateData),
+            success: function (data) {
+                console.log('Success:', data);
+                alert("Status berhasil diubah menjadi Tidak Aktif");
                 location.reload();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error: ' + textStatus);
+                alert('Error: ' + textStatus);
             }
-        })
+        });
     }
 </script>

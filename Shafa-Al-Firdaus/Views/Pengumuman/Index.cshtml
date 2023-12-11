@@ -1,6 +1,33 @@
 ﻿@{
     ViewData["Title"] = "Pengumuman";
 }
+<style>
+     .btn-tambah {
+         float: left;
+         margin-bottom: 10px;
+         margin-right: 10px;
+     }
+
+     .search-container {
+         margin-bottom: 10px;
+     }
+
+     .filter-container {
+         margin-bottom: 20px;
+     }
+
+     .table-container {
+         max-height: 400px; /* Adjust the maximum height as needed */
+         overflow-y: auto;
+     }
+
+     #statusFilter {
+         background-color: #5bc0de;
+         color: #fff;
+         border: 1px solid #5bc0de;
+     }
+</style>
+
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -10,9 +37,29 @@
                         <h4 class="card-title">Pengumuman</h4>
                     </div>
                     <div class="card-body">
-                        <a class="btn btn-primary btn-tambah" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="btn btn-primary btn-tambah" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <div class="filter-container">
+                                    <label for="statusFilter">Filter by Status:</label>
+                                    <select id="statusFilter" class="form-select">
+                                        <option value="">All</option>
+                                        <option value="1">Tayang</option>
+                                        <option value="2">Tidak Tayang</option>
+                                        <option value="3">Dijadwalkan</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-                        <div class="table-responsive">
+                        <div class="col-md-12 search-container">
+                            <label for="searchInput"> Search:</label>
+                            <input type="text" id="searchInput" class="form-control" />
+                        </div>
+
+                        <div class="table-responsive table-container">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -21,6 +68,7 @@
                                         <th scope="col">Isi</th>
                                         <th scope="col">Tanggal Mulai</th>
                                         <th scope="col">Tanggal Selesai</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -34,84 +82,139 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- ... (previous HTML code) ... -->
 
 <script>
-    loadTable();
+    $(document).ready(function () {
+        loadTable();
 
-    function loadTable() {
-        var hostname = "https://localhost:44307/";
-        var url = hostname + "GetAllPengumuman";
-        var method = "GET";
-
-        $.ajax({
-            url: url,
-            method: method,
-            contentType: "application/json",
-            success: function (data) {
-                var list = data.data;
-                list.forEach(function (item) {
-                    var jenisText = getJenisText(item.jenis);
-                    var mulai = new Date(item.tanggal_mulai);
-                    var selesai = new Date(item.tanggal_selesai);
-
-                    var newRow =
-                        "<tr>" +
-                        "<td>" +
-                        item.judul +
-                        "</td>" +
-                        "<td>" +
-                        jenisText +
-                        "</td>" +
-                        "<td class='wrap-column'>" +
-                        item.isi +
-                        "</td>" +
-                        "<td>" +
-                            mulai.toISOString().split("T")[0] +
-                        "</td>" +
-                        "<td>" +
-                        selesai.toISOString().split("T")[0] +
-                        "</td>" +
-                        "<td>" +
-                        '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
-                        item.id_pengumuman +
-                        '">Update</a>' +
-                        '<button class="btn btn-danger" value="' +
-                        item.id_pengumuman +
-                        '" onclick="hapus(this.value)">Delete</button>' +
-                        "</td>" +
-                        "</tr>";
-                    $("#tbody").append(newRow);
-                });
-            },
+        $("#statusFilter, #searchInput").on("input", function () {
+            $("#tbody").empty();
+            loadTable();
         });
-    }
 
-    function getJenisText(jenis) {
-        switch (jenis) {
-            case 1:
-                return "Kegiatan";
-            case 2:
-                return "Pengumuman";
-            case 3:
-                return "Teks Berjalan";
-            default:
-                return "Unknown";
+        function loadTable() {
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "GetAllPengumuman";
+            var method = "GET";
+
+            var statusFilter = $("#statusFilter").val();
+            var searchInput = $("#searchInput").val(); // Get the value from the search input
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                success: function (data) {
+                    var list = data.data;
+                    list.forEach(function (item) {
+
+                        var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
+                        var formatter = new Intl.DateTimeFormat('id-ID', options);
+
+                        var formattedTanggalMulai = formatter.format(new Date(item.tanggal_mulai));
+                        var formattedTanggalSelesai = formatter.format(new Date(item.tanggal_selesai));
+
+                        var jenisText = getJenisText(item.jenis);
+                        var statusText = getStatusText(item.status);
+
+                        var statusLabel = item.status === 3 ? "Dijadwalkan" : getStatusText(item.status);
+
+                        var newRow =
+                            "<tr>" +
+                            "<td>" +
+                            item.judul +
+                            "</td>" +
+                            "<td>" +
+                            jenisText +
+                            "</td>" +
+                            "<td class='wrap-column'>" +
+                            item.isi +
+                            "</td>" +
+                            "<td>" +
+                            formattedTanggalMulai +
+                            "</td>" +
+                            "<td>" +
+                            formattedTanggalSelesai +
+                            "</td>" +
+                            "<td>" +
+                            statusLabel +
+                            "</td>" +
+                            "<td>" +
+                            '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
+                            item.id_pengumuman +
+                            '">Update</a>' +
+                            '<button class="btn btn-danger" value="' + item.id_pengumuman + '" onclick="ubahStatusTidakTayang(this.value)">Tidak Tayang</button>' +
+                            "</td>" +
+                            "</tr>";
+
+                        // Apply status and search filters
+                        if (
+                            (statusFilter === "" || item.status.toString() === statusFilter) &&
+                            (searchInput === "" ||
+                                item.judul.toLowerCase().includes(searchInput.toLowerCase()) ||
+                                item.isi.toLowerCase().includes(searchInput.toLowerCase()) ||
+                                formattedTanggalMulai.toLowerCase().includes(searchInput.toLowerCase()) ||
+                                formattedTanggalSelesai.toLowerCase().includes(searchInput.toLowerCase()) ||
+                                jenisText.toLowerCase().includes(searchInput.toLowerCase()) ||
+                                statusLabel.toLowerCase().includes(searchInput.toLowerCase())
+                            )
+                        ) {
+                            $("#tbody").append(newRow);
+                        }
+                    });
+                },
+            });
         }
-    }
 
-    function hapus(id) {
+        function getJenisText(jenis) {
+            switch (jenis) {
+                case 1:
+                    return "Kegiatan";
+                case 2:
+                    return "Pemberitahuan";
+                case 3:
+                    return "Teks Berjalan";
+                default:
+                    return "Unknown";
+            }
+        }
+
+        function getStatusText(status) {
+            return status === 1 ? "Tayang" : (status === 2 ? "Tidak Tayang" : "Unknown");
+        }
+
+        function hapus(id) {
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "DeletePengumuman?id_pengumuman=" + id;
+            var method = "DELETE";
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                success: function (data) {
+                    alert("Data Berhasil Dihapus");
+                    location.reload();
+                },
+            });
+        }
+    });
+
+    function ubahStatusTidakTayang(id) {
         var hostname = "https://localhost:44307/";
-        var url = hostname + "DeletePengumuman?id_pengumuman=" + id;
-        var method = "DELETE";
+        var url = hostname + "UbahStatusTidakTayang?id_pengumuman=" + id;
+        var method = "PUT";
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
             success: function (data) {
-                alert("Data Berhasil Dihapus");
+                alert("Status berhasil diubah menjadi Tidak Tayang");
                 location.reload();
             },
         });
     }
+
 </script>
