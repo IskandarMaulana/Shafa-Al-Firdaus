@@ -21662,6 +21662,15 @@ code {
 .btn-danger {
   background: #F95F53;
   color: #ffffff;
+  margin: 0px 5px;
+}
+
+.btn-danger.btn-batal a{
+  margin: 0px 10px 0px 10px;
+}
+
+.btn-danger.btn-terlaksana a{
+  margin: 0px 10px 0px 10px;
 }
 
 .btn-danger.btn-light, .btn-danger.btn-secondary {

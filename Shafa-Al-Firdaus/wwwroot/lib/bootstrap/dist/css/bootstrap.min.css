@@ -2820,7 +2820,10 @@ fieldset:disabled .btn {
   color: #fff;
   background-color: #dc3545;
   border-color: #dc3545;
+  margin: 0px 5px;
+
 }
+
 .btn-danger:hover {
   color: #fff;
   background-color: #bb2d3b;

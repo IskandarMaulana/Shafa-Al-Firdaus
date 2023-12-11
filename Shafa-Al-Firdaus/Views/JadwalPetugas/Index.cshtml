@@ -111,9 +111,9 @@
                         "<td>" + item.tugas + "</td>" +
                         "<td>" + getStatusDescription(item.status) + "</td>" +
                         "<td>" +
-                        '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '">Update</a>' +
-                        '<a class="btn btn-danger btn-batal" data-id-jadwal="' + item.id_jadwal + '">Batal</a>' +
-                        '<a class="btn btn-danger btn-terlaksana" data-id-jadwal="' + item.id_jadwal + '">Terlaksana</a>' +
+                            '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '" style="margin : 0px 5px">Update</a>' +
+                            '<a class="btn btn-danger btn-batal" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Batal</a>' +
+                            '<a class="btn btn-danger btn-terlaksana" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Terlaksana</a>' +
                         '</td>' +
                         '</tr>';
 
@@ -141,23 +141,97 @@
                     var promises = list.map(processItem);
                     Promise.all(promises).then(function () {
                         // Attach the click event to the dynamically created "Batal" button
-                        $('.btn-batal').click(function () {
-                            var idJadwal = $(this).data('id-jadwal');
-                            ubahStatus(idJadwal);
+                        
+                        $('.btn-danger.btn-batal').click(function () {
+                            var idJadwal = $(this).data('id');
+
+                            updateBatal(idJadwal);
                         });
+
+                        $('.btn-danger.btn-terlaksana').click(function () {
+                            var idJadwal = $(this).data('id');
+
+                            updateTerlaksana(idJadwal);
+                        });
+                        
                     });
                 }
             });
         }
 
-        function ubahStatus(id) {
-                $('.btn-batal').click(function () {
-                    var idJadwal = $(this).data('id-jadwal');
-                    var confirmed = confirm("Apakah Anda yakin ingin mengubah status menjadi Tidak Aktif?");
-                    if (confirmed) {
-                        updateStatus(idJadwal);
-                    }
-                });
+
+        function updateBatal(id_jadwal) {
+            var status = '0';
+
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
+            var method = "PUT";
+
+            swal({
+                title: "Batalkan Jadwal Petugas",
+                text: "Apakah Anda Yakin ingin membatalkan tugas ini?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: url,
+                        method: method,
+                        contentType: "application/json",
+                        success: function (data) {
+                            if (data.status == 200) {
+                                swal("Sukses!", data.message, "success").then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                swal("Gagal", data.message, "error");
+                            }
+                        },
+                        error: function (errors) {
+                            console.log(errors);
+                            swal("Error", "Terjadi kesalahan saat mengubah Jadwal Petugas", "error");
+                        }
+                    });
+                }
+            });
+        }
+
+        function updateTerlaksana(id_jadwal) {
+            var status = '2';
+
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
+            var method = "PUT";
+
+            swal({
+                title: "Jadwal Petugas Terlaksana",
+                text: "Apakah Anda Yakin ingin mengubah tugas ini menjadi terlaksana?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: url,
+                        method: method,
+                        contentType: "application/json",
+                        success: function (data) {
+                            if (data.status == 200) {
+                                swal("Sukses!", data.message, "success").then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                swal("Gagal", data.message, "error");
+                            }
+                        },
+                        error: function (errors) {
+                            console.log(errors);
+                            swal("Error", "Terjadi kesalahan saat mengubah Jadwal Petugas", "error");
+                        }
+                    });
+                }
+            });
         }
 
         function updateStatus(id_jadwal) {
