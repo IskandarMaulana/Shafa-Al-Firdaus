@@ -2,8 +2,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-
 <div class="card">
     <div class="card-body">
         <div class="my-3" style="margin-top: 40px;">
@@ -16,6 +14,10 @@
                 <option value="1">Aktif</option>
                 <option value="0">Tidak Aktif</option>
             </select>
+        </div>
+        <div class="col-md-12 search-container">
+            <label for="searchInput"> Search:</label>
+            <input type="text" id="searchInput" class="form-control" />
         </div>
         <table class="table table-stripped">
             <thead>
@@ -34,7 +36,7 @@
 <script>
     loadTable();
 
-    $("#statusFilter").change(function () {
+    $("#statusFilter, #searchInput").on("input", function () {
         $("#tbody").empty();
         loadTable();
     });
@@ -44,6 +46,7 @@
         var url = hostname + "GetAllPetugasHarian";
         var method = "GET";
         var statusFilter = $("#statusFilter").val();
+        var searchInput = $("#searchInput").val();
 
         $.ajax({
             url: url,
@@ -64,7 +67,14 @@
                         '</tr>';
 
                     // Apply status filter
-                    if (statusFilter === "" || item.status.toString() === statusFilter) {
+                    if (
+                    (statusFilter === "" || item.status.toString() === statusFilter) &&
+                    (searchInput === "" ||
+                         item.nama.toLowerCase().includes(searchInput.toLowerCase()) ||
+                         item.nomor_telepon.toLowerCase().includes(searchInput.toLowerCase()) ||
+                         statusText.toLowerCase().includes(searchInput.toLowerCase())
+                        )
+                    ) {
                         $('#tbody').append(newRow);
                     }
                 });
