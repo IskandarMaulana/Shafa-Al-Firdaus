@@ -10430,6 +10430,7 @@ progress {
 
 .table > thead {
   vertical-align: bottom;
+  text-align: center;
 }
 
 .table > :not(:first-child) {
@@ -11622,6 +11623,13 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
   color: #fff;
   background-color: #1F3BB3;
   border-color: #1F3BB3;
+}
+
+.btn-tambah {
+  color: #fff;
+  background-color: #1F3BB3;
+  border-color: #1F3BB3;
+  margin-bottom: 20px;
 }
 
 .btn-primary:hover {
@@ -21513,6 +21521,7 @@ code {
 
 .btn-secondary.btn-light, .btn-secondary.btn-secondary {
   color: #1E283D;
+  margin-right: 20px;
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
@@ -23641,6 +23650,8 @@ code {
 /* Forms */
 .form-group {
   margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .input-group-append,
@@ -23673,7 +23684,7 @@ select.tt-hint {
   padding: .4375rem .75rem;
   border: 0;
   outline: 1px solid #dee2e6;
-  color: #c9c8c8;
+  color: #040505;
 }
 
 select.form-control:focus, select.asColorPicker-input:focus, .dataTables_wrapper select:focus, .select2-container--default select.select2-selection--single:focus, .select2-container--default .select2-selection--single select.select2-search__field:focus, select.typeahead:focus,
@@ -23787,10 +23798,12 @@ select.border-dark.tt-hint:focus {
 }
 
 .form-group label {
+  width: 100px;
   font-size: 0.812rem;
   line-height: 1.4rem;
-  vertical-align: top;
+  vertical-align: center;
   margin-bottom: .5rem;
+  margin-right: 1.5rem;
 }
 
 .form-group.has-danger .form-control, .form-group.has-danger .asColorPicker-input, .form-group.has-danger .dataTables_wrapper select, .dataTables_wrapper .form-group.has-danger select, .form-group.has-danger .select2-container--default .select2-selection--single, .select2-container--default .form-group.has-danger .select2-selection--single, .form-group.has-danger .select2-container--default .select2-selection--single .select2-search__field, .select2-container--default .select2-selection--single .form-group.has-danger .select2-search__field, .form-group.has-danger .typeahead,
@@ -25549,6 +25562,11 @@ dl li {
   line-height: 1;
   white-space: nowrap;
   padding: 1.125rem 1.375rem;
+}
+
+.table th.wrap-column,
+.table td.wrap-column {
+  white-space: pre-wrap;
 }
 
 .table td {
@@ -28914,8 +28932,8 @@ div.tagsinput span.tag a {
   font-weight: 500;
   padding: 0;
   width: 220px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
   z-index: 11;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
@@ -29308,8 +29326,8 @@ div.tagsinput span.tag a {
   width: 220px;
   height: 97px;
   padding: 20px 35px;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
+  border-top-right-radius: 40px;
+  border-top-left-radius: 40px;
 }
 
 .sidebar-dark .navbar .navbar-brand-wrapper {
@@ -30630,8 +30648,8 @@ div.tagsinput span.tag a {
     width: 70px;
     padding-left: 1.625rem;
     background: #80b3ff;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
   }
   .sidebar-dark.sidebar-icon-only .navbar .navbar-brand-wrapper .navbar-toggler {
     color: #484848;
@@ -30648,6 +30666,8 @@ div.tagsinput span.tag a {
   .sidebar-icon-only .sidebar {
     width: 70px;
     background: #80b3ff;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
   }
   .sidebar-icon-only .sidebar .nav {
     overflow: visible;

@@ -14,28 +14,40 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label name="judul" class="control-label">Judul Pengumuman</label>
+                            <label name="judul" class="control-label">Judul</label>
                             <input name="judul" id="judul" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label name="jenis" class="control-label">Jenis Pengumuman</label>
+                            <label name="jenis" class="control-label">Jenis</label>
                             <select id="jenis" class="form-control">
+                                <option value="">-- Pilih Jenis Pengumuman --</option>
                                 <option value="1">Kegiatan</option>
-                                <option value="2">Pengumuman</option>
+                                <option value="2">Pemberitahuan</option>
                                 <option value="3">Teks Berjalan</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label name="isi" class="control-label">Isi Pengumuman</label>
+                            <label name="isi" class="control-label">Isi</label>
                             <input name="isi" id="isi" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label name="tanggal_mulai" class="control-label">Tanggal Mulai Pengumuman</label>
-                            <input name="tanggal_mulai" type="date" id="tanggal_mulai" class="form-control" />
+                            <label name="tanggal_mulai" class="control-label">Tanggal Mulai</label>
+                            <input name="tanggal_mulai" type="datetime-local" id="tanggal_mulai" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label name="tanggal_selesai" class="control-label">Tanggal Selesai Peengumuman</label>
-                            <input name="tanggal_selesai" type="date" id="tanggal_selesai" class="form-control" />
+                            <label name="tanggal_selesai" class="control-label">Tanggal Selesai</label>
+                            <input name="tanggal_selesai" type="datetime-local" id="tanggal_selesai" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label name="status" class="control-label">Status</label>
+                            <select id="status" class="form-control">
+                                <option value="">--  --</option>
+                                <option value="1">Tayang</option>
+                                <option value="2">Tidak Tayang</option>
+                                <option value="3">Dijadwalkan</option>
+
+                                
+                            </select>
                         </div>
                         <br />
                         <div class="form-group">
@@ -50,41 +62,72 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
+<script>
+    function simpan() {
+        var judul = document.getElementById("judul").value;
+        var jenis = parseInt(document.getElementById("jenis").value);
+        var isi = document.getElementById("isi").value;
+        var tanggal_mulai = document.getElementById("tanggal_mulai").value;
+        var tanggal_selesai = document.getElementById("tanggal_selesai").value;
+        var status = parseInt(document.getElementById("status").value);
 
-    <script>
-        function simpan() {
-            var judul = document.getElementById("judul").value;
-            var jenis = parseInt(document.getElementById("jenis").value); // Assuming jenis is an integer
-            var isi = document.getElementById("isi").value;
-            var tanggal_mulai = document.getElementById("tanggal_mulai").value;
-            var tanggal_selesai = document.getElementById("tanggal_selesai").value;
 
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "InsertPengumuman";
-            var method = "POST";
-            var input = {
-                judul: judul,
-                jenis: jenis,
-                isi: isi,
-                tanggal_mulai: tanggal_mulai,
-                tanggal_selesai: tanggal_selesai
-            };
-            var data = JSON.stringify(input);
+        var today = new Date();
+        var selectedDate = new Date(tanggal_mulai);
 
-            $.ajax({
-                url: url,
-                method: method,
-                data: data,
-                contentType: "application/json",
-                success: function (response) {
-                    alert("Data Berhasil Ditambahkan");
-                    // Optionally, you can redirect or perform other actions after success
-                },
-                error: function (error) {
-                    console.error("Error:", error);
-                }
-            });
+        if (selectedDate < today) {
+            alert("Tanggal tidak boleh kurang dari hari ini.");
+            return; // Berhenti jika tanggal tidak valid
         }
-</script>
 
+
+
+        // Disable date fields if jenis is 3 (Teks Berjalan)
+        if (jenis === 3) {
+            document.getElementById("tanggal_mulai").disabled = true;
+            document.getElementById("tanggal_selesai").disabled = true;
+            tanggal_mulai = null; // Set to null if disabled
+            tanggal_selesai = null; // Set to null if disabled
+        }
+
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "InsertPengumuman";
+        var method = "POST";
+        var input = {
+            judul: judul,
+            jenis: jenis,
+            isi: isi,
+            tanggal_mulai: tanggal_mulai === "" ? null : tanggal_mulai,
+            tanggal_selesai: tanggal_selesai === "" ? null : tanggal_selesai,
+            status: status
+        };
+
+
+
+        var data = JSON.stringify(input);
+        console.log(data);
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            contentType: "application/json",
+            success: function (response) {
+                alert("Data Berhasil Ditambahkan");
+                // Optionally, you can redirect or perform other actions after success
+                window.location.href = "https://localhost:44355/";
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            }
+        });
+    }
+
+    // Add an event listener to the jenis select element
+    document.getElementById("jenis").addEventListener("change", function () {
+        // Enable date fields if jenis is not 3 (Teks Berjalan)
+        var isTeksBerjalan = parseInt(this.value) === 3;
+        document.getElementById("tanggal_mulai").disabled = isTeksBerjalan;
+        document.getElementById("tanggal_selesai").disabled = isTeksBerjalan;
+    });
+</script>
 

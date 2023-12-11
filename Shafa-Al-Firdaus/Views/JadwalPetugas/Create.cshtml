@@ -1,88 +1,123 @@
-﻿
-    
-        
-            <div class="menambah-data-petugas-harian-parent">
-                <div class="menambah-data-petugas">Menambah Data Jadwal Petugas</div>
-                <div class="nim">Petugas</div>
-                <input type="text" class="frame-child" placeholder="Masukkan nama petugas" />
-                <div class="nama">Tanggal</div>
-                <input type="datetime-local" class="frame-item" placeholder="Pilih tanggal dan waktu" />
-                <div class="prodi">Waktu Shalat</div>
-                <select class="frame-inner" placeholder="Pilih waktu shalat">
-                    <option value="">-- Pilih Waktu Shalat --</option>
-                    <option value="subuh">Subuh</option>
-                    <option value="dzuhur">Dzuhur</option>
-                    <option value="ashar">Ashar</option>
-                    <option value="maghrib">Maghrib</option>
-                    <option value="isya">Isya</option>
-                </select>
-                <div class="notlpon">Tugas</div>
-                <input type="text" class="frame-child1" placeholder="Masukkan tugas" />
-                
-                
-                
-                
-                <!-- You can remove the following elements as they seem unnecessary for the Jadwal Petugas form -->
-                <!-- These may be placeholders or unnecessary elements based on the provided code -->
-                <!-- Adjust the class names if needed based on your styling -->
-                <button class="simpan btn btn-primary" onclick="simpan()">Simpan</button>
-                <button class="batal btn btn-secondary">Batal</button>
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Tambah Jadwal Petugas Harian</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="kode" class="control-label">Petugas</label>
+                            <select name="kode" id="kode" class="form-control" required>
+                                <option value="">-- Pilih Petugas Harian --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggal" class="control-label">Tanggal</label>
+                            <input type="datetime-local" name="tanggal" id="tanggal" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="waktu" class="control-label">Waktu</label>
+                            <select type="text" name="waktu" id="waktu" class="form-control" required>
+                                <option value="">-- Pilih Waktu Bertugas --</option>
+                                <option value="Jum'at">Jum'at</option>
+                                <option value="Subuh">Subuh</option>
+                                <option value="Dzuhur">Dzuhur</option>
+                                <option value="Ashar">Ashar</option>
+                                <option value="Maghrib">Maghrib</option>
+                                <option value="Isya">Isya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tugas" class="control-label">Tugas</label>
+                            <input type="text" name="tugas" id="tugas" class="form-control" required />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button type="button" class="btn btn-secondary" onclick="batal()">Batal</button>
+                        </div>
+                      
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
 
-   
+<script>
+    loadPetugas();
 
+    function loadPetugas() {
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetAllPetugasHarian";
+        var method = "GET";
 
-    <script>
-        loadPetugas()
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                var list = data.data;
+                list.forEach(function (item) {
+                    var newOption = '<option value="' + item.kode + '">' + item.nama + "</option>";
+                    $("#kode").append(newOption);
+                });
+            },
+        });
+    }
 
+    function simpan() {
+        var kode = $("#kode").val();
+        var tanggal = $("#tanggal").val();
+        var waktu = $("#waktu").val();
+        var tugas = $("#tugas").val();
+        var status = '1';
 
-        function loadPetugas() {
-            var hostname = "https://localhost:44307/"
-            var url = hostname + "GetAllPetugasHarian"
-            var method = "GET"
+        var today = new Date();
+        var selectedDate = new Date(tanggal);
 
-            $.ajax({
-                url: url,
-                method: method,
-                contentType: "application/json",
-                success: function (data) {
-                    var list = data.data
-                    list.forEach(function (item) {
-                        var newOption = '<option value="' + item.nim + '">' + item.nama + '</option>';
-                        $('#nim').append(newOption);
-                    });
-                },
-            });
+        if (selectedDate < today) {
+            alert("Tanggal tidak boleh kurang dari hari ini.");
+            return; // Berhenti jika tanggal tidak valid
         }
 
-        function simpan() {
-            var nim = $("#nim").val();
-            var tanggal = $("#tanggal").val();
-            var waktu = $("#waktu").val();
-            var tugas = $("#tugas").val();
+        var myHostname = "https://localhost:44355/";
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "InsertJadwalPetugasHarian"; // Change the endpoint accordingly
+        var method = "POST";
+        var input = {
+            kode: kode,
+            tanggal: tanggal,
+            waktu: waktu,
+            tugas: tugas,
+            status: status,
+        };
+        var data = JSON.stringify(input);
 
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "InsertJadwalPetugasHarian"; // Change the endpoint accordingly
-            var method = "POST";
-            var input = {
-                nim: nim,
-                tanggal: tanggal,
-                waktu: waktu,
-                tugas: tugas
-            };
-            var data = JSON.stringify(input);
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            contentType: "application/json",
+            success: function (data) {
+                alert("Data Jadwal Petugas Harian Berhasil Ditambahkan");
+                window.location.href = myHostname + "JadwalPetugas/Index";
+            },
+            error: function () {
+                alert("Gagal menyimpan data Jadwal Petugas Harian.");
+            },
+        });
+    }
 
-            $.ajax({
-                url: url,
-                method: method,
-                data: data,
-                contentType: "application/json",
-                success: function (data) {
-                    alert("Data Jadwal Petugas Harian Berhasil Ditambahkan");
-                },
-                error: function () {
-                    alert("Gagal menyimpan data Jadwal Petugas Harian.");
-                }
-            });
-        }
-    </script>
+    function batal() {
+        history.back();
+    }
+</script>

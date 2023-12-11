@@ -3,3 +3,166 @@
 *@
 @{
 }
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Ubah Jadwal Petugas Harian</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <input type="hidden" name="id_jadwal" id="id_jadwal" value="@ViewBag.IdJadwal" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="kode" class="control-label">Petugas</label>
+                            <select name="kode" id="kode" class="form-control" required>
+                                <option value="">-- Pilih Petugas Harian --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">    
+                            <label for="tanggal" class="control-label">Tanggal</label>
+                            <input type="date" name="tanggal" id="tanggal" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="waktu" class="control-label">Waktu</label>
+                            <select type="text" name="waktu" id="waktu" class="form-control" required>
+                                <option value="">-- Pilih Waktu Bertugas --</option>
+                                <option value="Jum'at'">Jum'at'</option>
+                                <option value="Subuh">Subuh</option>
+                                <option value="Dzuhur">Dzuhur</option>
+                                <option value="Ashar">Ashar</option>
+                                <option value="Maghrib">Maghrib</option>
+                                <option value="Isya">Isya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tugas" class="control-label">Tugas</label>
+                            <input type="text" name="tugas" id="tugas" class="form-control" required />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button href="#" class="btn btn-secondary" onclick="batal()">Batal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    loadPetugas();
+    loadJadwalPetugas();
+
+    function loadPetugas() {
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetAllPetugasHarian"
+        var method = "GET"
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                var list = data.data;
+                list.forEach(function (item) {
+                    var newOption = '<option value="' + item.kode + '">' + item.nama + "</option>";
+                    
+                    $("#kode").append(newOption);
+                });
+            },
+        });
+    }
+
+    function loadJadwalPetugas() {
+        var id_jadwal = document.getElementById("id_jadwal");
+        var kode = document.getElementById("kode");
+        var tanggal = document.getElementById("tanggal");
+        var waktu = document.getElementById("waktu");
+        var tugas = document.getElementById("tugas");
+
+        console.log(id_jadwal);
+
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetJadwalPetugasHarian?id_jadwal=" + id_jadwal.value;
+        var method = "GET";
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                console.log("Jadwal Data:", data);
+
+                
+                    var item = data.data;
+
+                    var receivedDate = new Date(item.tanggal);
+                    var formattedTanggal =
+                        receivedDate.getFullYear() +
+                        "-" +
+                        ("0" + (receivedDate.getMonth() + 1)).slice(-2) +
+                        "-" +
+                        ("0" + receivedDate.getDate()).slice(-2);
+
+                    console.log("Formatted Tanggal:", formattedTanggal);
+
+                    kode.value = item.kode;
+                    tanggal.value = formattedTanggal;
+                    waktu.value = item.waktu;
+                    tugas.value = item.tugas;
+
+                 
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+            },
+        });
+    }
+
+    function simpan() {
+        var id_jadwal = document.getElementById("id_jadwal").value
+        var kode = document.getElementById("kode").value
+        var tanggal = document.getElementById("tanggal").value
+        var waktu = document.getElementById("waktu").value
+        var tugas = document.getElementById("tugas").value
+        var status = '1';
+
+        var myHostname = "https://localhost:44355/";
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "UpdateJadwalPetugasHarian"; // Change the endpoint accordingly
+        var method = "PUT";
+        var input = {
+            id_jadwal: id_jadwal,
+            kode: kode,
+            tanggal: tanggal,
+            waktu: waktu,
+            tugas: tugas,
+            status: status
+        };
+        var data = JSON.stringify(input);
+
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            contentType: "application/json",
+            success: function (data) {
+                alert("Data Jadwal Petugas Harian Berhasil Diubah");
+                window.location.href = myHostname + "JadwalPetugas/Index";
+            },
+            error: function () {
+                alert("Gagal menyimpan data Jadwal Petugas Harian.");
+            },
+        });
+    }
+
+    function batal() {
+        history.back();
+    }
+</script>

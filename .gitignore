@@ -396,11 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/Shafa-Al-Firdaus/obj/Debug/net7.0/Shafa-Al-Firdaus.assets.cache
-/Shafa-Al-Firdaus/obj/Debug/net7.0/Shafa-Al-Firdaus.GeneratedMSBuildEditorConfig.editorconfig
-/Shafa-Al-Firdaus/obj/project.assets.json
-/Shafa-Al-Firdaus/obj/project.nuget.cache
-/Shafa-Al-Firdaus/obj/Shafa-Al-Firdaus.csproj.nuget.dgspec.json
-/Shafa-Al-Firdaus/obj/Shafa-Al-Firdaus.csproj.nuget.g.props
-/.vs/Shafa-Al-Firdaus/FileContentIndex/7ff1aa44-610b-4b5a-ae17-3885af1007e1.vsidx
-/.vs/Shafa-Al-Firdaus/FileContentIndex/ee367e61-b9c7-45cd-ac3a-06a61bbcc63e.vsidx
+/Shafa-Al-Firdaus/bin/Debug/net7.0/Shafa-Al-Firdaus.dll
