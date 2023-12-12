@@ -52,6 +52,9 @@
             url: url,
             method: method,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + '@TempData["JwtToken"]'
+            },
             success: function (data) {
                 var list = data.data;
                 list.forEach(function (item) {

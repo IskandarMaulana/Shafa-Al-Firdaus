@@ -21,9 +21,9 @@
                             <label name="jenis" class="control-label">Jenis</label>
                             <select id="jenis" class="form-control">
                                 <option value="">-- Pilih Jenis Pengumuman --</option>
-                                <option value="1">Kegiatan</option>
-                                <option value="2">Pemberitahuan</option>
-                                <option value="3">Teks Berjalan</option>
+                                <option value="0">Kegiatan</option>
+                                <option value="1">Pemberitahuan</option>
+                                <option value="2">Teks Berjalan</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -78,7 +78,7 @@
         }
 
         // Disable date fields if jenis is 3 (Teks Berjalan)
-        if (jenis === 3) {
+        if (jenis === 2) {
             document.getElementById("tanggal_mulai").disabled = true;
             document.getElementById("tanggal_selesai").disabled = true;
             tanggal_mulai = null; // Set to null if disabled
@@ -100,6 +100,7 @@
             status: status
         };
 
+        console.log(input)
         var data = JSON.stringify(input);
         console.log(data);
         $.ajax({
@@ -110,7 +111,8 @@
             success: function (response) {
                 alert("Data Berhasil Ditambahkan");
                 // Optionally, you can redirect or perform other actions after success
-                window.location.href = "https://localhost:44355/";
+                //window.location.href = "https://localhost:44355/";
+                console.log(response)
             },
             error: function (error) {
                 console.error("Error:", error);
@@ -120,8 +122,8 @@
 
     // Add an event listener to the jenis select element
     document.getElementById("jenis").addEventListener("change", function () {
-        // Enable date fields if jenis is not 3 (Teks Berjalan)
-        var isTeksBerjalan = parseInt(this.value) === 3;
+        // Enable date fields if jenis is not 2 (Teks Berjalan)
+        var isTeksBerjalan = parseInt(this.value) === 2;
         document.getElementById("tanggal_mulai").disabled = isTeksBerjalan;
         document.getElementById("tanggal_selesai").disabled = isTeksBerjalan;
 
@@ -148,7 +150,7 @@
 
     document.getElementById("jenis").addEventListener("change", function () {
         // Enable date fields if jenis is not 3 (Teks Berjalan)
-        var isTeksBerjalan = parseInt(this.value) === 3;
+        var isTeksBerjalan = parseInt(this.value) === 2;
         document.getElementById("tanggal_mulai").disabled = isTeksBerjalan;
         document.getElementById("tanggal_selesai").disabled = isTeksBerjalan;
 

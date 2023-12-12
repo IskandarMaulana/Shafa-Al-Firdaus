@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Jadwal Petugas";
 }
+
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -12,14 +13,29 @@
                     <div class="card-body">
                         <a class="btn btn-primary btn-tambah" asp-controller="JadwalPetugas" asp-action="Create">Tambah Data</a>
 
+                        <br />
+
+                            
+                        <label for="searchInput">Search:</label>
+                        <input type="text" id="searchInput" />
+                        
+                            <label for="statusFilter">Filter dari Status:</label>
+                            <select id="statusFilter">
+                                <option value="">All</option>
+                                <option value="0">Tidak Aktif</option>
+                                <option value="1">Aktif</option>
+                                <option value="2">Terlaksana</option>
+                            </select>
+
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">kode</th>
+                                        <th scope="col">Petugas Harian</th>
                                         <th scope="col">Tanggal</th>
                                         <th scope="col">Waktu</th>
                                         <th scope="col">Tugas</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -31,113 +47,203 @@
             </div>
         </div>
     </div>
-    <!-- Add this modal at the end of your HTML content -->
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus data ini?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Hapus</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
+
+    $(document).ready(function () {
         loadTable();
+
+        $("#statusFilter, #searchInput").on("input change", function () {
+            $("#tbody").empty();
+            loadTable();
+        });
 
         function loadTable() {
             var hostname = "https://localhost:44307/";
             var url = hostname + "GetAllJadwalPetugasHarian";
             var method = "GET";
 
+            var statusFilter = $("#statusFilter").val();
+            var searchInput = $("#searchInput").val();
+
+            function getStatusDescription(status) {
+                switch (status) {
+                    case 0:
+                        return "Tidak Aktif";
+                    case 1:
+                        return "Aktif";
+                    case 2:
+                        return "Terlaksana";
+                    default:
+                        return "Unknown Status";
+                }
+            }
+
+            function loadNamaPetugasAsync(kode) {
+                return new Promise(function (resolve) {
+                    var url = hostname + "GetPetugasHarian?kode=" + kode;
+                    $.ajax({
+                        url: url,
+                        method: "GET",
+                        contentType: "application/json",
+                        headers: {
+                            'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                        },
+                        success: function (data) {
+                            var item = data.data;
+                            var result = item.nama;
+                            resolve(result);
+                        }
+                    });
+                });
+            }
+
+            function processItem(item) {
+                return loadNamaPetugasAsync(item.kode).then(function (nama) {
+                    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    var formatter = new Intl.DateTimeFormat('id-ID', options);
+                    var formattedTanggal = formatter.format(new Date(item.tanggal));
+
+                    var newRow =
+                        "<tr align='center'>" +
+                        "<td>" + nama + "</td>" +
+                        "<td>" + formattedTanggal + "</td>" +
+                        "<td>" + item.waktu + "</td>" +
+                        "<td>" + item.tugas + "</td>" +
+                        "<td>" + getStatusDescription(item.status) + "</td>" +
+                        "<td>" +
+                            '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '" style="margin : 0px 5px">Update</a>' +
+                            '<a class="btn btn-danger btn-batal" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Batal</a>' +
+                            '<a class="btn btn-danger btn-terlaksana" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Terlaksana</a>' +
+                        '</td>' +
+                        '</tr>';
+
+                    if (
+                        (statusFilter === "" || item.status.toString() === statusFilter) &&
+                        (searchInput === "" ||
+                            nama.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.waktu.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            formattedTanggal.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.tugas.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            getStatusDescription(item.status).toLowerCase().includes(searchInput.toLowerCase())
+                        )
+                    ) {
+                        $('#tbody').append(newRow);
+                    }
+                });
+            }
+
             $.ajax({
                 url: url,
                 method: method,
                 contentType: "application/json",
+                headers: {
+                    'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                },
                 success: function (data) {
                     var list = data.data;
-                    list.forEach(function (item) {
-                        // Call loadNamaPetugas with a callback function
-                        loadNamaPetugas(item.kode, function (nama) {
-                            // Continue processing once the nama is obtained
-                            console.log(nama);
+                    var promises = list.map(processItem);
+                    Promise.all(promises).then(function () {
+                        // Attach the click event to the dynamically created "Batal" button
+                        
+                        $('.btn-danger.btn-batal').click(function () {
+                            var idJadwal = $(this).data('id');
 
-                            // Rest of your code here...
-                            var options = { year: 'numeric', month: 'long', day: 'numeric' };
-                            var formatter = new Intl.DateTimeFormat('id-ID', options);
-                            var formattedTanggal = formatter.format(new Date(item.tanggal));
-
-                            var newRow =
-                                "<tr align='center'>" +
-                                "<td>" + nama + "</td>" +
-                                "<td>" + formattedTanggal + "</td>" +
-                                "<td>" + item.waktu + "</td>" +
-                                "<td>" + item.tugas + "</td>" +
-                                "<td>" +
-                                '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '">Update</a>' +
-                                '<button class="btn btn-danger" value="' + item.id_jadwal + '" onclick="hapus(this.value)">Delete</button>' +
-                                "</td>" +
-                                "</tr>";
-                            $("#tbody").append(newRow);
+                            updateBatal(idJadwal);
                         });
+
+                        $('.btn-danger.btn-terlaksana').click(function () {
+                            var idJadwal = $(this).data('id');
+
+                            updateTerlaksana(idJadwal);
+                        });
+                        
                     });
-                },
+                }
             });
         }
 
-        function loadNamaPetugas(kode, callback) {
+
+        function updateBatal(id_jadwal) {
+            var status = '0';
+
             var hostname = "https://localhost:44307/";
-            var url = hostname + "GetPetugasHarian?kode=" + kode;
-            var method = "GET";
+            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
+            var method = "PUT";
 
-            $.ajax({
-                url: url,
-                method: method,
-                contentType: "application/json",
-                success: function (data) {
-                    var item = data.data;
-                    var result = item.nama;
-
-                    // Invoke the callback function with the result
-                    callback(result);
-                },
+            swal({
+                title: "Batalkan Jadwal Petugas",
+                text: "Apakah Anda Yakin ingin membatalkan tugas ini?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: url,
+                        method: method,
+                        contentType: "application/json",
+                        headers: {
+                            'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                        },
+                        success: function (data) {
+                            if (data.status == 200) {
+                                swal("Sukses!", data.message, "success").then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                swal("Gagal", data.message, "error");
+                            }
+                        },
+                        error: function (errors) {
+                            console.log(errors);
+                            swal("Error", "Terjadi kesalahan saat mengubah Jadwal Petugas", "error");
+                        }
+                    });
+                }
             });
         }
 
-        function hapus(id_jadwal) {
-            // Show the confirmation modal
-            $('#deleteConfirmationModal').modal('show');
+        function updateTerlaksana(id_jadwal) {
+            var status = '2';
 
-            // Set the click event for the confirm delete button in the modal
-            $('#confirmDeleteBtn').click(function () {
-                var hostname = "https://localhost:44307/";
-                var url = hostname + "DeleteJadwalPetugasHarian?id_jadwal=" + id_jadwal;
-                var method = "DELETE";
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
+            var method = "PUT";
 
-                $.ajax({
-                    url: url,
-                    method: method,
-                    contentType: "application/json",
-                    success: function (data) {
-                        alert("Data Jadwal Petugas Harian Berhasil Dihapus");
-                        // Close the modal
-                        $('#deleteConfirmationModal').modal('hide');
-                        // Reload the page
-                        location.reload();
-                    },
-                });
+            swal({
+                title: "Jadwal Petugas Terlaksana",
+                text: "Apakah Anda Yakin ingin mengubah tugas ini menjadi terlaksana?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: url,
+                        method: method,
+                        contentType: "application/json",
+                        success: function (data) {
+                            if (data.status == 200) {
+                                swal("Sukses!", data.message, "success").then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                swal("Gagal", data.message, "error");
+                            }
+                        },
+                        error: function (errors) {
+                            console.log(errors);
+                            swal("Error", "Terjadi kesalahan saat mengubah Jadwal Petugas", "error");
+                        }
+                    });
+                }
             });
         }
 
-    </script>
+    });
+
+</script>
 </div>
