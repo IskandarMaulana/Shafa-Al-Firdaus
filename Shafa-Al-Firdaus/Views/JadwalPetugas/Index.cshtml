@@ -88,6 +88,9 @@
                         url: url,
                         method: "GET",
                         contentType: "application/json",
+                        headers: {
+                            'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                        },
                         success: function (data) {
                             var item = data.data;
                             var result = item.nama;
@@ -136,6 +139,9 @@
                 url: url,
                 method: method,
                 contentType: "application/json",
+                headers: {
+                    'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                },
                 success: function (data) {
                     var list = data.data;
                     var promises = list.map(processItem);
@@ -179,6 +185,9 @@
                         url: url,
                         method: method,
                         contentType: "application/json",
+                        headers: {
+                            'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                        },
                         success: function (data) {
                             if (data.status == 200) {
                                 swal("Sukses!", data.message, "success").then(() => {
@@ -234,50 +243,6 @@
             });
         }
 
-        function updateStatus(id_jadwal) {
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "UpdateStatus";
-            var method = "PUT";
-            var updateData = {
-                id_jadwal: id_jadwal,
-                status: '0'
-            };
-
-            var data = JSON.stringify(updateData);
-
-            $.ajax({
-                url: url,
-                method: method,
-                data: data,
-                contentType: "application/json",
-                success: function (data) {
-                        alert("Status berhasil diubah menjadi Tidak Aktif");
-                        location.reload();
-                },
-                error: function (data) {
-                    var e = data.errors
-                    alert("Gagal menyimpan data Jadwal Petugas Harian." + e);
-                },
-            });
-            /*console.log('Update Data:', updateData);
-
-            $.ajax({
-                url: url,
-                method: method,
-                contentType: "application/json",
-                data: JSON.stringify(updateData),
-                success: function (data) {
-                    console.log('Success:', data);
-                    alert("Status berhasil diubah menjadi Tidak Aktif");
-                    location.reload();
-                },
-                error: function (errors, textStatus, errorThrown) {
-                    var errorList = errors.data
-                    console.log('Error: ' + errorThrown + errorList.status);
-                    alert('Error: ' + textStatus);
-                }
-            });*/
-        }
     });
 
 </script>
