@@ -101,10 +101,15 @@
             var statusFilter = $("#statusFilter").val();
             var searchInput = $("#searchInput").val(); // Get the value from the search input
 
+            console.log(@TempData["JwtToken"]);
+
             $.ajax({
                 url: url,
                 method: method,
                 contentType: "application/json",
+                headers: {
+                    'Authorization': 'Bearer ' + @TempData["JwtToken"]
+                },
                 success: function (data) {
                     var list = data.data;
                     list.forEach(function (item) {
