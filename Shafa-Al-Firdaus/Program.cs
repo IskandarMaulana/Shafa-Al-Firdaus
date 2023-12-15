@@ -1,3 +1,6 @@
+using Newtonsoft.Json.Linq;
+using System.IdentityModel.Tokens.Jwt;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +10,7 @@ builder.Services.AddSession();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline.B
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -15,6 +18,29 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSession();
+
+/*app.Use(async (context, next) =>
+{
+    var JwtToken = context.Session.GetString("JwtToken");
+    if (!string.IsNullOrEmpty(JwtToken))
+    {
+        context.Request.Headers.Add("Authorization", "Bearer " + JwtToken);
+
+        var handler = new JwtSecurityTokenHandler();
+        var jsonToken = handler.ReadToken(JwtToken) as JwtSecurityToken;
+
+        if (jsonToken != null)
+        {
+            // Ambil waktu kedaluwarsa dari token
+            var expirationTime = jsonToken.ValidTo;
+
+            // Set waktu kedaluwarsa dalam sesi
+            context.Session.SetString("TokenExpirationTime", expirationTime.ToString("O"));
+        }
+    }
+    await next();
+});*/
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -23,7 +49,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

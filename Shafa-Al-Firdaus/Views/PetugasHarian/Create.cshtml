@@ -38,11 +38,15 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "GetIdPetugasHarian";
         var method = "GET";
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             success: function (data) {
                 console.log(data);
                 kode.value = data.data;
@@ -55,6 +59,8 @@
         var nomor_telepon = document.getElementById("nomor_telepon").value;
         var status = '1';
 
+        var myHostname = "https://localhost:44355/";
+
         var hostname = "https://localhost:44307/";
         var url = hostname + "InsertPetugasHarian";
         var method = "POST";
@@ -65,23 +71,26 @@
             status: status
         };
         var data = JSON.stringify(input);
-        
+        var jwtToken = '@ViewBag.Token';
+
         $.ajax({
             url: url,
             method: method,
             data: data,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             success: function (data) {
-                alert("Data Petugas Harian Berhasil Ditambahkan");
-                document.getElementById("nama").value = "";
-                document.getElementById("nomor_telepon").value = "";
+                swal("Sukses!", "Data Petugas Harian Berhasil Ditambahkan", "success").then(() => {
+                    window.location.href = myHostname + "PetugasHarian/Index";
+                });
             },
             error: function () {
                 alert("Gagal menyimpan data Petugas Harian.");
             },
         });
     }
-
     function batal() {
         history.back();
     }

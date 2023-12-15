@@ -50,11 +50,15 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "GetPetugasHarian?kode=" + '@name';
         var method = "GET";
+        var jwtToken = '@ViewBag.Token';
         console.log('@name');
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             success: function (data) {
                 console.log(data);
                 var item = data.data
@@ -74,6 +78,7 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdatePetugasHarian";
         var method = "PUT";
+        var jwtToken = '@ViewBag.Token';
 
         var input = {
             kode: kode,
@@ -90,6 +95,9 @@
             method: method,
             data: data,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             success: function (data, textStatus, xhr) {
                 if (xhr.status === 200) {
                     alert("Data Berhasil Disimpan/Updated");

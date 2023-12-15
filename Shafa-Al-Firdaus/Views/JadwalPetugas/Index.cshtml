@@ -72,8 +72,8 @@
                         '<td>' + statusText + '</td>' +
                         '<td>' +
                         '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '" style="margin : 0px 5px">Update</a>' +
-                        '<a class="btn btn-danger btn-batal" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Batal</a>' +
-                        '<a class="btn btn-danger btn-terlaksana" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Terlaksana</a>' +
+                        '<button  class="btn btn-danger" value="' + item.id_jadwal + '" onclick="updateBatal(\'' + item.id_jadwal + '\')">Batal</button>' +
+                        '<button  class="btn btn-danger" value="' + item.id_jadwal + '" onclick="updateTerlaksana(\'' + item.id_jadwal + '\')">Terlaksana</button>' +
                         '</td>' +
                         '</tr>';
 
@@ -120,6 +120,7 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
         var method = "PUT";
+        var jwtToken = '@ViewBag.Token';
 
         swal({
             title: "Batalkan Jadwal Petugas",
@@ -160,6 +161,7 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
         var method = "PUT";
+        var jwtToken = '@ViewBag.Token';
 
         swal({
             title: "Jadwal Petugas Terlaksana",
@@ -173,6 +175,9 @@
                     url: url,
                     method: method,
                     contentType: "application/json",
+                    headers: {
+                        'Authorization': 'Bearer ' + '@ViewBag.Token'
+                    },
                     success: function (data) {
                         if (data.status == 200) {
                             swal("Sukses!", data.message, "success").then(() => {

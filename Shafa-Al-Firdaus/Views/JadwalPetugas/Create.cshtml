@@ -59,11 +59,15 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "GetAllPetugasHarian";
         var method = "GET";
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             success: function (data) {
                 var list = data.data;
                 list.forEach(function (item) {
@@ -101,15 +105,20 @@
             status: status,
         };
         var data = JSON.stringify(input);
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             data: data,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             success: function (data) {
-                alert("Data Jadwal Petugas Harian Berhasil Ditambahkan");
-                window.location.href = myHostname + "JadwalPetugas/Index";
+                swal("Sukses!", "Data Jadwal Petugas Harian Berhasil Ditambahkan", "success").then(() => {
+                    window.location.href = myHostname + "JadwalPetugas/Index";
+                });
             },
             error: function () {
                 alert("Gagal menyimpan data Jadwal Petugas Harian.");

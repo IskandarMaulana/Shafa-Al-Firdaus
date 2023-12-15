@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-md-6 text-right">
                                 <div class="filter-container">
-                                    <label for="statusFilter">Filter by Status:</label>
+                                    <label for="x">Filter by Status:</label>
                                     <select id="statusFilter" class="form-select">
                                         <option value="">All</option>
                                         <option value="1">Tayang</option>
@@ -68,7 +68,7 @@
                                         <th scope="col">Isi</th>
                                         <th scope="col">Tanggal Mulai</th>
                                         <th scope="col">Tanggal Selesai</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col">Status</th> 
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -85,6 +85,45 @@
 <!-- ... (previous HTML code) ... -->
 
 <script>
+
+    function ubahStatus(id) {
+        console.log(id);
+        var confirmed = confirm("Apakah Anda yakin ingin mengubah status menjadi Tidak Aktif?");
+        if (!confirmed) {
+            return;
+        }
+
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "UpdateStatusPengumuman?id_pengumuman=" + id + "&newStatus=4";
+        var method = "PATCH";
+        var updateData = {
+            status: '4'
+        };
+        var jwtToken = '@ViewBag.Token';
+
+        console.log('Update Data:', updateData);
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            data: JSON.stringify(updateData),
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
+            success: function (data) {
+                console.log('Success:', data);
+                alert("Status berhasil diubah menjadi Tidak Aktif");
+                location.reload();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error: ' + textStatus);
+                alert('Error: ' + textStatus);
+            }
+        });
+    }
+
+
     $(document).ready(function () {
         loadTable();
 
@@ -148,7 +187,7 @@
                             '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
                             item.id_pengumuman +
                             '">Update</a>' +
-                            '<button class="btn btn-danger" value="' + item.id_pengumuman + '" onclick="ubahStatusTidakTayang(this.value)">Tidak Tayang</button>' +
+                            '<button  class="btn btn-danger" value="' + item.id_pengumuman + '" onclick="ubahStatus(\'' + item.id_pengumuman + '\')">Tidak Tayang</button>' +
                             "</td>" +
                             "</tr>";
 
@@ -173,19 +212,20 @@
 
         function getJenisText(jenis) {
             switch (jenis) {
-                case 1:
+                case 0:
                     return "Kegiatan";
-                case 2:
+                case 1:
                     return "Pemberitahuan";
-                case 3:
+                case 2:
                     return "Teks Berjalan";
                 default:
                     return "Unknown";
             }
         }
 
+
         function getStatusText(status) {
-            return status === 1 ? "Tayang" : (status === 2 ? "Tidak Tayang" : "Unknown");
+            return status === 1 ? "Tayang" : (status === 4 ? "Tidak Tayang" : "Unknown");
         }
 
         function hapus(id) {
@@ -205,20 +245,6 @@
         }
     });
 
-    function ubahStatusTidakTayang(id) {
-        var hostname = "https://localhost:44307/";
-        var url = hostname + "UbahStatusTidakTayang?id_pengumuman=" + id;
-        var method = "PUT";
-
-        $.ajax({
-            url: url,
-            method: method,
-            contentType: "application/json",
-            success: function (data) {
-                alert("Status berhasil diubah menjadi Tidak Tayang");
-                location.reload();
-            },
-        });
-    }
+   
 
 </script>

@@ -36,10 +36,16 @@ namespace Shafa_Al_Firdaus.Controllers
         }
         public IActionResult Create()
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+
+            ViewData["Token"] = token;
             return View();
         }
         public IActionResult Update(string id)
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+
+            ViewData["Token"] = token;
             ViewBag.Name = id;
             return View();
         }
