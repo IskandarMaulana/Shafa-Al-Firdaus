@@ -51,21 +51,22 @@
         var method = "GET";
         var statusFilter = $("#statusFilter").val();
         var searchInput = $("#searchInput").val();
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
             headers: {
-                'Authorization': 'Bearer ' + '@TempData["JwtToken"]'
+                'Authorization': 'Bearer ' + jwtToken
             },
             success: function (data) {
                 var list = data.data;
                 list.forEach(function (item) {
                     var statusText = item.status === 2 ? 'Terlaksana' : (item.status === 1 ? 'Aktif' : 'Tidak Aktif');
                     var newRow = '<tr align="center">' +
-                        "<td>" + nama + "</td>" +
-                        "<td>" + formattedTanggal + "</td>" +
+                        "<td>" + "Nama" + "</td>" +
+                        "<td>" + "Tanggal" + "</td>" +
                         "<td>" + item.waktu + "</td>" +
                         "<td>" + item.tugas + "</td>" +
                         '<td>' + statusText + '</td>' +
@@ -102,7 +103,7 @@
                 method: "GET",
                 contentType: "application/json",
                 headers: {
-                    'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                    'Authorization': 'Bearer ' + '@ViewBag.Token'
                 },
                 success: function (data) {
                     var item = data.data;
@@ -133,7 +134,7 @@
                     method: method,
                     contentType: "application/json",
                     headers: {
-                        'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                        'Authorization': 'Bearer ' + '@ViewBag.Token'
                     },
                     success: function (data) {
                         if (data.status == 200) {
@@ -189,5 +190,5 @@
             }
         });
     }
-   });
+
 </script>

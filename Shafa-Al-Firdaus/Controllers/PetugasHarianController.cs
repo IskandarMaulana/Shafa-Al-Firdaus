@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using Shafa_Al_Firdaus.Models;
 using System.Diagnostics;
 
@@ -18,6 +19,9 @@ namespace Shafa_Al_Firdaus.Controllers
 
         public IActionResult Index()
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+
+            ViewData["Token"] = token;
             return View();
         }
         public IActionResult Privacy()

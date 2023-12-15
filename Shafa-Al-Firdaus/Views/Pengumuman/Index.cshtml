@@ -100,15 +100,14 @@
 
             var statusFilter = $("#statusFilter").val();
             var searchInput = $("#searchInput").val(); // Get the value from the search input
-
-            console.log(@TempData["JwtToken"]);
+            var jwtToken = '@ViewBag.Token';
 
             $.ajax({
                 url: url,
                 method: method,
                 contentType: "application/json",
                 headers: {
-                    'Authorization': 'Bearer ' + @TempData["JwtToken"]
+                    'Authorization': 'Bearer ' + jwtToken
                 },
                 success: function (data) {
                     var list = data.data;

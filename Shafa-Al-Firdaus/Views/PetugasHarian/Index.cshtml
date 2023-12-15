@@ -44,13 +44,14 @@
         var url = hostname + "GetAllPetugasHarian";
         var method = "GET";
         var statusFilter = $("#statusFilter").val();
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
             headers: {
-                'Authorization': 'Bearer ' + '@TempData["JwtToken"]'
+                'Authorization': 'Bearer ' + jwtToken
             },
             success: function (data) {
                 var list = data.data;
