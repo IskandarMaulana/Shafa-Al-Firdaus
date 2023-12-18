@@ -2,6 +2,8 @@
 using Shafa_Al_Firdaus.Models;
 using System.Text;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
+
 namespace Shafa_Al_Firdaus.Controllers
 {
     public class LoginController : Controller
@@ -28,9 +30,24 @@ namespace Shafa_Al_Firdaus.Controllers
 
             if (token != null)
             {
-                // Store the token or use it as needed (e.g., store in session or cookie)
                 // For simplicity, just store in TempData and redirect
-                TempData["JwtToken"] = token;
+                //TempData
+                //TempData["JwtToken"] = token;
+
+                // Store the token or use it as needed (e.g., store in session or cookie)
+
+                //Cookie
+                /*HttpContext.Response.Cookies.Append("JwtToken", token, new CookieOptions
+                {
+                    HttpOnly = true, // Atribut ini mencegah akses langsung oleh JavaScript
+                    Secure = true,   // Hanya mengizinkan pengiriman cookie melalui HTTPS
+                    SameSite = SameSiteMode.Strict, // Mencegah penanganan cookie dari luar situs
+                    Expires = DateTimeOffset.UtcNow.AddHours(1) // Sesuaikan dengan kebutuhan
+                });*/
+                
+                //Session
+                HttpContext.Session.SetString("JwtToken", token);
+
                 return RedirectToAction("Index", "Home"); // Redirect to a dashboard or any secure page
             }
 

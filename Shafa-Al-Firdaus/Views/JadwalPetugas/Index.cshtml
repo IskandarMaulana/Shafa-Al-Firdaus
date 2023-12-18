@@ -2,124 +2,82 @@
     ViewData["Title"] = "Jadwal Petugas";
 }
 
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Jadwal Petugas Harian</h4>
-                    </div>
-                    <div class="card-body">
-                        <a class="btn btn-primary btn-tambah" asp-controller="JadwalPetugas" asp-action="Create">Tambah Data</a>
 
-                        <br />
 
-                            
-                        <label for="searchInput">Search:</label>
-                        <input type="text" id="searchInput" />
-                        
-                            <label for="statusFilter">Filter dari Status:</label>
-                            <select id="statusFilter">
-                                <option value="">All</option>
-                                <option value="0">Tidak Aktif</option>
-                                <option value="1">Aktif</option>
-                                <option value="2">Terlaksana</option>
-                            </select>
-
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Petugas Harian</th>
-                                        <th scope="col">Tanggal</th>
-                                        <th scope="col">Waktu</th>
-                                        <th scope="col">Tugas</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="card">
+    <div class="card-body">
+        <div class="my-3" style="margin-top: 40px;">
+            <a class="btn btn-primary" asp-controller="JadwalPetugas" asp-action="Create">Tambah Data</a>
         </div>
+        <div class="col-md-12 filter-container">
+            <label for="statusFilter">Filter by Status:</label>
+            <select id="statusFilter">
+                <option value="">All</option>
+                <option value="1">Aktif</option>
+                <option value="0">Tidak Aktif</option>
+            </select>
+        </div>
+        <div>
+            <label for="searchInput">Search:</label>
+            <input type="text" id="searchInput" />
+        </div>
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th scope="col">Petugas Harian</th>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Waktu</th>
+                    <th scope="col">Tugas</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    loadTable();
 
-    <script>
-
-    $(document).ready(function () {
+    $("#statusFilter, #searchInput").change(function () {
+        $("#tbody").empty();
         loadTable();
+    });
 
-        $("#statusFilter, #searchInput").on("input change", function () {
-            $("#tbody").empty();
-            loadTable();
-        });
+    function loadTable() {
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "GetAllJadwalPetugasHarian";
+        var method = "GET";
+        var statusFilter = $("#statusFilter").val();
+        var searchInput = $("#searchInput").val();
+        var jwtToken = '@ViewBag.Token';
 
-        function loadTable() {
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "GetAllJadwalPetugasHarian";
-            var method = "GET";
-
-            var statusFilter = $("#statusFilter").val();
-            var searchInput = $("#searchInput").val();
-
-            function getStatusDescription(status) {
-                switch (status) {
-                    case 0:
-                        return "Tidak Aktif";
-                    case 1:
-                        return "Aktif";
-                    case 2:
-                        return "Terlaksana";
-                    default:
-                        return "Unknown Status";
-                }
-            }
-
-            function loadNamaPetugasAsync(kode) {
-                return new Promise(function (resolve) {
-                    var url = hostname + "GetPetugasHarian?kode=" + kode;
-                    $.ajax({
-                        url: url,
-                        method: "GET",
-                        contentType: "application/json",
-                        headers: {
-                            'Authorization': 'Bearer ' + @TempData["JwtToken"];
-                        },
-                        success: function (data) {
-                            var item = data.data;
-                            var result = item.nama;
-                            resolve(result);
-                        }
-                    });
-                });
-            }
-
-            function processItem(item) {
-                return loadNamaPetugasAsync(item.kode).then(function (nama) {
-                    var options = { year: 'numeric', month: 'long', day: 'numeric' };
-                    var formatter = new Intl.DateTimeFormat('id-ID', options);
-                    var formattedTanggal = formatter.format(new Date(item.tanggal));
-
-                    var newRow =
-                        "<tr align='center'>" +
-                        "<td>" + nama + "</td>" +
-                        "<td>" + formattedTanggal + "</td>" +
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
+            success: function (data) {
+                var list = data.data;
+                list.forEach(function (item) {
+                    var statusText = item.status === 2 ? 'Terlaksana' : (item.status === 1 ? 'Aktif' : 'Tidak Aktif');
+                    var newRow = '<tr align="center">' +
+                        "<td>" + "Nama" + "</td>" +
+                        "<td>" + "Tanggal" + "</td>" +
                         "<td>" + item.waktu + "</td>" +
                         "<td>" + item.tugas + "</td>" +
-                        "<td>" + getStatusDescription(item.status) + "</td>" +
-                        "<td>" +
-                            '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '" style="margin : 0px 5px">Update</a>' +
-                            '<a class="btn btn-danger btn-batal" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Batal</a>' +
-                            '<a class="btn btn-danger btn-terlaksana" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Terlaksana</a>' +
+                        '<td>' + statusText + '</td>' +
+                        '<td>' +
+                        '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '" style="margin : 0px 5px">Update</a>' +
+                        '<button  class="btn btn-danger" value="' + item.id_jadwal + '" onclick="updateBatal(\'' + item.id_jadwal + '\')">Batal</button>' +
+                        '<button  class="btn btn-danger" value="' + item.id_jadwal + '" onclick="updateTerlaksana(\'' + item.id_jadwal + '\')">Terlaksana</button>' +
                         '</td>' +
                         '</tr>';
 
+                    // Apply status filter
                     if (
                         (statusFilter === "" || item.status.toString() === statusFilter) &&
                         (searchInput === "" ||
@@ -133,117 +91,109 @@
                         $('#tbody').append(newRow);
                     }
                 });
-            }
+            },
+        });
+    }
 
+    function loadNamaPetugasAsync(kode) {
+        return new Promise(function (resolve) {
+            var url = hostname + "GetPetugasHarian?kode=" + kode;
             $.ajax({
                 url: url,
-                method: method,
+                method: "GET",
                 contentType: "application/json",
                 headers: {
-                    'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                    'Authorization': 'Bearer ' + '@ViewBag.Token'
                 },
                 success: function (data) {
-                    var list = data.data;
-                    var promises = list.map(processItem);
-                    Promise.all(promises).then(function () {
-                        // Attach the click event to the dynamically created "Batal" button
-                        
-                        $('.btn-danger.btn-batal').click(function () {
-                            var idJadwal = $(this).data('id');
-
-                            updateBatal(idJadwal);
-                        });
-
-                        $('.btn-danger.btn-terlaksana').click(function () {
-                            var idJadwal = $(this).data('id');
-
-                            updateTerlaksana(idJadwal);
-                        });
-                        
-                    });
+                    var item = data.data;
+                    var result = item.nama;
+                    resolve(result);
                 }
             });
-        }
+        });
+    }
 
+    function updateBatal(id_jadwal) {
+        var status = '0';
 
-        function updateBatal(id_jadwal) {
-            var status = '0';
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
+        var method = "PUT";
+        var jwtToken = '@ViewBag.Token';
 
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
-            var method = "PUT";
-
-            swal({
-                title: "Batalkan Jadwal Petugas",
-                text: "Apakah Anda Yakin ingin membatalkan tugas ini?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((willDelete) => {
-                if (willDelete) {
-                    $.ajax({
-                        url: url,
-                        method: method,
-                        contentType: "application/json",
-                        headers: {
-                            'Authorization': 'Bearer ' + @TempData["JwtToken"];
-                        },
-                        success: function (data) {
-                            if (data.status == 200) {
-                                swal("Sukses!", data.message, "success").then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                swal("Gagal", data.message, "error");
-                            }
-                        },
-                        error: function (errors) {
-                            console.log(errors);
-                            swal("Error", "Terjadi kesalahan saat mengubah Jadwal Petugas", "error");
+        swal({
+            title: "Batalkan Jadwal Petugas",
+            text: "Apakah Anda Yakin ingin membatalkan tugas ini?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: url,
+                    method: method,
+                    contentType: "application/json",
+                    headers: {
+                        'Authorization': 'Bearer ' + '@ViewBag.Token'
+                    },
+                    success: function (data) {
+                        if (data.status == 200) {
+                            swal("Sukses!", data.message, "success").then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            swal("Gagal", data.message, "error");
                         }
-                    });
-                }
-            });
-        }
+                    },
+                    error: function (errors) {
+                        console.log(errors);
+                        swal("Error", "Terjadi kesalahan saat mengubah Jadwal Petugas", "error");
+                    }
+                });
+            }
+        });
+    }
 
-        function updateTerlaksana(id_jadwal) {
-            var status = '2';
+    function updateTerlaksana(id_jadwal) {
+        var status = '2';
 
-            var hostname = "https://localhost:44307/";
-            var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
-            var method = "PUT";
+        var hostname = "https://localhost:44307/";
+        var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
+        var method = "PUT";
+        var jwtToken = '@ViewBag.Token';
 
-            swal({
-                title: "Jadwal Petugas Terlaksana",
-                text: "Apakah Anda Yakin ingin mengubah tugas ini menjadi terlaksana?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((willDelete) => {
-                if (willDelete) {
-                    $.ajax({
-                        url: url,
-                        method: method,
-                        contentType: "application/json",
-                        success: function (data) {
-                            if (data.status == 200) {
-                                swal("Sukses!", data.message, "success").then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                swal("Gagal", data.message, "error");
-                            }
-                        },
-                        error: function (errors) {
-                            console.log(errors);
-                            swal("Error", "Terjadi kesalahan saat mengubah Jadwal Petugas", "error");
+        swal({
+            title: "Jadwal Petugas Terlaksana",
+            text: "Apakah Anda Yakin ingin mengubah tugas ini menjadi terlaksana?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: url,
+                    method: method,
+                    contentType: "application/json",
+                    headers: {
+                        'Authorization': 'Bearer ' + '@ViewBag.Token'
+                    },
+                    success: function (data) {
+                        if (data.status == 200) {
+                            swal("Sukses!", data.message, "success").then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            swal("Gagal", data.message, "error");
                         }
-                    });
-                }
-            });
-        }
-
-    });
+                    },
+                    error: function (errors) {
+                        console.log(errors);
+                        swal("Error", "Terjadi kesalahan saat mengubah Jadwal Petugas", "error");
+                    }
+                });
+            }
+        });
+    }
 
 </script>
-</div>

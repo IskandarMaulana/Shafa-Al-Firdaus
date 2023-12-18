@@ -2,6 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+
 <div class="card">
     <div class="card-body">
         <div class="my-3" style="margin-top: 40px;">
@@ -47,13 +49,14 @@
         var method = "GET";
         var statusFilter = $("#statusFilter").val();
         var searchInput = $("#searchInput").val();
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
             headers: {
-                'Authorization': 'Bearer ' + '@TempData["JwtToken"]'
+                'Authorization': 'Bearer ' + jwtToken
             },
             success: function (data) {
                 var list = data.data;
@@ -71,11 +74,11 @@
 
                     // Apply status filter
                     if (
-                    (statusFilter === "" || item.status.toString() === statusFilter) &&
-                    (searchInput === "" ||
-                         item.nama.toLowerCase().includes(searchInput.toLowerCase()) ||
-                         item.nomor_telepon.toLowerCase().includes(searchInput.toLowerCase()) ||
-                         statusText.toLowerCase().includes(searchInput.toLowerCase())
+                        (statusFilter === "" || item.status.toString() === statusFilter) &&
+                        (searchInput === "" ||
+                            item.nama.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.nomor_telepon.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            statusText.toLowerCase().includes(searchInput.toLowerCase())
                         )
                     ) {
                         $('#tbody').append(newRow);
@@ -94,6 +97,7 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateStatusPetugasHarian?kode=" + id + "&newStatus=0";
         var method = "PATCH";
+        var jwtToken = '@ViewBag.Token';
         var updateData = {
             status: '0'
         };
@@ -104,6 +108,9 @@
             url: url,
             method: method,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             data: JSON.stringify(updateData),
             success: function (data) {
                 console.log('Success:', data);
