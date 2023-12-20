@@ -1,6 +1,4 @@
 using Newtonsoft.Json.Linq;
-using System.IdentityModel.Tokens.Jwt;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,7 +6,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(1);
+    options.IdleTimeout = TimeSpan.FromSeconds(5);
 });
 
 var app = builder.Build();
@@ -21,33 +19,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseSession();
-
-/*app.Use(async (context, next) =>
-{
-    var JwtToken = context.Session.GetString("JwtToken");
-    if (!string.IsNullOrEmpty(JwtToken))
-    {
-        context.Request.Headers.Add("Authorization", "Bearer " + JwtToken);
-
-        var handler = new JwtSecurityTokenHandler();
-        var jsonToken = handler.ReadToken(JwtToken) as JwtSecurityToken;
-
-        if (jsonToken != null)
-        {
-            // Ambil waktu kedaluwarsa dari token
-            var expirationTime = jsonToken.ValidTo;
-
-            // Set waktu kedaluwarsa dalam sesi
-            context.Session.SetString("TokenExpirationTime", expirationTime.ToString("O"));
-        }
-    }
-    await next();
-});*/
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();

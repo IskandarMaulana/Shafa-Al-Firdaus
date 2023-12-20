@@ -60,9 +60,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+    <link rel="stylesheet" href="~/assets/css/vertical-layout-light/dashboard.css" />
 
-    <link rel="stylesheet" href="~/assets/css/global.css" />
-    <link rel="stylesheet" href="~/assets/css/index.css" />
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Baloo:wght@400&display=swap" />
     <link rel="stylesheet"
@@ -72,7 +71,7 @@
 <body style="margin: 0;padding: 0;background-image: url('assets/images/Polytechnic-Astra.jpg');background-size: cover;
 background-position: center;background-repeat: no-repeat;height: 100vh;justify-content: center;align-items: center;">
     <div class="container-scroller">
-        <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="container-fluid page-body-wrapper full-page-wrapper" id="container-login">
             <div class="content-wrapper d-flex align-items-center auth px-0" style="position: relative; overflow: hidden; height: 100vh">
                 <div class="row w-100 mx-0">
                     <div class="col-lg-6 mx-auto">
@@ -106,10 +105,18 @@ background-position: center;background-repeat: no-repeat;height: 100vh;justify-c
                         </div>
                     </div>
                 </div>
+                
             </div>
             <!-- content-wrapper ends -->
         </div>
         <!-- page-body-wrapper ends -->
+        <div class="row w-100 mx-0">
+            <footer class="footer footer-login">
+                <div class="d-sm-flex justify-content-center ">
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © @DateTime.Now.Year. DKM Masjid Asy-Syabab.</span>
+                </div>
+            </footer>
+        </div>
     </div>
     <!-- container-scroller -->
 </body>
