@@ -12,7 +12,6 @@
 .dashboard-page {
   margin: 0;
   padding: 0;
-  background-image: url("/images/Polytechnic-Astra-2.jpeg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -147,26 +146,31 @@
 }
 
 .jadwal-body .nama-petugas {
-  white-space: nowrap; /* Mencegah teks untuk melipat saat mencapai batas lebar */
-  animation: marquee 5s linear infinite; /* Animasi marquee selama 5 detik dengan efek linear dan diulang secara tak terbatas */
-}
-
-.jadwal-body .nama-petugas:after {
-  content: ""; /* Konten tambahan untuk menghentikan animasi */
-  animation: pause 3s 1; /* Animasi pause selama 3 detik setelah mencapai akhir teks */
+  white-space: nowrap; 
+  will-change: transform;
+  animation: marquee 15s linear infinite; 
 }
 
 .jadwal-body .card-title-tugas {
   font-size: 20px;
 }
 
-@keyframes marquee {
+/* @keyframes marquee {
   0% {
-    transform: translateX(100%); /* Memulai teks dari luar kotak sebelah kanan */
+    transform: translateX(100%); 
   }
 
   100% {
-    transform: translateX(-100%); /* Menggerakkan teks ke luar kotak sebelah kiri */
+    transform: translateX(-100%);
+  }
+} */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-150%);
   }
 }
 
@@ -227,14 +231,14 @@
 .card-running-text .card-body .card-text {
   color: white;
   font-size: 20px;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
-.school-address{
+.school-address {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 20px;
-  white-space: nowrap; 
+  white-space: nowrap;
   margin-top: 30px;
 }
 

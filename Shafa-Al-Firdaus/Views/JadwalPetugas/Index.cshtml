@@ -13,6 +13,7 @@
             <label for="statusFilter">Filter by Status:</label>
             <select id="statusFilter">
                 <option value="">All</option>
+                <option value="2">Terlaksana</option>
                 <option value="1">Aktif</option>
                 <option value="0">Tidak Aktif</option>
             </select>
@@ -65,8 +66,8 @@
                 list.forEach(function (item) {
                     var statusText = item.status === 2 ? 'Terlaksana' : (item.status === 1 ? 'Aktif' : 'Tidak Aktif');
                     var newRow = '<tr align="center">' +
-                        "<td>" + "Nama" + "</td>" +
-                        "<td>" + "Tanggal" + "</td>" +
+                        "<td>" + item.kode + "</td>" +
+                        "<td>" + item.tanggal + "</td>" +
                         "<td>" + item.waktu + "</td>" +
                         "<td>" + item.tugas + "</td>" +
                         '<td>' + statusText + '</td>' +
