@@ -17,26 +17,16 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="css/vertical-layout-light/style.css" />
+    <link rel="stylesheet" href="css/vertical-layout-light/dashboard.css" />
+
     <!-- <link rel="stylesheet" href="css/index.css" /> -->
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
   </head>
 
-  <body
-    style="
-      margin: 0;
-      padding: 0;
-      background-image: url('/images/Polytechnic-Astra.jpeg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-    "
-  >
+  <body class="dashboard-page" style="background-image: url(images/Polytechnic-Astra-2.jpeg);">
     <div class="container-scroller">
-      <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="container-fluid  page-body-wrapper full-page-wrapper" id="container-login">
         <div class="content-wrapper d-flex align-items-center auth px-0" style="position: relative; overflow: hidden; height: 100vh">
           <div class="row w-100 mx-0">
             <div class="col-lg-6 mx-auto">
@@ -62,7 +52,7 @@
                     </div>
                     <div class="col-md-4">
                       <div class="brand-logo">
-                        <img src="images/logo-shafa.svg" alt="logo" />
+                        <img src="images/logo-shafa.png" alt="logo" />
                       </div>
                     </div>
                   </div>
@@ -74,6 +64,13 @@
         <!-- content-wrapper ends -->
       </div>
       <!-- page-body-wrapper ends -->
+      <div class="row w-100 mx-0">
+        <footer class="footer footer-login">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © @DateTime.Now.Year. DKM Masjid Asy-Syabab.</span>
+          </div>
+        </footer>
+      </div>
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->

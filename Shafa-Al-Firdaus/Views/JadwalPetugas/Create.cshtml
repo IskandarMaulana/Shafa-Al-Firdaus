@@ -159,7 +159,9 @@
                 });
             },
             error: function () {
-                alert("Gagal menyimpan data Jadwal Petugas Harian.");
+                swal("Gagal!", "Menyimpan data Jadwal Petugas Harian gagal ditambahkan", "error").then(() => {
+                    window.location.href = myHostname + "JadwalPetugas/Index";
+                });
             },
         });
     }

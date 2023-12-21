@@ -15,6 +15,7 @@ namespace Shafa_Al_Firdaus.Controllers
         public IActionResult Index()
         {
             var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
 
             ViewData["Token"] = token;
             return View();
@@ -22,6 +23,9 @@ namespace Shafa_Al_Firdaus.Controllers
 
         public IActionResult Privacy()
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
+
             return View();
         }
 
@@ -33,6 +37,7 @@ namespace Shafa_Al_Firdaus.Controllers
         public IActionResult Create()
         {
             var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
 
             ViewData["Token"] = token;
             return View();
@@ -40,6 +45,7 @@ namespace Shafa_Al_Firdaus.Controllers
         public IActionResult Update(string id_jadwal)
         {
             var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
 
             ViewData["Token"] = token;
             ViewBag.IdJadwal = id_jadwal;

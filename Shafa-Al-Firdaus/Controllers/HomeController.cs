@@ -15,11 +15,17 @@ namespace Shafa_Al_Firdaus.Controllers
 
         public IActionResult Index()
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
+
             return View();
         }
 
         public IActionResult Privacy()
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
+
             return View();
         }
 
