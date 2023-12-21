@@ -43,9 +43,9 @@
                             </div>
                             <div class="col-md-6 text-right">
                                 <div class="filter-container">
-                                    <label for="x">Filter by Status:</label>
+                                    <label for="x">Filter berdasarkan Status:</label>
                                     <select id="statusFilter" class="form-select">
-                                        <option value="">All</option>
+                                        <option value="">Semua data</option>
                                         <option value="1">Tayang</option>
                                         <option value="4">Tidak Tayang</option>
                                         <option value="3">Dijadwalkan</option>
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="col-md-12 search-container">
-                            <label for="searchInput"> Search:</label>
+                            <label for="searchInput"> Mencari Data:</label>
                             <input type="text" id="searchInput" class="form-control" />
                         </div>
 
@@ -230,7 +230,7 @@
                             "<td>" +
                             '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
                             item.id_pengumuman +
-                            '">Update</a>' +
+                            '">Memperbarui</a>' +
                             '<button class="btn btn-danger" value="' + item.id_pengumuman + '" onclick="ubahStatus(\'' + item.id_pengumuman + '\')">Tidak Tayang</button>' +
                             "</td>" +
                             "</tr>";
