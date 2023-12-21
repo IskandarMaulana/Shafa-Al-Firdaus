@@ -22,13 +22,12 @@ namespace Shafa_Al_Firdaus.Controllers
             // You might want to do something with jadwal here, for example, pass it to the view
             ViewBag.Jadwal = jadwal;
 
-            Console.WriteLine(ViewBag.Jadwal);
             return View();
         }
         private async Task<JObject> GetJadwalFromWebApi()
         {
             //var apiBaseUrl = "https://localhost:44307";
-            var endpoint = $"https://api.aladhan.com/v1/calendar/{DateTime.Now.Year}/{DateTime.Now.Month}?latitude=-6.348014&longitude=107.148479&method=2";
+            var endpoint = $"https://api.aladhan.com/v1/calendar/{DateTime.Now.Year}/{DateTime.Now.Month}?latitude=-6.348014&longitude=107.148479&method=2&tune=-20,-20,-3,3,2,2,0,15";
 
             using var httpClient = _httpClientFactory.CreateClient();
 

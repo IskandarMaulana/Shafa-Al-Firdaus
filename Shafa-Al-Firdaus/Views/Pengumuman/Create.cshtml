@@ -81,8 +81,8 @@
         if (jenis === 2) {
             document.getElementById("tanggal_mulai").disabled = true;
             document.getElementById("tanggal_selesai").disabled = true;
-            tanggal_mulai = null; // Set to null if disabled
-            tanggal_selesai = null; // Set to null if disabled
+            tanggal_mulai = new Date('01/01/2001'); // Set to null if disabled
+            tanggal_selesai = new Date('01/01/2001'); // Set to null if disabled
         }
 
         // Disable status dropdown and set value to "Dijadwalkan"
@@ -102,9 +102,9 @@
         };
         var jwtToken = '@ViewBag.Token';
 
-        console.log(input)
+
         var data = JSON.stringify(input);
-        console.log(data);
+
         $.ajax({
             url: url,
             method: method,
@@ -118,7 +118,8 @@
                     window.location.href = myHostname + "Pengumuman/Index";
                 });
             },
-            error: function () {
+            error: function (error) {
+                console.log(error)
                 alert("Gagal menyimpan data Pengumuman.");
             },
         });

@@ -93,34 +93,46 @@
                 var startDate = item.tanggal_mulai; // Replace this with your actual start date
                 var endDate = item.tanggal_selesai;
 
-                var options = {
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: false
-                };
+                var receivedDateMulai = new Date(item.tanggal_mulai);
+                var formattedTanggalMulai =
+                    receivedDateMulai.getFullYear() +
+                    "-" +
+                    ("0" + (receivedDateMulai.getMonth() + 1)).slice(-2) +
+                    "-" +
+                    ("0" + receivedDateMulai.getDate()).slice(-2) +
+                    "T" +
+                    ("0" + receivedDateMulai.getHours()).slice(-2) +
+                    ":" +
+                    ("0" + receivedDateMulai.getMinutes()).slice(-2);
 
-                var formattedTanggal = startDate.toLocaleString('en-US', options).replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+):(\d+)/, '$3/$2/$1 $4:$5');
-                var formattedTanggalend = endDate.toLocaleString('en-US', options).replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+):(\d+)/, '$3/$2/$1 $4:$5');
+                var receivedDateSelesai = new Date(item.tanggal_selesai);
+                var formattedTanggalSelesai =
+                    receivedDateSelesai.getFullYear() +
+                    "-" +
+                    ("0" + (receivedDateSelesai.getMonth() + 1)).slice(-2) +
+                    "-" +
+                    ("0" + receivedDateSelesai.getDate()).slice(-2) +
+                    "T" +
+                    ("0" + receivedDateSelesai.getHours()).slice(-2) +
+                    ":" +
+                    ("0" + receivedDateSelesai.getMinutes()).slice(-2);
 
-                console.log(formattedTanggal);      // Output: 13/12/2023 10:14
-                console.log(formattedTanggalend);   // Output: 13/12/2023 10:14
+                console.log(formattedTanggalMulai);      // Output: 13/12/2023 10:14
+                console.log(formattedTanggalSelesai);   // Output: 13/12/2023 10:14
 
                 // Set the values in the form
                 judul.value = item.judul;
                 jenis.value = item.jenis;
                 isi.value = item.isi;
-                tanggal_mulai.value = formattedTanggal;
-                tanggal_selesai.value = formattedTanggalend;
+                tanggal_mulai.value = formattedTanggalMulai;
+                tanggal_selesai.value = formattedTanggalSelesai;
                 status.value = item.status;
 
                 // Disable date fields if jenis is 3 (Teks Berjalan)
                 if (item.jenis === 2) {
                     tanggal_mulai.disabled = true;
                     tanggal_selesai.disabled = true;
-
+                    
                 }
             },
         });
@@ -147,13 +159,16 @@
         }
 
         // Disable date fields if jenis is 3 (Teks Berjalan)
-        if (jenis === 2) {
+        if (jenis === '2') {
             document.getElementById("tanggal_mulai").disabled = true;
             document.getElementById("tanggal_selesai").disabled = true;
-            tanggal_mulai = null; // Set to null if disabled
-            tanggal_selesai = null; // Set to null if disabled
+            tanggal_mulai = new Date('01/01/2001'); // Set to null if disabled
+            tanggal_selesai = new Date('01/01/2001'); // Set to null if disabled
         }
 
+        console.log(jenis)
+        console.log(tanggal_mulai)
+        console.log(tanggal_selesai)
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
@@ -187,7 +202,8 @@
                 alert("Data Pengumuman Berhasil Diubah");
                 window.location.href = myHostname + "pengumuman/Index";
             },
-            error: function () {
+            error: function (error) {
+                console.log(error)
                 alert("Gagal menyimpan data Pengumuman.");
             },
         });

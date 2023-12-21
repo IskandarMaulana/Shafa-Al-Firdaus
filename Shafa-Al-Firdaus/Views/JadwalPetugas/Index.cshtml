@@ -63,18 +63,26 @@
             },
             success: function (data) {
                 var list = data.data;
+                var currentDate = new Date();
+
                 list.forEach(function (item) {
+                    var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour24: false };
+                    
+                    var formatter = new Intl.DateTimeFormat('id-ID', options);
+
+                    var formattedTanggal = formatter.format(new Date(item.tanggal));
+
                     var statusText = item.status === 2 ? 'Terlaksana' : (item.status === 1 ? 'Aktif' : 'Tidak Aktif');
                     var newRow = '<tr align="center">' +
-                        "<td>" + item.nama + "</td>" +
-                        "<td>" + item.tanggal + "</td>" +
+                        "<td>" + item.kode + "</td>" +
+                        "<td>" + formattedTanggal + "</td>" +
                         "<td>" + item.waktu + "</td>" +
                         "<td>" + item.tugas + "</td>" +
                         '<td>' + statusText + '</td>' +
                         '<td>' +
-                        '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '" style="margin : 0px 5px">Ubah</a>' +
-                        '<button  class="btn btn-danger" value="' + item.id_jadwal + '" onclick="updateBatal(\'' + item.id_jadwal + '\')">Batal</button>' +
-                        '<button  class="btn btn-danger" value="' + item.id_jadwal + '" onclick="updateTerlaksana(\'' + item.id_jadwal + '\')">Terlaksana</button>' +
+                        '<a type="button" class="btn btn-outline-info btn-icon" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="bi bi-pencil-square"></i></a>' +
+                        '<button  class="btn btn-outline-danger btn-icon" value="' + item.id_jadwal + '" onclick="updateBatal(\'' + item.id_jadwal + '\')" style="margin-left: 10px;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Batal"><i class="bi bi-dash-circle-fill"></i></button>' +
+                        '<button  class="btn btn-outline-success btn-icon" value="' + item.id_jadwal + '" onclick="updateTerlaksana(\'' + item.id_jadwal + '\')"><i class="bi bi-check-circle-fill" data-toggle="tooltip" data-placement="top" title="Terlaksana"></i></button>' +
                         '</td>' +
                         '</tr>';
 

@@ -304,9 +304,6 @@
 
             var list = jadwal.data;
 
-            var today = new Date();
-            var todayDateString = today.toLocaleDateString('en-ID'); // Sesuaikan dengan format yang sesuai
-
             var targetDate = moment().format('D-MM-YYYY');
 
 
@@ -323,13 +320,13 @@
             });
             
             // Contoh: Menambahkan teks ke dalam elemen dengan ID "time-imsak"
-            imsak.textContent = targetData.timings.Imsak;
-            subuh.textContent = targetData.timings.Fajr;
-            terbit.textContent = targetData.timings.Sunrise;
-            dzuhur.textContent = targetData.timings.Dhuhr;
-            ashar.textContent = targetData.timings.Asr;
-            maghrib.textContent = targetData.timings.Maghrib;
-            isya.textContent = targetData.timings.Isha;
+            imsak.textContent = targetData.timings.Imsak.replace("(WIB)", "WIB");
+            subuh.textContent = targetData.timings.Fajr.replace("(WIB)", "WIB");
+            terbit.textContent = targetData.timings.Sunrise.replace("(WIB)", "WIB");
+            dzuhur.textContent = targetData.timings.Dhuhr.replace("(WIB)", "WIB");
+            ashar.textContent = targetData.timings.Asr.replace("(WIB)", "WIB");
+            maghrib.textContent = targetData.timings.Maghrib.replace("(WIB)", "WIB");
+            isya.textContent = targetData.timings.Isha.replace("(WIB)", "WIB");
         }
     </script>
 
