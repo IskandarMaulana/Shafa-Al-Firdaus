@@ -113,15 +113,14 @@
             headers: {
                 'Authorization': 'Bearer ' + jwtToken
             },
-            success: function (response) {
-                alert("Data Berhasil Ditambahkan");
-                // Optionally, you can redirect or perform other actions after success
-                window.location.href = "https://localhost:44355/pengumuman/index"
-                console.log(response)
+            success: function (data) {
+                swal("Sukses!", "Data Pengumuman Berhasil Ditambahkan", "success").then(() => {
+                    window.location.href = myHostname + "Pengumuman/Index";
+                });
             },
-            error: function (error) {
-                console.error("Error:", error);
-            }
+            error: function () {
+                alert("Gagal menyimpan data Pengumuman.");
+            },
         });
     }
 
