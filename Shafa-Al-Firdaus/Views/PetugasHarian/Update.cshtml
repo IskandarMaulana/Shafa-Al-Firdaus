@@ -25,12 +25,11 @@
                         </div>
                         <div class="form-group">
                             <label for="status" class="control-label">Status</label>
-                            <select name="status" id="status" class="form-control">
-                                <option value="1">Aktif</option>
-                                
+                            <select name="status" id="status" class="form-control" value="1">
+                                <option>Aktif</option>
                             </select>
                         </div>
-                        <br />
+                        <br/>
                         <div class="form-group">
                             <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
                             <button href="#" class="btn btn-secondary" onclick="batal()">Batal</button>
@@ -100,9 +99,9 @@
             },
             success: function (data, textStatus, xhr) {
                 if (xhr.status === 200) {
-                    alert("Data Berhasil Disimpan/Updated");
+                    alert("Data Petugas Harian Berhasil Disimpan/Updated");
                 } else {
-                    alert("Gagal menyimpan/memperbarui data Petugas Harian. Kode Status: " + xhr.status);
+                    alert("Gagal menyimpan/memperbarui Data Petugas Harian. Kode Status: " + xhr.status);
                 }
             },
         });
