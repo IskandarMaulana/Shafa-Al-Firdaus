@@ -17,6 +17,10 @@
                 <option value="0">Tidak Aktif</option>
             </select>
         </div>
+        <div class="col-md-12 search-container">
+            <label for="searchInput"> Search:</label>
+            <input type="text" id="searchInput" class="form-control" />
+        </div>
         <table class="table table-stripped">
             <thead>
                 <tr>
@@ -34,7 +38,7 @@
 <script>
     loadTable();
 
-    $("#statusFilter").change(function () {
+    $("#statusFilter, #searchInput").on("input", function () {
         $("#tbody").empty();
         loadTable();
     });
@@ -44,13 +48,15 @@
         var url = hostname + "GetAllPetugasHarian";
         var method = "GET";
         var statusFilter = $("#statusFilter").val();
+        var searchInput = $("#searchInput").val();
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
             headers: {
-                'Authorization': 'Bearer ' + '@TempData["JwtToken"]'
+                'Authorization': 'Bearer ' + jwtToken
             },
             success: function (data) {
                 var list = data.data;
@@ -67,7 +73,14 @@
                         '</tr>';
 
                     // Apply status filter
-                    if (statusFilter === "" || item.status.toString() === statusFilter) {
+                    if (
+                        (statusFilter === "" || item.status.toString() === statusFilter) &&
+                        (searchInput === "" ||
+                            item.nama.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.nomor_telepon.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            statusText.toLowerCase().includes(searchInput.toLowerCase())
+                        )
+                    ) {
                         $('#tbody').append(newRow);
                     }
                 });
@@ -84,6 +97,7 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateStatusPetugasHarian?kode=" + id + "&newStatus=0";
         var method = "PATCH";
+        var jwtToken = '@ViewBag.Token';
         var updateData = {
             status: '0'
         };
@@ -94,6 +108,9 @@
             url: url,
             method: method,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             data: JSON.stringify(updateData),
             success: function (data) {
                 console.log('Success:', data);

@@ -51,6 +51,44 @@
         </div>
     </div>
 </div>
+<script>
+    // Add an event listener to the 'tanggal' input
+    document.getElementById('tanggal').addEventListener('change', function () {
+        // Get the selected date
+        var selectedDate = new Date(this.value);
+
+        // Get the 'waktu' dropdown
+        var waktuDropdown = document.getElementById('waktu');
+
+        // Remove all options from 'waktu' dropdown
+        waktuDropdown.innerHTML = '';
+
+        // Add default option
+        var defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.text = '-- Pilih Waktu Bertugas --';
+        waktuDropdown.appendChild(defaultOption);
+
+        // Add options based on the selected day
+        if (selectedDate.getDay() === 5) { // Friday
+            // Add options for Friday
+            ['Subuh', 'Jumat', 'Ashar', 'Maghrib', 'Isya'].forEach(function (time) {
+                var option = document.createElement('option');
+                option.value = time;
+                option.text = time;
+                waktuDropdown.appendChild(option);
+            });
+        } else {
+            // Add other options for non-Friday days
+            ['Subuh', 'Dzuhur', 'Ashar', 'Maghrib', 'Isya'].forEach(function (time) {
+                var option = document.createElement('option');
+                option.value = time;
+                option.text = time;
+                waktuDropdown.appendChild(option);
+            });
+        }
+    });
+</script>
 
 <script>
     loadPetugas();
@@ -59,11 +97,15 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "GetAllPetugasHarian";
         var method = "GET";
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             success: function (data) {
                 var list = data.data;
                 list.forEach(function (item) {
@@ -101,18 +143,25 @@
             status: status,
         };
         var data = JSON.stringify(input);
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             data: data,
             contentType: "application/json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
             success: function (data) {
-                alert("Data Jadwal Petugas Harian Berhasil Ditambahkan");
-                window.location.href = myHostname + "JadwalPetugas/Index";
+                swal("Sukses!", "Data Jadwal Petugas Harian Berhasil Ditambahkan", "success").then(() => {
+                    window.location.href = myHostname + "JadwalPetugas/Index";
+                });
             },
             error: function () {
-                alert("Gagal menyimpan data Jadwal Petugas Harian.");
+                swal("Gagal!", "Menyimpan data Jadwal Petugas Harian gagal ditambahkan", "error").then(() => {
+                    window.location.href = myHostname + "JadwalPetugas/Index";
+                });
             },
         });
     }

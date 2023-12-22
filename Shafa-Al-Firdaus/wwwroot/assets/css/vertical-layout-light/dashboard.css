@@ -1,0 +1,252 @@
+#container-login {
+  min-height: calc(100vh - 78px);
+  height: calc(100vh - 78px);
+}
+
+#carouselDashboard {
+  display: flex;
+  align-items: center;
+  height: 65vh;
+}
+
+.dashboard-page {
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.footer-login {
+  background-color: transparent;
+  color: black;
+  font-size: 20px;
+  text-align: center;
+}
+
+.logo-asy-syabab {
+  height: 150px;
+  width: 150px;
+  padding: 19px;
+}
+
+.logo-shafa {
+  height: 150px;
+  width: 150px;
+  padding-bottom: 19px;
+  padding-top: 19px;
+}
+
+.title-asy-syabab {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+.main-panel-dashboard {
+  margin-top: 150px;
+  width: 100%;
+  height: calc(100vh - 150px);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-wrapper {
+  height: 100%;
+}
+
+.container-jadwal {
+  margin-top: 3rem;
+}
+
+.carousel-inner {
+  height: inherit;
+}
+
+.title-jadwal {
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  margin: 20px 0px 25px 0px;
+}
+
+.card-jadwal {
+  width: 300px;
+  height: auto;
+  margin-top: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #004fe356;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgb(255 255 255 / 40%);
+}
+
+.card-jadwal-shalat .card-title {
+  color: white;
+  text-align: center;
+  font-size: 40px;
+}
+
+.card-jadwal-shalat .card-text {
+  color: white;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.jadwal-shalat {
+  height: auto;
+}
+
+.jadwal-petugas {
+  align-items: top;
+}
+
+.pengumuan {
+  align-items: top;
+}
+
+.card-jadwal-petugas {
+}
+
+.card-jadwal-petugas .card-body {
+  padding: 1rem;
+  display: flex;
+}
+
+.card-jadwal-petugas .card-title {
+  color: white;
+  text-align: center;
+  font-size: 30px;
+}
+
+.card-jadwal-petugas .card-text {
+  color: white;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 30px;
+}
+
+.icon-jadwal-petugas {
+  width: 70px;
+  height: 70px;
+}
+
+.jadwal-body {
+  display: block;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.jadwal-body .nama-petugas {
+  white-space: nowrap; 
+  will-change: transform;
+  animation: marquee 15s linear infinite; 
+}
+
+.jadwal-body .card-title-tugas {
+  font-size: 20px;
+}
+
+/* @keyframes marquee {
+  0% {
+    transform: translateX(100%); 
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+} */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-150%);
+  }
+}
+
+@keyframes pause {
+  0%,
+  100% {
+    transform: translateX(0); /* Posisi tetap saat animasi berhenti */
+  }
+}
+
+.jadwal-divider {
+  height: 2px;
+  background-color: #fff;
+}
+
+.card-pengumuman {
+  min-height: 34rem;
+  height: auto !important;
+}
+
+.card-pengumuman .card-body {
+  /* padding: 1rem;
+  display: flex; */
+}
+
+.card-pengumuman .card-title {
+  color: white;
+  text-align: center;
+  font-size: 30px;
+}
+
+.card-pengumuman .card-text {
+  color: white;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.5;
+}
+
+.card-running-text {
+  width: 85rem;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #1967f754;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgb(255 255 255 / 40%);
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.card-running-text .card-body {
+  /* margin: 0px; */
+  padding: 1rem;
+}
+
+.card-running-text .card-body .card-text {
+  color: white;
+  font-size: 20px;
+  white-space: nowrap;
+}
+
+.school-address {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  white-space: nowrap;
+  margin-top: 30px;
+}
+
+.footer-dashboard {
+  background-color: transparent;
+  color: black;
+  font-size: 15px;
+  text-align: center;
+  margin: 0px;
+  padding: 10px;
+}

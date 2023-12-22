@@ -81,13 +81,14 @@
         if (jenis === 2) {
             document.getElementById("tanggal_mulai").disabled = true;
             document.getElementById("tanggal_selesai").disabled = true;
-            tanggal_mulai = null; // Set to null if disabled
-            tanggal_selesai = null; // Set to null if disabled
+            tanggal_mulai = new Date('01/01/2001'); // Set to null if disabled
+            tanggal_selesai = new Date('01/01/2001'); // Set to null if disabled
         }
 
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
+        var myHostname = "https://localhost:44355/";
         var hostname = "https://localhost:44307/";
         var url = hostname + "InsertPengumuman";
         var method = "POST";
@@ -99,24 +100,28 @@
             tanggal_selesai: tanggal_selesai === "" ? null : tanggal_selesai,
             status: status
         };
+        var jwtToken = '@ViewBag.Token';
 
-        console.log(input)
+
         var data = JSON.stringify(input);
-        console.log(data);
+
         $.ajax({
             url: url,
             method: method,
             data: data,
             contentType: "application/json",
-            success: function (response) {
-                alert("Data Berhasil Ditambahkan");
-                // Optionally, you can redirect or perform other actions after success
-                //window.location.href = "https://localhost:44355/";
-                console.log(response)
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
+            success: function (data) {
+                swal("Sukses!", "Data Pengumuman Berhasil Ditambahkan", "success").then(() => {
+                    window.location.href = myHostname + "Pengumuman/Index";
+                });
             },
             error: function (error) {
-                console.error("Error:", error);
-            }
+                console.log(error)
+                alert("Gagal menyimpan data Pengumuman.");
+            },
         });
     }
 

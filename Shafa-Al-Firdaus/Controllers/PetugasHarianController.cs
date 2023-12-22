@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using Shafa_Al_Firdaus.Models;
 using System.Diagnostics;
 
@@ -18,10 +19,17 @@ namespace Shafa_Al_Firdaus.Controllers
 
         public IActionResult Index()
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
+
+            ViewData["Token"] = token;
             return View();
         }
         public IActionResult Privacy()
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
+
             return View();
         }
 
@@ -32,10 +40,18 @@ namespace Shafa_Al_Firdaus.Controllers
         }
         public IActionResult Create()
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
+
+            ViewData["Token"] = token;
             return View();
         }
         public IActionResult Update(string id)
         {
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (token == null) { return RedirectToAction("Index", "Login"); }
+
+            ViewData["Token"] = token;
             ViewBag.Name = id;
             return View();
         }

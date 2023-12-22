@@ -13,6 +13,7 @@
             <label for="statusFilter">Filter by Status:</label>
             <select id="statusFilter">
                 <option value="">All</option>
+                <option value="2">Terlaksana</option>
                 <option value="1">Aktif</option>
                 <option value="0">Tidak Aktif</option>
             </select>
@@ -21,6 +22,7 @@
             <label for="searchInput">Search:</label>
             <input type="text" id="searchInput" />
         </div>
+
         <table class="table table-stripped">
             <thead>
                 <tr>
@@ -51,28 +53,37 @@
         var method = "GET";
         var statusFilter = $("#statusFilter").val();
         var searchInput = $("#searchInput").val();
+        var jwtToken = '@ViewBag.Token';
 
         $.ajax({
             url: url,
             method: method,
             contentType: "application/json",
             headers: {
-                'Authorization': 'Bearer ' + '@TempData["JwtToken"]'
+                'Authorization': 'Bearer ' + jwtToken
             },
             success: function (data) {
                 var list = data.data;
+                var currentDate = new Date();
+
                 list.forEach(function (item) {
+                    var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour24: false };
+                    
+                    var formatter = new Intl.DateTimeFormat('id-ID', options);
+
+                    var formattedTanggal = formatter.format(new Date(item.tanggal));
+
                     var statusText = item.status === 2 ? 'Terlaksana' : (item.status === 1 ? 'Aktif' : 'Tidak Aktif');
                     var newRow = '<tr align="center">' +
-                        "<td>" + nama + "</td>" +
+                        "<td>" + item.kode + "</td>" +
                         "<td>" + formattedTanggal + "</td>" +
                         "<td>" + item.waktu + "</td>" +
                         "<td>" + item.tugas + "</td>" +
                         '<td>' + statusText + '</td>' +
                         '<td>' +
-                        '<a class="btn btn-secondary" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '" style="margin : 0px 5px">Update</a>' +
-                        '<a class="btn btn-danger btn-batal" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Batal</a>' +
-                        '<a class="btn btn-danger btn-terlaksana" data-id="' + item.id_jadwal + '" style="margin : 0px 5px">Terlaksana</a>' +
+                        '<a type="button" class="btn btn-outline-info btn-icon" href="/JadwalPetugas/Update?id_jadwal=' + item.id_jadwal + '" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="bi bi-pencil-square"></i></a>' +
+                        '<button  class="btn btn-outline-danger btn-icon" value="' + item.id_jadwal + '" onclick="updateBatal(\'' + item.id_jadwal + '\')" style="margin-left: 10px;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Batal"><i class="bi bi-dash-circle-fill"></i></button>' +
+                        '<button  class="btn btn-outline-success btn-icon" value="' + item.id_jadwal + '" onclick="updateTerlaksana(\'' + item.id_jadwal + '\')"><i class="bi bi-check-circle-fill" data-toggle="tooltip" data-placement="top" title="Terlaksana"></i></button>' +
                         '</td>' +
                         '</tr>';
 
@@ -102,7 +113,7 @@
                 method: "GET",
                 contentType: "application/json",
                 headers: {
-                    'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                    'Authorization': 'Bearer ' + '@ViewBag.Token'
                 },
                 success: function (data) {
                     var item = data.data;
@@ -119,6 +130,7 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
         var method = "PUT";
+        var jwtToken = '@ViewBag.Token';
 
         swal({
             title: "Batalkan Jadwal Petugas",
@@ -133,7 +145,7 @@
                     method: method,
                     contentType: "application/json",
                     headers: {
-                        'Authorization': 'Bearer ' + @TempData["JwtToken"];
+                        'Authorization': 'Bearer ' + '@ViewBag.Token'
                     },
                     success: function (data) {
                         if (data.status == 200) {
@@ -159,6 +171,7 @@
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
         var method = "PUT";
+        var jwtToken = '@ViewBag.Token';
 
         swal({
             title: "Jadwal Petugas Terlaksana",
@@ -172,6 +185,9 @@
                     url: url,
                     method: method,
                     contentType: "application/json",
+                    headers: {
+                        'Authorization': 'Bearer ' + '@ViewBag.Token'
+                    },
                     success: function (data) {
                         if (data.status == 200) {
                             swal("Sukses!", data.message, "success").then(() => {
@@ -189,5 +205,4 @@
             }
         });
     }
-       });
 </script>
