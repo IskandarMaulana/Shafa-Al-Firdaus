@@ -42,7 +42,7 @@
 <script>
     loadTable();
 
-    $("#statusFilter, #searchInput").change(function () {
+    $("#statusFilter, #searchInput").on("input", function () {
         $("#tbody").empty();
         loadTable();
     });
@@ -91,11 +91,11 @@
                     if (
                         (statusFilter === "" || item.status.toString() === statusFilter) &&
                         (searchInput === "" ||
-                            nama.toLowerCase().includes(searchInput.toLowerCase()) ||
-                            item.waktu.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.kode.toLowerCase().includes(searchInput.toLowerCase()) ||
                             formattedTanggal.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.waktu.toLowerCase().includes(searchInput.toLowerCase()) ||
                             item.tugas.toLowerCase().includes(searchInput.toLowerCase()) ||
-                            getStatusDescription(item.status).toLowerCase().includes(searchInput.toLowerCase())
+                            statusText.toLowerCase().includes(searchInput.toLowerCase())
                         )
                     ) {
                         $('#tbody').append(newRow);
