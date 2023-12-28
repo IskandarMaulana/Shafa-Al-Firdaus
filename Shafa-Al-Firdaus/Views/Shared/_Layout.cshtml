@@ -62,17 +62,14 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
-
-    <link rel="stylesheet" href="~/assets/css/global.css" />
-    <link rel="stylesheet" href="~/assets/css/index.css" />
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Baloo:wght@400&display=swap" />
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    
 </head>
 <body>
     <div class="container-scroller">
@@ -107,7 +104,7 @@
                                 <p class="fw-light text-muted mb-0">Masjid Asy-Syabab</p>
                             </div>
                             <a class="dropdown-item" asp-controller="Akun" asp-action="Index"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i>Akun</a>
-                            <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Keluar</a>
+                            <a class="dropdown-item" asp-controller="Login" asp-action="Index"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Keluar</a>
                         </div>
                     </li>
                 </ul>
@@ -156,6 +153,13 @@
                             <img class="mdi mdi-grid-large menu-icon" src="~/assets/icons/megaphone.png" alt="Pengumuman Icon" />
                             <!-- <i class="mdi mdi-grid-large menu-icon"></i> -->
                             <span class="menu-title">Pengumuman</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
+                            <img class="mdi mdi-grid-large menu-icon" src="~/assets/icons/clock.png" alt="Dashboard Icon" />
+                            <!-- <i class="mdi mdi-grid-large menu-icon"></i> -->
+                            <span class="menu-title">Tampilkan</span>
                         </a>
                     </li>
                 </ul>

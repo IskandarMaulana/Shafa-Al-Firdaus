@@ -52,7 +52,7 @@ namespace Shafa_Al_Firdaus.Controllers
             }
 
             // If authentication fails, return to the login page with an error message
-            TempData["ErrorMessage"] = "Invalid username or password";
+            TempData["ErrorMessage"] = "Nama Pengguna atau Kata Sandi salah";
             return RedirectToAction("Index");
         }
 

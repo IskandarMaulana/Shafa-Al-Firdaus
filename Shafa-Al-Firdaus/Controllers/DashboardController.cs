@@ -22,6 +22,8 @@ namespace Shafa_Al_Firdaus.Controllers
             // You might want to do something with jadwal here, for example, pass it to the view
             ViewBag.Jadwal = jadwal;
 
+            HttpContext.Session.Remove("JwtToken");
+
             return View();
         }
         private async Task<JObject> GetJadwalFromWebApi()
@@ -44,6 +46,10 @@ namespace Shafa_Al_Firdaus.Controllers
             }
 
             return null;
+        }
+        public IActionResult BlackScreen()
+        {
+            return View();
         }
     }
 }

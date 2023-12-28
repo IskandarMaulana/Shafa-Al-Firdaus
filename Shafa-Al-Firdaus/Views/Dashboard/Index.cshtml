@@ -3,7 +3,7 @@
 *@
 @using Newtonsoft.Json
 @{
-    ViewData["Title"] = "Login Page";
+    ViewData["Title"] = "Halaman Utama";
     Layout = null;
 }
 
@@ -12,7 +12,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
     <title>@ViewData["Title"] - Shafa Al-Firdaus</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="~/assets/vendors/feather/feather.css" />
@@ -52,7 +52,7 @@
 <body class="dashboard-page" style="background-image: url('assets/images/Polytechnic-Astra-2.jpeg');">
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
-            <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-center flex-row bg-transparent">
+            <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-center flex-row bg-transparent" style="height: 170px">
                 <div class="navbar-dashboard d-flex align-items-top">
                     <ul class="navbar-nav">
                         <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
@@ -61,12 +61,29 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav ms-auto me-auto align-items-center">
+                        <li class="nav-item d-none d-lg-block ms-0 pt-0">
+                            <p class="title-time-now">Sekarang</p>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <p class="text-time-now" id="time-now"></p>
+                        </li>
+                    </ul>
+                    
                     <ul class="navbar-nav ms-auto me-auto">
                         <li class="nav-item d-none d-lg-block ms-0">
                             <h1 class="title-asy-syabab">Masjid Asy-Syabab</h1>
                         </li>
                         <li class="nav-item">
                             <h3 class="title-asy-syabab">Politeknik Astra</h3>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto me-auto align-items-center">
+                        <li class="nav-item d-none d-lg-block ms-0 pt-0">
+                            <p class="title-time-now">Adzan Berikutnya</p>
+                        </li>
+                        <li class="nav-item pt-2">
+                            <p class="text-time-now" id="time-next">10:20</p>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
@@ -77,73 +94,25 @@
                         </li>
                     </ul>
                 </div>
+                <div class="row w-100 mx-0" style="height: 20px;">
+                    <div class="school-address d-sm-flex justify-content-center ">
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+                            Jalan Gaharu Blok F No. 1, Kawasan Delta Silicon 2, Lippo Cikarang, Cibatu, Cikarang Selatan
+                        </span>
+                    </div>
+                </div>
             </nav>
             <!-- content-wrapper ends -->
             <!-- partial -->
+            
             <div class="main-panel-dashboard">
                 <div class="dashboard-wrapper">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="home-tab">
+                    <div class="row slide-jadwal">
+                        
                                 <div id="carouselDashboard" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                        <!-- Jadwal Shalat -->
-                                        <div class="carousel-item jadwal-shalat active" data-bs-interval="10000">
-                                            <h2 class="title-jadwal">Jadwal Shalat</h2>
-                                            <div class="container d-flex p-0 align-items-center flex-row">
-                                                <div class="card card-jadwal card-jadwal-shalat" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" id="title-imsak">Imsak</h5>
-                                                        <p class="card-text" id="time-imsak"></p>
-                                                    </div>
-                                                </div>
-                                                <div class="card card-jadwal card-jadwal-shalat" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" id="title-subuh">Subuh</h5>
-                                                        <p class="card-text" id="time-subuh"></p>
-                                                    </div>
-                                                </div>
-                                                <div class="card card-jadwal card-jadwal-shalat" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" id="title-terbit">Terbit</h5>
-                                                        <p class="card-text" id="time-terbit"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="container d-flex p-0 align-items-center flex-row container-jadwal">
-                                                <div class="card card-jadwal card-jadwal-shalat" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" id="title-dzuhur">Dzuhur</h5>
-                                                        <p class="card-text" id="time-dzuhur"></p>
-                                                    </div>
-                                                </div>
-                                                <div class="card card-jadwal card-jadwal-shalat " style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" id="title-ashar">Ashar</h5>
-                                                        <p class="card-text" id="time-ashar"></p>
-                                                    </div>
-                                                </div>
-                                                <div class="card card-jadwal card-jadwal-shalat" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" id="title-maghrib">Maghrib</h5>
-                                                        <p class="card-text" id="time-maghrib"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="container d-flex p-0 align-items-center flex-row container-jadwal">
-                                                <div class="card card-jadwal card-jadwal-shalat" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" id="title-isya">Isya</h5>
-                                                        <p class="card-text" id="time-isya"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                    <div class="carousel-inner" id="slide-inner">
                                         <!-- Jadwal Petugas  -->
-                                        <div class="carousel-item jadwal-petugas" data-bs-interval="10000">
+                                        <div class="carousel-item jadwal-petugas active" data-bs-interval="10000">
                                             <h2 class="title-jadwal">Jadwal Petugas</h2>
                                             <div class="container d-flex p-0 align-items-center flex-row container-jadwal">
                                                 <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
@@ -152,11 +121,11 @@
                                                             <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
                                                         </div>
                                                         <div class="jadwal-body">
-                                                            <h5 class="card-title">Subuh</h5>
-                                                            <p class="card-text">04:14</p>
+                                                            <h5 class="card-title" id="tugas-title-1"></h5>
+                                                            <p class="card-text" id="tugas-time-1"></p>
                                                             <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas">Adzan - Iqamah</h5>
-                                                            <p class="card-text nama-petugas">Muhammad Naufal Maulana Iskandar</p>
+                                                            <h5 class="card-title card-title-tugas" id="tugas-task-1"></h5>
+                                                            <p class="card-text nama-petugas" id="tugas-name-1"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -166,11 +135,11 @@
                                                             <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
                                                         </div>
                                                         <div class="jadwal-body">
-                                                            <h5 class="card-title">Subuh</h5>
-                                                            <p class="card-text">04:14</p>
+                                                            <h5 class="card-title" id="tugas-title-2"></h5>
+                                                            <p class="card-text" id="tugas-time-2"></p>
                                                             <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas">Adzan</h5>
-                                                            <p class="card-text nama-petugas">Maulana Iskandar</p>
+                                                            <h5 class="card-title card-title-tugas" id="tugas-task-2"></h5>
+                                                            <p class="card-text nama-petugas" id="tugas-name-2"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -180,11 +149,11 @@
                                                             <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
                                                         </div>
                                                         <div class="jadwal-body">
-                                                            <h5 class="card-title">Subuh</h5>
-                                                            <p class="card-text">04:14</p>
+                                                            <h5 class="card-title" id="tugas-title-3"></h5>
+                                                            <p class="card-text" id="tugas-time-3"></p>
                                                             <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas">Adzan</h5>
-                                                            <p class="card-text nama-petugas">Maulana Iskandar</p>
+                                                            <h5 class="card-title card-title-tugas" id="tugas-task-3"></h5>
+                                                            <p class="card-text nama-petugas" id="tugas-name-3"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -197,11 +166,11 @@
                                                             <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
                                                         </div>
                                                         <div class="jadwal-body">
-                                                            <h5 class="card-title">Subuh</h5>
-                                                            <p class="card-text">04:14</p>
+                                                            <h5 class="card-title" id="tugas-title-4"></h5>
+                                                            <p class="card-text" id="tugas-time-4"></p>
                                                             <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas">Adzan</h5>
-                                                            <p class="card-text nama-petugas">Maulana Iskandar</p>
+                                                            <h5 class="card-title card-title-tugas" id="tugas-task-4"></h5>
+                                                            <p class="card-text nama-petugas" id="tugas-name-4"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -211,32 +180,20 @@
                                                             <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
                                                         </div>
                                                         <div class="jadwal-body">
-                                                            <h5 class="card-title">Subuh</h5>
-                                                            <p class="card-text">04:14</p>
+                                                            <h5 class="card-title" id="tugas-title-5"></h5>
+                                                            <p class="card-text" id="tugas-time-5"></p>
                                                             <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas">Adzan</h5>
-                                                            <p class="card-text nama-petugas" id="nama-petugas">Iskandar</p>
+                                                            <h5 class="card-title card-title-tugas" id="tugas-task-5"></h5>
+                                                            <p class="card-text nama-petugas" id="tugas-name-5"></p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <!-- Pengumuman  -->
-                                        <div class="carousel-item pengumuman" data-bs-interval="10000">
-                                            <h2 class="title-jadwal">Pengumuman</h2>
-                                            <div class="container d-flex p-0 align-items-center flex-row">
-                                                <div class="card card-jadwal card-pengumuman" style="width: 75rem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Informasi</h5>
-                                                        <p class="card-text">
-                                                            Star Admin2 is a responsive HTML template that is based on the CSS framework Bootstrap 5 and it is built with Sass. Sass compiler makes it easier to code and customize. If you are unfamiliar with Bootstrap or Sass, visit their website and read through the documentation. All of Bootstrap components have been modified to fit the style of Star Admin2 and provide a consistent look throughout the template.
-                                                            Before you start working with the template, we suggest you go through the pages that are bundled with the theme. Most of the template example pages contain quick tips on how to create or use a component which can be really helpful when you need to create something on the fly.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
+
+                                        
                                     </div>
                                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselDashboard" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -247,31 +204,72 @@
                                         <span class="visually-hidden">Next</span>
                                     </button>
                                 </div>
-                            </div>
-                        </div>
+                          
                     </div>
+                    <!-- Pengumuman Teks Berjalan -->
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="home-tab">
                                 <div class="card card-running-text">
                                     <div class="card-body">
-                                        <marquee class="card-text " behavior="scroll" direction="left">
-                                            Here is some scrolling text... right to left!
-                                            Star Admin2 is a responsive HTML template that is based on the CSS framework Bootstrap 5 and it is built with Sass. Sass compiler makes it easier to code and customize. If you are unfamiliar with Bootstrap or Sass, visit their website and read through the documentation. All of Bootstrap components have been modified to fit the style of Star Admin2 and provide a consistent look throughout the template.
-                                            Before you start working with the template, we suggest you go through the pages that are bundled with the theme. Most of the template example pages contain quick tips on how to create or use a component which can be really helpful when you need to create something on the fly.
-                                        </marquee>
+                                        <marquee class="card-text nama-petugas" id="pengumuman-running-text" behavior="scroll" direction="left"></marquee>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row w-100 mx-0">
-                        <div class="school-address d-sm-flex justify-content-center ">
-                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                                Jalan Gaharu Blok F No. 1, Kawasan Delta Silicon 2, Lippo Cikarang, Cibatu, Cikarang Selatan
-                            </span>
+
+                    <!-- Jadwal Shalat -->
+                    <div class="row w-100 h-18 mx-0">
+                        <div class="jadwal-shalat">
+                            <div class="container-jadwal-shalat w-100 d-flex p-0 align-items-center flex-row">
+                                <div class="card card-jadwal card-jadwal-shalat" >
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="title-imsak">Imsak</h5>
+                                        <p class="card-text" id="time-imsak"></p>
+                                    </div>
+                                </div>
+                                <div class="card card-jadwal card-jadwal-shalat" >
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="title-subuh">Subuh</h5>
+                                        <p class="card-text" id="time-subuh"></p>
+                                    </div>
+                                </div>
+                                <div class="card card-jadwal card-jadwal-shalat" >
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="title-terbit">Terbit</h5>
+                                        <p class="card-text" id="time-terbit"></p>
+                                    </div>
+                                </div>
+                                <div class="card card-jadwal card-jadwal-shalat" >
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="title-dzuhur">Dzuhur</h5>
+                                        <p class="card-text" id="time-dzuhur"></p>
+                                    </div>
+                                </div>
+                                <div class="card card-jadwal card-jadwal-shalat " >
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="title-ashar">Ashar</h5>
+                                        <p class="card-text" id="time-ashar"></p>
+                                    </div>
+                                </div>
+                                <div class="card card-jadwal card-jadwal-shalat" >
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="title-maghrib">Maghrib</h5>
+                                        <p class="card-text" id="time-maghrib"></p>
+                                    </div>
+                                </div>
+                                <div class="card card-jadwal card-jadwal-shalat">
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="title-isya">Isya</h5>
+                                        <p class="card-text" id="time-isya"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
+                    
                     <div class="row w-100 mx-0">
                         <footer class="footer footer-dashboard">
                             <div class="d-sm-flex justify-content-center ">
@@ -286,9 +284,49 @@
     </div>
     <!-- container-scroller -->
     <script>
-        loadJadwalShalatFromContoller();
+        var nextAdzanTime = null;
 
-        function loadJadwalShalatFromContoller() {
+        loadJadwalShalat();
+        loadJadwalPetugas();
+        loadPengumuman();
+
+/*      ========================= COUNTDOWN & JAM ================================ */
+        function updateTime() {
+            var now = new Date();
+
+            document.getElementById("time-now").innerText = zeroPadding(now.getHours(), 2) + ":" + zeroPadding(now.getMinutes(), 2) + ":" + zeroPadding(now.getSeconds(), 2);
+        }
+
+        function zeroPadding(num, digit) {
+            return String(num).padStart(digit, '0');
+        }
+
+        function updateNextAdzanCountdown() {
+            var now = new Date();
+
+            // Hitung selisih waktu antara sekarang dan waktu adzan berikutnya
+            var countdownMillis = nextAdzanTime - now;
+
+            if (countdownMillis <= 0) {
+                //window.location.href = "/Dashboard/BlackScreen";
+            }
+
+            var hours = Math.floor(countdownMillis / (1000 * 60 * 60));
+            var minutes = Math.floor((countdownMillis % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((countdownMillis % (1000 * 60)) / 1000);
+
+            // Tampilkan waktu countdown
+            document.getElementById("time-next").innerText = zeroPadding(hours, 2) + ":" + zeroPadding(minutes, 2) + ":" + zeroPadding(seconds, 2);
+        }
+        updateTime();
+        setInterval(updateTime, 100);
+
+        updateNextAdzanCountdown();
+        setInterval(updateNextAdzanCountdown, 100);
+
+/*      ========================= JADWAL SHALAT ================================ */
+
+        function loadJadwalShalat() {
             var jadwalString = '@JsonConvert.SerializeObject(ViewBag.Jadwal)';
 
             // Ganti HTML entities kembali ke karakter aslinya
@@ -305,9 +343,6 @@
             var list = jadwal.data;
 
             var targetDate = moment().format('D-MM-YYYY');
-
-
-            console.log(targetDate);
             
             var targetData = null;
 
@@ -319,14 +354,178 @@
                 }
             });
             
-            // Contoh: Menambahkan teks ke dalam elemen dengan ID "time-imsak"
-            imsak.textContent = targetData.timings.Imsak.replace("(WIB)", "WIB");
-            subuh.textContent = targetData.timings.Fajr.replace("(WIB)", "WIB");
-            terbit.textContent = targetData.timings.Sunrise.replace("(WIB)", "WIB");
-            dzuhur.textContent = targetData.timings.Dhuhr.replace("(WIB)", "WIB");
-            ashar.textContent = targetData.timings.Asr.replace("(WIB)", "WIB");
-            maghrib.textContent = targetData.timings.Maghrib.replace("(WIB)", "WIB");
-            isya.textContent = targetData.timings.Isha.replace("(WIB)", "WIB");
+            var todayData = targetData.timings;
+
+            for (let i in todayData) {
+                var currentDate = new Date();
+                var currentHours = currentDate.getHours();
+                var currentMinutes = currentDate.getMinutes();
+                var currentTime = currentHours * 60 + currentMinutes; // Ubah waktu ke menit untuk perbandingan
+
+                var adzanTime = todayData[i].replace("(WIB)", "").split(":");
+                var adzanHours = parseInt(adzanTime[0], 10);
+                var adzanMinutes = parseInt(adzanTime[1], 10);
+                var adzanTimeInMinutes = adzanHours * 60 + adzanMinutes; // Ubah waktu adzan ke menit
+                
+                var nextAdzanHours = 0;
+                var nextAdzanMinutes = 0;
+                var nextAdzanTimeInMinutes = 0;
+
+                if (nextAdzanTime != null) {
+                    nextAdzanHours = nextAdzanTime.getHours();
+                    nextAdzanMinutes = nextAdzanTime.getMinutes();
+                    nextAdzanTimeInMinutes = nextAdzanHours * 60 + nextAdzanMinutes;
+                }
+
+                if ((adzanTimeInMinutes >= currentTime) && (nextAdzanTime === null || (adzanTimeInMinutes < nextAdzanTimeInMinutes) || (nextAdzanTimeInMinutes === 0))) {
+                    if ((i == "Fajr") || (i == "Dhuhr") || (i == "Asr") || (i == "Maghrib") || (i == "Isha")) {
+                        nextAdzanTime = new Date();
+                        nextAdzanTime.setHours(adzanHours);
+                        nextAdzanTime.setMinutes(adzanMinutes);
+                    }
+                }
+            }
+
+            imsak.textContent = targetData.timings.Imsak.replace("(WIB)", "");
+            subuh.textContent = targetData.timings.Fajr.replace("(WIB)", "");
+            terbit.textContent = targetData.timings.Sunrise.replace("(WIB)", "");
+            dzuhur.textContent = targetData.timings.Dhuhr.replace("(WIB)", "");
+            ashar.textContent = targetData.timings.Asr.replace("(WIB)", "");
+            maghrib.textContent = targetData.timings.Maghrib.replace("(WIB)", "");
+            isya.textContent = targetData.timings.Isha.replace("(WIB)", "");
+        }
+
+/*      ========================= JADWAL PETUGAS HARIAN ================================ */
+
+        function loadJadwalPetugas() {
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "GetViewJadwalPetugas";
+            var method = "GET";
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                success: function (data) {
+                    var list = data.data;
+                    var currentDate = new Date();
+                    var i = 1;
+
+                    var todayDateString = currentDate.toISOString().split('T')[0];
+                    //console.log(todayDateString)
+                    list.forEach(function (item) {
+                        if (i > 5) {
+                            return;
+                        }
+
+                        var itemDate = new Date(item.tanggal);
+                        var itemDateString = itemDate.toISOString().split('T')[0];
+                        var itemStatus = item.status;
+
+                        if ((itemDateString === todayDateString) && (itemDate >= currentDate) && (itemStatus === 1)) {
+                           // console.log(item);
+
+                            var titleElement = document.getElementById('tugas-title-' + i);
+                            var timeElement = document.getElementById('tugas-time-' + i);
+                            var taskElement = document.getElementById('tugas-task-' + i);
+                            var nameElement = document.getElementById('tugas-name-' + i);
+
+                            var hours = itemDate.getHours();
+                            var minutes = itemDate.getMinutes();
+                            var formattedTime = hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+
+                            titleElement.textContent = item.waktu;
+                            timeElement.textContent = formattedTime;
+                            taskElement.textContent = item.tugas;
+                            nameElement.textContent = item.nama;
+                            i++;
+                        }
+                    });
+
+                    if (i <= 5) {
+                        var cardElements = document.getElementsByClassName('card-jadwal-petugas');
+                        
+                        for (let j = 4; j >= i-1; j--) {
+                            cardElements[j].remove();
+                        }
+                    }
+
+                },
+            });
+        }
+
+/*      ========================= PENGUMUMAN ================================ */
+
+        function loadPengumuman() {
+            var judulKegiatan = document.getElementById("pengumuman-kegiatan-judul");
+            var isiKegiatan = document.getElementById("pengumuman-kegiatan-isi");
+            
+            var judulPemberitahuan = document.getElementById("pengumuman-pemberitahuan-judul");
+            var isiPemberitahuan = document.getElementById("pengumuman-pemberitahuan-isi");
+            
+            var isiRunningText= document.getElementById("pengumuman-running-text");
+
+            var hostname = "https://localhost:44307/";
+            var url = hostname + "GetViewPengumuman";
+            var method = "GET";
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: "application/json",
+                success: function (data) {
+                    var list = data.data;
+
+                    var runningText = " • ";
+
+                    list.forEach(function (item) {
+                        var status = item.status;
+                        var jenis = item.jenis;
+
+                        if (status === 1 && jenis === 0) {
+                            var newItem = 
+                            "<div class='carousel-item pengumuman' id='pengumuman-kegiatan' data-bs-interval='10000'> " +
+                                "<h2 class='title-jadwal'>Pengumuman</h2> " +
+                                "<div class='container d-flex p-0 align-items-center flex-row'> " +
+                                "<div class='card card-jadwal card-pengumuman' style='width: 75rem'> " +
+                                "<div class='card-body'>" +
+                                "<h5 class='card-title' id='pengumuman-kegiatan-judul'>" + item.judul + "</h5>" + 
+                                "<p class='card-text' id='pengumuman-kegiatan-isi'>" + item.isi + "</p>" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>";
+
+                            $("#slide-inner").append(newItem);
+                        }
+
+                        if (status === 1 && jenis === 1) {
+                            var newItem =
+                                "<div class='carousel-item pengumuman' id = 'pengumuman-pemberitahuan' data - bs - interval='10000' >" +
+                                "<h2 class='title-jadwal' > Pengumuman < /h2>" +
+                                "<div class='container d-flex p-0 align-items-center flex-row' >" +
+                                "<div class='card card-jadwal card-pengumuman' style = 'width: 75rem' > " +
+                                "<div class='card-body' >" +
+                                "<h5 class='card-title' id = 'pengumuman-pemberitahuan-judul' >" + item.judul + "</h5>" +
+                                "<p class='card-text' id = 'pengumuman-pemberitahuan-isi' >" + item.isi + "</p>" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>";
+
+                            $("#slide-inner").append(newItem);
+                        }
+
+                        if (status === 1 && jenis === 2) {
+                            var judul = item.judul;
+                            var isi = item.isi;
+
+                            runningText += isi + " • ";
+                        }
+                    });
+                    isiRunningText.textContent = runningText;
+                },
+            });
         }
     </script>
 

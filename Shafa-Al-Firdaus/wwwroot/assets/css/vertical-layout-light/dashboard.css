@@ -6,7 +6,11 @@
 #carouselDashboard {
   display: flex;
   align-items: center;
-  height: 65vh;
+  height: 100%;
+}
+
+.h-18 {
+  height: 18% !important;
 }
 
 .dashboard-page {
@@ -46,11 +50,26 @@
   margin-bottom: 10px;
   text-align: center;
   font-family: "Roboto", sans-serif;
+  font-weight: bold;
   color: white;
 }
 
+.title-time-now{
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+}
+
+.text-time-now {
+  color: #FFF;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px #7B66FF;
+}
+
 .main-panel-dashboard {
-  margin-top: 150px;
+  margin-top: 170px;
   width: 100%;
   height: calc(100vh - 150px);
   display: flex;
@@ -61,10 +80,20 @@
   height: 100%;
 }
 
+.slide-jadwal {
+  /* max-height: 640px;
+  min-height: 600px; */
+  height: 600px;
+}
+
 .container-jadwal {
   margin-top: 3rem;
 }
 
+.container-jadwal-shalat{
+  width: inherit;
+  height: 100%;
+}
 .carousel-inner {
   height: inherit;
 }
@@ -82,22 +111,35 @@
   margin-top: 10px;
   margin-right: auto;
   margin-left: auto;
-  background-color: #004fe356;
+  background-color: #32417b62;
   backdrop-filter: blur(10px);
   border: 2px solid rgb(255 255 255 / 40%);
 }
 
+.card-jadwal-shalat {
+  height: 100%;
+  width: auto;
+  min-width: 16rem;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
 .card-jadwal-shalat .card-title {
-  color: white;
+  color: #EEF5B2;
   text-align: center;
-  font-size: 40px;
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
 .card-jadwal-shalat .card-text {
-  color: white;
+  color: #5EDFFF;
+  font-weight: bold;
   margin-top: 20px;
   text-align: center;
-  font-size: 40px;
+  font-size: 5rem;
+  /* text-shadow: 0 0 5px #39A7FF; */
 }
 
 .jadwal-shalat {
@@ -121,16 +163,18 @@
 }
 
 .card-jadwal-petugas .card-title {
-  color: white;
+  color: #46B5D1;
   text-align: center;
   font-size: 30px;
+  margin-bottom: 0.5rem;
 }
 
 .card-jadwal-petugas .card-text {
-  color: white;
-  margin-top: 20px;
+  color: #5EDFFF;
+  margin-top: 0.5rem;
   text-align: center;
   font-size: 30px;
+  font-weight: 800;
 }
 
 .icon-jadwal-petugas {
@@ -146,6 +190,7 @@
 }
 
 .jadwal-body .nama-petugas {
+  height: 2rem;
   white-space: nowrap; 
   will-change: transform;
   animation: marquee 15s linear infinite; 
@@ -154,16 +199,6 @@
 .jadwal-body .card-title-tugas {
   font-size: 20px;
 }
-
-/* @keyframes marquee {
-  0% {
-    transform: translateX(100%); 
-  }
-
-  100% {
-    transform: translateX(-100%);
-  }
-} */
 
 @keyframes marquee {
   from {
@@ -177,18 +212,21 @@
 @keyframes pause {
   0%,
   100% {
-    transform: translateX(0); /* Posisi tetap saat animasi berhenti */
+    transform: translateX(0); 
   }
 }
 
 .jadwal-divider {
   height: 2px;
+  margin: 0.5rem;
   background-color: #fff;
 }
 
 .card-pengumuman {
-  min-height: 34rem;
+  min-height: 300px;
   height: auto !important;
+  max-height: 500px;
+  background-color: #1365df57;
 }
 
 .card-pengumuman .card-body {
@@ -197,13 +235,13 @@
 }
 
 .card-pengumuman .card-title {
-  color: white;
+  color: #DFF6FF;
   text-align: center;
   font-size: 30px;
 }
 
 .card-pengumuman .card-text {
-  color: white;
+  color: #DFF6FF;
   margin-top: 20px;
   text-align: center;
   font-size: 30px;
@@ -211,11 +249,11 @@
 }
 
 .card-running-text {
-  width: 85rem;
+  width: 100rem;
   height: auto;
   margin-top: 10px;
   margin-bottom: 10px;
-  background-color: #1967f754;
+  background-color: #32417b62;
   backdrop-filter: blur(10px);
   border: 2px solid rgb(255 255 255 / 40%);
   margin-left: auto;
@@ -239,13 +277,13 @@
   font-weight: bold;
   font-size: 20px;
   white-space: nowrap;
-  margin-top: 30px;
+  margin-top: 0px;
 }
 
 .footer-dashboard {
   background-color: transparent;
   color: black;
-  font-size: 15px;
+  font-size: 20px;
   text-align: center;
   margin: 0px;
   padding: 10px;

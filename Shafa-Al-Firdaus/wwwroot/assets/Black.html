@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown to Dzuhur Prayer</title>
+    <style>
+      body {
+        align-items: center;
+        background-color: black;
+        color: white;
+        font-family: "Arial", sans-serif;
+        font-size: 5em;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      #countdown {
+        font-size: 2em;
+      }
+
+      #prayer-message {
+        font-size: 1.5em;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <div id="countdown"></div>
+      <div id="prayer-message">Sedang Melaksanakan Sholat</div>
+    </div>
+    <script>
+      var countdownTime = 10 * 60;
+
+      function updateCountdown() {
+        var minutes = Math.floor(countdownTime / 60);
+        var seconds = countdownTime % 60;
+
+        document.getElementById("countdown").innerHTML = formatTime(minutes) + " : " + formatTime(seconds);
+
+        countdownTime--;
+
+        if (countdownTime < 0) {
+          window.location.href = "https://localhost:44355/Dashboard/Index";
+        }
+      }
+
+      function formatTime(time) {
+        return time < 10? "0" + time : time ;
+      }
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>

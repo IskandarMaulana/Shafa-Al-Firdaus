@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Login Page";
     Layout = null;
+    var errorMessage = TempData["ErrorMessage"] as string;
 }
 
 <!DOCTYPE html>
@@ -74,13 +75,20 @@
             <div class="content-wrapper d-flex align-items-center auth px-0" style="position: relative; overflow: hidden; height: 100vh">
                 <div class="row w-100 mx-0">
                     <div class="col-lg-6 mx-auto">
-                        <div class="auth-form-light text-left py-3 px-4 px-sm-4">
+                        <div class="auth-form-light text-left py-3 px-4 px-sm-4 h-auto">
                             <div class="content-wrapper">
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-content">
                                             <h4>Selamat Datang</h4>
                                             <h6 class="fw-light">Silahkan masuk untuk melanjutkan</h6>
+
+                                            @if (!string.IsNullOrEmpty(errorMessage))
+                                            {
+                                                <div class="alert alert-danger">
+                                                    @errorMessage
+                                                </div>
+                                            }
                                             <form class="pt-3" asp-controller="Login" asp-action="Login" method="post">
                                                 <div class="form-group">
                                                     <input asp-for="Username" class="form-control form-control-lg" placeholder="Nama Pengguna" required data-val="true" oninvalid="this.setCustomValidity('Nama Pengguna harus diisi')" />
