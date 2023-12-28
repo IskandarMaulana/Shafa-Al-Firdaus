@@ -21,15 +21,15 @@
                         </div>
                         <div class="form-group">
                             <label name="password" class="control-label">Kata Sandi Lama</label>
-                            <input name="password-old" id="password-old" class="form-control" />
+                            <input type="password" name="password-old" id="password-old" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label name="password" class="control-label">Kata Sandi Baru</label>
-                            <input name="password-new-1" id="password-new-1" class="form-control" />
+                            <input type="password" name="password-new-1" id="password-new-1" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label name="password" class="control-label">Kondirmasi Kata Sandi Baru</label>
-                            <input name="password-new-2" id="password-new-2" class="form-control" />
+                            <input type="password" name="password-new-2" id="password-new-2" class="form-control" />
                         </div>
                         <div class="form-group">
                             <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
@@ -100,6 +100,11 @@
         
         if (passwordOld !== oldPassword) {
             swal("Gagal!", "Kata Sandi Lama tidak sesuai", "error");
+            return; 
+        }
+
+        if (passwordNew1 == oldPassword) {
+            swal("Gagal!", "Kata Sandi tidak berubah", "error");
             return; 
         }
 

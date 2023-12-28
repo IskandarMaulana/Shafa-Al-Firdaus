@@ -228,10 +228,10 @@
                             statusText +
                             "</td>" +
                             "<td>" +
-                            '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
+                            '<a class="btn btn-outline-info btn-icon" href="/Pengumuman/Update?id=' +
                             item.id_pengumuman +
-                            '">Memperbarui</a>' +
-                            '<button class="btn btn-danger" value="' + item.id_pengumuman + '" onclick="ubahStatus(\'' + item.id_pengumuman + '\')">Tidak Tayang</button>' +
+                            '"data-toggle="tooltip" data-placement="top" title="Ubah Data Pengumuman"><i class="bi bi-pencil-square"></i></a>' +
+                            '<button class="btn btn-outline-danger btn-icon" value="' + item.id_pengumuman + '" onclick="ubahStatus(\'' + item.id_pengumuman + '\')" style="margin-left: 10px;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Pengumuman Tidak Ditayangkan"><i class="bi bi-dash-circle-fill"></i></button>' +
                             "</td>" +
                             "</tr>";
 
