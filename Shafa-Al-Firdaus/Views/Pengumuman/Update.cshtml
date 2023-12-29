@@ -74,7 +74,7 @@
         var tanggal_selesai = document.getElementById("tanggal_selesai");
         var status = document.getElementById("status");
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "GetPengumuman?id_pengumuman=" + id_pengumuman;
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -172,9 +172,7 @@
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
-
-        var myHostname = "https://localhost:44355/";
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "UpdatePengumuman"; // Change the endpoint accordingly
         var method = "PUT";
         var input = {
@@ -200,7 +198,7 @@
             },
             success: function (data) {
                 alert("Data Pengumuman Berhasil Diubah");
-                window.location.href = myHostname + "pengumuman/Index";
+                window.location.href = "/pengumuman/Index";
             },
             error: function (error) {
                 console.log(error)

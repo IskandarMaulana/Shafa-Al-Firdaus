@@ -45,7 +45,7 @@
 
     function loadPetugas() {
         
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "GetPetugasHarian?kode=" + '@name';
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -74,8 +74,7 @@
         var nomor_telepon = document.getElementById("nomor_telepon").value;
         var status = document.getElementById("status").value;
 
-        var myHostname = "https://localhost:44355/"; 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "UpdatePetugasHarian";
         var method = "PUT";
         var jwtToken = '@ViewBag.Token';
@@ -101,7 +100,7 @@
             success: function (data, textStatus, xhr) {
                 if (xhr.status === 200) {
                     swal("Berhasil", "Data Petugas Harian berhasil diubah", "success").then(() => {
-                        window.location.href = myHostname + "PetugasHarian/Index";
+                        window.location.href = "/PetugasHarian/Index";
                     });
                 } else {
                     alert("Gagal menyimpan/memperbarui Data Petugas Harian. Kode Status: " + xhr.status);

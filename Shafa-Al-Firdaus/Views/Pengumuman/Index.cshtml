@@ -94,7 +94,7 @@
             return;
         }
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "UpdateStatusPengumuman?id_pengumuman=" + id + "&newStatus=4";
         var method = "PATCH";
         var updateData = {
@@ -135,7 +135,7 @@
         });
 
         function loadTable() {
-            var hostname = "https://localhost:44307/";
+            var hostname = "http://10.5.0.123:9091/";
             var url = hostname + "GetAllPengumuman";
             var method = "GET";
 
@@ -179,7 +179,7 @@
                             (item.jenis === 0 || item.jenis === 1)
                         ) {
                             // Make an asynchronous request to update the status in the database
-                            var updateStatusUrl = "https://localhost:44307/UpdateStatusPengumuman?id_pengumuman=" + item.id_pengumuman + "&newStatus=5";
+                            var updateStatusUrl = "http://10.5.0.123:9091/UpdateStatusPengumuman?id_pengumuman=" + item.id_pengumuman + "&newStatus=5";
 
                             $.ajax({
                                 url: updateStatusUrl,
@@ -292,7 +292,7 @@
         }
 
         function hapus(id) {
-            var hostname = "https://localhost:44307/";
+            var hostname = "http://10.5.0.123:9091/";
             var url = hostname + "DeletePengumuman?id_pengumuman=" + id;
             var method = "DELETE";
 

@@ -35,7 +35,7 @@
 
     function loadID() {
         var kode = document.getElementById("kode");
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "GetIdPetugasHarian";
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -59,9 +59,7 @@
         var nomor_telepon = document.getElementById("nomor_telepon").value;
         var status = '1';
 
-        var myHostname = "https://localhost:44355/";
-
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "InsertPetugasHarian";
         var method = "POST";
         var input = {
@@ -83,7 +81,7 @@
             },
             success: function (data) {
                 swal("Sukses!", "Data Petugas Harian Berhasil Ditambahkan", "success").then(() => {
-                    window.location.href = myHostname + "PetugasHarian/Index";
+                    window.location.href = "/PetugasHarian/Index";
                 });
             },
             error: function () {

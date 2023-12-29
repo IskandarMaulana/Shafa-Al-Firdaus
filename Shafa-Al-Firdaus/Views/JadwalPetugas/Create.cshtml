@@ -94,7 +94,7 @@
     loadPetugas();
 
     function loadPetugas() {
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "GetAllPetugasHarian";
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -131,8 +131,7 @@
             return; // Berhenti jika tanggal tidak valid
         }
 
-        var myHostname = "https://localhost:44355/";
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "InsertJadwalPetugasHarian"; // Change the endpoint accordingly
         var method = "POST";
         var input = {
@@ -155,12 +154,12 @@
             },
             success: function (data) {
                 swal("Sukses!", "Data Jadwal Petugas Harian Berhasil Ditambahkan", "success").then(() => {
-                    window.location.href = myHostname + "JadwalPetugas/Index";
+                    window.location.href = "/JadwalPetugas/Index";
                 });
             },
             error: function () {
                 swal("Gagal!", "Menyimpan data Jadwal Petugas Harian gagal ditambahkan", "error").then(() => {
-                    window.location.href = myHostname + "JadwalPetugas/Index";
+                    window.location.href = "/JadwalPetugas/Index";
                 });
             },
         });

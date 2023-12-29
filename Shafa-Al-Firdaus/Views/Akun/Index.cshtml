@@ -57,7 +57,7 @@
         var decodedToken = parseJwt(jwtToken);
         var user = decodedToken.username;
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "GetDkm?username=" + user;
         var method = "GET";
 
@@ -129,7 +129,7 @@
                 }
             });
             if (success) {
-                var hostname = "https://localhost:44307/";
+                var hostname = "http://10.5.0.123:9091/";
                 var url = hostname + "UpdateDkm";
                 var method = "PUT";
                 var jwtToken = '@ViewBag.Token';
@@ -184,7 +184,7 @@
     }
 
     function sendOtpEmail(email, otp) {
-        var url = "https://localhost:44307/SendOtp?to=" + email + "&otp=" + otp;
+        var url = "http://10.5.0.123:9091/SendOtp?to=" + email + "&otp=" + otp;
         console.log(url);
 
         var method = "POST";
