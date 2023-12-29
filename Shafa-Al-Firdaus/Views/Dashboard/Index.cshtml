@@ -108,103 +108,97 @@
             <div class="main-panel-dashboard">
                 <div class="dashboard-wrapper">
                     <div class="row slide-jadwal">
-                        
-                                <div id="carouselDashboard" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                                    <div class="carousel-inner" id="slide-inner">
-                                        <!-- Jadwal Petugas  -->
-                                        <div class="carousel-item jadwal-petugas active" data-bs-interval="10000">
-                                            <h2 class="title-jadwal">Jadwal Petugas</h2>
-                                            <div class="container d-flex p-0 align-items-center flex-row container-jadwal">
-                                                <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <div class="my-auto">
-                                                            <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
-                                                        </div>
-                                                        <div class="jadwal-body">
-                                                            <h5 class="card-title" id="tugas-title-1"></h5>
-                                                            <p class="card-text" id="tugas-time-1"></p>
-                                                            <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas" id="tugas-task-1"></h5>
-                                                            <p class="card-text nama-petugas" id="tugas-name-1"></p>
-                                                        </div>
+                            <div id="carouselDashboard" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                <div class="carousel-inner" id="slide-inner">
+                                    <!-- Jadwal Petugas  -->
+                                    <div class="carousel-item jadwal-petugas active" id="petugas-jadwal-slide" data-bs-interval="10000">
+                                        <h2 class="title-jadwal">Jadwal Petugas</h2>
+                                        <div class="container d-flex p-0 align-items-center flex-row container-jadwal">
+                                            <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
+                                                <div class="card-body">
+                                                    <div class="my-auto">
+                                                        <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
                                                     </div>
-                                                </div>
-                                                <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <div class="my-auto">
-                                                            <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
-                                                        </div>
-                                                        <div class="jadwal-body">
-                                                            <h5 class="card-title" id="tugas-title-2"></h5>
-                                                            <p class="card-text" id="tugas-time-2"></p>
-                                                            <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas" id="tugas-task-2"></h5>
-                                                            <p class="card-text nama-petugas" id="tugas-name-2"></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <div class="my-auto">
-                                                            <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
-                                                        </div>
-                                                        <div class="jadwal-body">
-                                                            <h5 class="card-title" id="tugas-title-3"></h5>
-                                                            <p class="card-text" id="tugas-time-3"></p>
-                                                            <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas" id="tugas-task-3"></h5>
-                                                            <p class="card-text nama-petugas" id="tugas-name-3"></p>
-                                                        </div>
+                                                    <div class="jadwal-body">
+                                                        <h5 class="card-title" id="tugas-title-1"></h5>
+                                                        <p class="card-text" id="tugas-time-1"></p>
+                                                        <div class="sidebar-divider jadwal-divider"></div>
+                                                        <h5 class="card-title card-title-tugas" id="tugas-task-1"></h5>
+                                                        <p class="card-text nama-petugas" id="tugas-name-1"></p>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="container d-flex p-0 align-items-center flex-row container-jadwal">
-                                                <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <div class="my-auto">
-                                                            <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
-                                                        </div>
-                                                        <div class="jadwal-body">
-                                                            <h5 class="card-title" id="tugas-title-4"></h5>
-                                                            <p class="card-text" id="tugas-time-4"></p>
-                                                            <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas" id="tugas-task-4"></h5>
-                                                            <p class="card-text nama-petugas" id="tugas-name-4"></p>
-                                                        </div>
+                                            <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
+                                                <div class="card-body">
+                                                    <div class="my-auto">
+                                                        <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
+                                                    </div>
+                                                    <div class="jadwal-body">
+                                                        <h5 class="card-title" id="tugas-title-2"></h5>
+                                                        <p class="card-text" id="tugas-time-2"></p>
+                                                        <div class="sidebar-divider jadwal-divider"></div>
+                                                        <h5 class="card-title card-title-tugas" id="tugas-task-2"></h5>
+                                                        <p class="card-text nama-petugas" id="tugas-name-2"></p>
                                                     </div>
                                                 </div>
-                                                <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
-                                                    <div class="card-body">
-                                                        <div class="my-auto">
-                                                            <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
-                                                        </div>
-                                                        <div class="jadwal-body">
-                                                            <h5 class="card-title" id="tugas-title-5"></h5>
-                                                            <p class="card-text" id="tugas-time-5"></p>
-                                                            <div class="sidebar-divider jadwal-divider"></div>
-                                                            <h5 class="card-title card-title-tugas" id="tugas-task-5"></h5>
-                                                            <p class="card-text nama-petugas" id="tugas-name-5"></p>
-                                                        </div>
+                                            </div>
+                                            <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
+                                                <div class="card-body">
+                                                    <div class="my-auto">
+                                                        <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
+                                                    </div>
+                                                    <div class="jadwal-body">
+                                                        <h5 class="card-title" id="tugas-title-3"></h5>
+                                                        <p class="card-text" id="tugas-time-3"></p>
+                                                        <div class="sidebar-divider jadwal-divider"></div>
+                                                        <h5 class="card-title card-title-tugas" id="tugas-task-3"></h5>
+                                                        <p class="card-text nama-petugas" id="tugas-name-3"></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        
-
-                                        
+                                        <div class="container d-flex p-0 align-items-center flex-row container-jadwal">
+                                            <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
+                                                <div class="card-body">
+                                                    <div class="my-auto">
+                                                        <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
+                                                    </div>
+                                                    <div class="jadwal-body">
+                                                        <h5 class="card-title" id="tugas-title-4"></h5>
+                                                        <p class="card-text" id="tugas-time-4"></p>
+                                                        <div class="sidebar-divider jadwal-divider"></div>
+                                                        <h5 class="card-title card-title-tugas" id="tugas-task-4"></h5>
+                                                        <p class="card-text nama-petugas" id="tugas-name-4"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
+                                                <div class="card-body">
+                                                    <div class="my-auto">
+                                                        <img src="~/assets/icons/wired-lineal-target.gif" alt="" class="icon-jadwal-petugas" />
+                                                    </div>
+                                                    <div class="jadwal-body">
+                                                        <h5 class="card-title" id="tugas-title-5"></h5>
+                                                        <p class="card-text" id="tugas-time-5"></p>
+                                                        <div class="sidebar-divider jadwal-divider"></div>
+                                                        <h5 class="card-title card-title-tugas" id="tugas-task-5"></h5>
+                                                        <p class="card-text nama-petugas" id="tugas-name-5"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselDashboard" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselDashboard" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
                                 </div>
-                          
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselDashboard" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselDashboard" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                     </div>
                     <!-- Pengumuman Teks Berjalan -->
                     <div class="row">
@@ -326,6 +320,32 @@
 
 /*      ========================= JADWAL SHALAT ================================ */
 
+        function jadwalNext() {
+            var jadwalString = '@JsonConvert.SerializeObject(ViewBag.Jadwal)';
+
+            var jadwal = JSON.parse(jadwalString.replace(/&quot;/g, '"'));
+
+            var list = jadwal.data;
+
+            var targetDate = moment(targetDate, 'D-MM-YYYY').add(1, 'days').format('D-MM-YYYY');
+
+            var targetData = null;
+
+            list.forEach(function (item) {
+                var itemDate = item.date.gregorian.date;
+
+                if (itemDate === targetDate) {
+                    targetData = item;
+                }
+            });
+
+            var todayData = targetData.timings;
+
+            var nextDayData = targetData.timings.Fajr.replace("(WIB)", "").split(":");
+
+            return nextDayData;
+        }
+
         function loadJadwalShalat() {
             var jadwalString = '@JsonConvert.SerializeObject(ViewBag.Jadwal)';
 
@@ -354,8 +374,17 @@
                 }
             });
             
-            var todayData = targetData.timings;
+            
 
+            imsak.textContent = targetData.timings.Imsak.replace("(WIB)", "");
+            subuh.textContent = targetData.timings.Fajr.replace("(WIB)", "");
+            terbit.textContent = targetData.timings.Sunrise.replace("(WIB)", "");
+            dzuhur.textContent = targetData.timings.Dhuhr.replace("(WIB)", "");
+            ashar.textContent = targetData.timings.Asr.replace("(WIB)", "");
+            maghrib.textContent = targetData.timings.Maghrib.replace("(WIB)", "");
+            isya.textContent = targetData.timings.Isha.replace("(WIB)", "");
+
+            var todayData = targetData.timings;
             for (let i in todayData) {
                 var currentDate = new Date();
                 var currentHours = currentDate.getHours();
@@ -383,16 +412,12 @@
                         nextAdzanTime.setHours(adzanHours);
                         nextAdzanTime.setMinutes(adzanMinutes);
                     }
+
+                    if (i == "Isha") {
+                        adzanTime = jadwalNext();
+                    }
                 }
             }
-
-            imsak.textContent = targetData.timings.Imsak.replace("(WIB)", "");
-            subuh.textContent = targetData.timings.Fajr.replace("(WIB)", "");
-            terbit.textContent = targetData.timings.Sunrise.replace("(WIB)", "");
-            dzuhur.textContent = targetData.timings.Dhuhr.replace("(WIB)", "");
-            ashar.textContent = targetData.timings.Asr.replace("(WIB)", "");
-            maghrib.textContent = targetData.timings.Maghrib.replace("(WIB)", "");
-            isya.textContent = targetData.timings.Isha.replace("(WIB)", "");
         }
 
 /*      ========================= JADWAL PETUGAS HARIAN ================================ */
@@ -450,6 +475,11 @@
                         }
                     }
 
+                    /*if (i == 1) {
+                        var cardElements = document.getElementById('petugas-jadwal-slide');
+
+                        cardElements.remove();
+                    }*/
                 },
             });
         }
