@@ -155,6 +155,7 @@
 }
 
 .card-jadwal-petugas {
+  background-color: #1365df57;
 }
 
 .card-jadwal-petugas .card-body {
@@ -163,14 +164,14 @@
 }
 
 .card-jadwal-petugas .card-title {
-  color: #46B5D1;
+  color: #DFF6FF;
   text-align: center;
   font-size: 30px;
   margin-bottom: 0.5rem;
 }
 
 .card-jadwal-petugas .card-text {
-  color: #5EDFFF;
+  color: #DFF6FF;
   margin-top: 0.5rem;
   text-align: center;
   font-size: 30px;

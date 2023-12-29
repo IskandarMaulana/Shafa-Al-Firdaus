@@ -111,7 +111,7 @@
                             <div id="carouselDashboard" class="carousel slide carousel-fade" data-bs-ride="carousel">
                                 <div class="carousel-inner" id="slide-inner">
                                     <!-- Jadwal Petugas  -->
-                                    <div class="carousel-item jadwal-petugas active" id="petugas-jadwal-slide" data-bs-interval="10000">
+                                    <div class="carousel-item jadwal-petugas active" id="petugas-jadwal-slide" data-bs-interval="5000">
                                         <h2 class="title-jadwal">Jadwal Petugas</h2>
                                         <div class="container d-flex p-0 align-items-center flex-row container-jadwal">
                                             <div class="card card-jadwal card-jadwal-petugas" style="width: 18rem">
@@ -190,7 +190,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselDashboard" data-bs-slide="prev">
+
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselDashboard" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
@@ -513,8 +514,8 @@
                         var jenis = item.jenis;
 
                         if (status === 1 && jenis === 0) {
-                            var newItem = 
-                            "<div class='carousel-item pengumuman' id='pengumuman-kegiatan' data-bs-interval='10000'> " +
+                            var newItem =
+                                "<div class='carousel-item pengumuman' id='pengumuman-kegiatan' data-bs-interval='5000'> " +
                                 "<h2 class='title-jadwal'>Pengumuman</h2> " +
                                 "<div class='container d-flex p-0 align-items-center flex-row'> " +
                                 "<div class='card card-jadwal card-pengumuman' style='width: 75rem'> " +
@@ -531,7 +532,7 @@
 
                         if (status === 1 && jenis === 1) {
                             var newItem =
-                                "<div class='carousel-item pengumuman' id = 'pengumuman-pemberitahuan' data - bs - interval='10000' >" +
+                                "<div class='carousel-item pengumuman' id = 'pengumuman-pemberitahuan' data - bs - interval='5000' >" +
                                 "<h2 class='title-jadwal' > Pengumuman < /h2>" +
                                 "<div class='container d-flex p-0 align-items-center flex-row' >" +
                                 "<div class='card card-jadwal card-pengumuman' style = 'width: 75rem' > " +
