@@ -45,7 +45,7 @@
                         <br />
                         <div class="form-group">
                             <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
-                            <button href="#" class="btn btn-secondary" onclick="batal()">Batal</button>
+                            <button class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
     loadJadwalPetugas();
 
     function loadPetugas() {
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "GetAllPetugasHarian"
         var method = "GET"
         var jwtToken = '@ViewBag.Token';
@@ -92,7 +92,7 @@
 
         console.log(id_jadwal);
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "GetJadwalPetugasHarian?id_jadwal=" + id_jadwal.value;
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -147,7 +147,7 @@
         var jwtToken = '@ViewBag.Token';
 
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateJadwalPetugasHarian"; // Change the endpoint accordingly
         var method = "PUT";
         var input = {

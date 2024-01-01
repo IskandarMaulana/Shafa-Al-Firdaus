@@ -328,7 +328,9 @@
 
             var list = jadwal.data;
 
-            var targetDate = moment(targetDate, 'D-MM-YYYY').add(1, 'days').format('D-MM-YYYY');
+            var nowDate = moment().format('DD-MM-YYYY');
+
+            var targetDate = moment(nowDate, 'DD-MM-YYYY').add(1, 'days').format('DD-MM-YYYY');
 
             var targetData = null;
 
@@ -339,8 +341,6 @@
                     targetData = item;
                 }
             });
-
-            var todayData = targetData.timings;
 
             var nextDayData = targetData.timings.Fajr.replace("(WIB)", "").split(":");
 
@@ -363,19 +363,18 @@
 
             var list = jadwal.data;
 
-            var targetDate = moment().format('D-MM-YYYY');
+            var targetDate = moment().format('DD-MM-YYYY');
             
             var targetData = null;
 
             list.forEach(function (item) {
                 var itemDate = item.date.gregorian.date;
-
+                
                 if (itemDate === targetDate) {
                     targetData = item;
                 }
             });
-            
-            
+
 
             imsak.textContent = targetData.timings.Imsak.replace("(WIB)", "");
             subuh.textContent = targetData.timings.Fajr.replace("(WIB)", "");
@@ -390,12 +389,12 @@
                 var currentDate = new Date();
                 var currentHours = currentDate.getHours();
                 var currentMinutes = currentDate.getMinutes();
-                var currentTime = currentHours * 60 + currentMinutes; // Ubah waktu ke menit untuk perbandingan
+                var currentTime = currentHours * 60 + currentMinutes; 
 
                 var adzanTime = todayData[i].replace("(WIB)", "").split(":");
                 var adzanHours = parseInt(adzanTime[0], 10);
                 var adzanMinutes = parseInt(adzanTime[1], 10);
-                var adzanTimeInMinutes = adzanHours * 60 + adzanMinutes; // Ubah waktu adzan ke menit
+                var adzanTimeInMinutes = adzanHours * 60 + adzanMinutes; 
                 
                 var nextAdzanHours = 0;
                 var nextAdzanMinutes = 0;
@@ -408,23 +407,34 @@
                 }
 
                 if ((adzanTimeInMinutes >= currentTime) && (nextAdzanTime === null || (adzanTimeInMinutes < nextAdzanTimeInMinutes) || (nextAdzanTimeInMinutes === 0))) {
+
                     if ((i == "Fajr") || (i == "Dhuhr") || (i == "Asr") || (i == "Maghrib") || (i == "Isha")) {
                         nextAdzanTime = new Date();
                         nextAdzanTime.setHours(adzanHours);
                         nextAdzanTime.setMinutes(adzanMinutes);
-                    }
 
-                    if (i == "Isha") {
-                        adzanTime = jadwalNext();
                     }
                 }
+            }
+
+            if (nextAdzanTime === null) {
+                var newAdzanTime = jadwalNext();
+
+                var adzanHours = parseInt(newAdzanTime[0], 10);
+                var adzanMinutes = parseInt(newAdzanTime[1], 10);
+
+                nextAdzanTime = new Date();
+                nextAdzanTime.setDate(nextAdzanTime.getDate() + 1);
+
+                nextAdzanTime.setHours(adzanHours);
+                nextAdzanTime.setMinutes(adzanMinutes);
             }
         }
 
 /*      ========================= JADWAL PETUGAS HARIAN ================================ */
 
         function loadJadwalPetugas() {
-            var hostname = "http://10.5.0.123:9091/";
+            var hostname = "https://localhost:44307/";
             var url = hostname + "GetViewJadwalPetugas";
             var method = "GET";
 
@@ -496,7 +506,7 @@
             
             var isiRunningText= document.getElementById("pengumuman-running-text");
 
-            var hostname = "http://10.5.0.123:9091/";
+            var hostname = "https://localhost:44307/";
             var url = hostname + "GetViewPengumuman";
             var method = "GET";
 
@@ -533,7 +543,7 @@
                         if (status === 1 && jenis === 1) {
                             var newItem =
                                 "<div class='carousel-item pengumuman' id = 'pengumuman-pemberitahuan' data - bs - interval='5000' >" +
-                                "<h2 class='title-jadwal' > Pengumuman < /h2>" +
+                                "<h2 class='title-jadwal' > Pengumuman </h2>" +
                                 "<div class='container d-flex p-0 align-items-center flex-row' >" +
                                 "<div class='card card-jadwal card-pengumuman' style = 'width: 75rem' > " +
                                 "<div class='card-body' >" +

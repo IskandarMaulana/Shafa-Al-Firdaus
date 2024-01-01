@@ -48,7 +48,8 @@
                         </div>
                         <br />
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button type="button" class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -88,7 +89,7 @@
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "InsertPengumuman";
         var method = "POST";
         var input = {
@@ -123,7 +124,9 @@
             },
         });
     }
-
+    function batal() {
+        history.back();
+    }
     // Add an event listener to the jenis select element
     document.getElementById("jenis").addEventListener("change", function () {
         // Enable date fields if jenis is not 2 (Teks Berjalan)

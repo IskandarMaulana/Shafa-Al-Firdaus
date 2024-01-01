@@ -35,7 +35,7 @@
 
     function loadID() {
         var kode = document.getElementById("kode");
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "GetIdPetugasHarian";
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -59,7 +59,7 @@
         var nomor_telepon = document.getElementById("nomor_telepon").value;
         var status = '1';
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "InsertPetugasHarian";
         var method = "POST";
         var input = {

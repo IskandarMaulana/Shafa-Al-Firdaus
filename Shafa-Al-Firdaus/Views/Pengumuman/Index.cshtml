@@ -2,30 +2,10 @@
     ViewData["Title"] = "Pengumuman";
 }
 <style>
-     .btn-tambah {
-         float: left;
-         margin-bottom: 10px;
-         margin-right: 10px;
-     }
-
-     .search-container {
-         margin-bottom: 10px;
-     }
-
-     .filter-container {
-         margin-bottom: 20px;
-     }
-
-     .table-container {
-         max-height: 400px; /* Adjust the maximum height as needed */
-         overflow-y: auto;
-     }
-
-     #statusFilter {
-         background-color: #5bc0de;
-         color: #fff;
-         border: 1px solid #5bc0de;
-     }
+    .table-container {
+        max-height: 595px;
+        overflow-y: auto;
+    }
 </style>
 
 <div class="content">
@@ -37,27 +17,24 @@
                         <h4 class="card-title">Pengumuman</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <a class="btn btn-primary btn-tambah" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <div class="filter-container">
-                                    <label for="x">Filter berdasarkan Status:</label>
-                                    <select id="statusFilter" class="form-select">
-                                        <option value="">Semua data</option>
-                                        <option value="1">Tayang</option>
-                                        <option value="4">Tidak Tayang</option>
-                                        <option value="3">Dijadwalkan</option>
-                                        <option value="5">Selesai</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="my-3" style="margin-top: 40px;">
+                            <a class="btn btn-primary" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
                         </div>
-
-                        <div class="col-md-12 search-container">
-                            <label for="searchInput"> Mencari Data:</label>
-                            <input type="text" id="searchInput" class="form-control" />
+                        <div class="row my-4" style="height: 50px">
+                            <div class="col-md-12 w-50 h-100 d-flex align-items-start filter-container">
+                                <label for="statusFilter" style="width: 45%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Filter Berdasarkan Status :</label>
+                                <select class="form-control" id="statusFilter" style="width: 55%;height: 100%;font-size: 1rem;">
+                                    <option value="">Semua data</option>
+                                    <option value="1">Tayang</option>
+                                    <option value="4">Tidak Tayang</option>
+                                    <option value="3">Dijadwalkan</option>
+                                    <option value="5">Selesai</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 w-50 d-flex align-items-end search-container">
+                                <label for="searchInput" style="width: 10%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Cari :</label>
+                                <input type="text" id="searchInput" class="form-control" style="width: 70%;height: 100%;font-size: 1rem;" />
+                            </div>
                         </div>
 
                         <div class="table-responsive table-container">
@@ -82,6 +59,7 @@
         </div>
     </div>
 </div>
+           
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- ... (previous HTML code) ... -->
 
@@ -94,7 +72,7 @@
             return;
         }
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateStatusPengumuman?id_pengumuman=" + id + "&newStatus=4";
         var method = "PATCH";
         var updateData = {
@@ -135,7 +113,7 @@
         });
 
         function loadTable() {
-            var hostname = "http://10.5.0.123:9091/";
+            var hostname = "https://localhost:44307/";
             var url = hostname + "GetAllPengumuman";
             var method = "GET";
 
@@ -179,7 +157,7 @@
                             (item.jenis === 0 || item.jenis === 1)
                         ) {
                             // Make an asynchronous request to update the status in the database
-                            var updateStatusUrl = "http://10.5.0.123:9091/UpdateStatusPengumuman?id_pengumuman=" + item.id_pengumuman + "&newStatus=5";
+                            var updateStatusUrl = "https://localhost:44307/UpdateStatusPengumuman?id_pengumuman=" + item.id_pengumuman + "&newStatus=5";
 
                             $.ajax({
                                 url: updateStatusUrl,
@@ -292,7 +270,7 @@
         }
 
         function hapus(id) {
-            var hostname = "http://10.5.0.123:9091/";
+            var hostname = "https://localhost:44307/";
             var url = hostname + "DeletePengumuman?id_pengumuman=" + id;
             var method = "DELETE";
 

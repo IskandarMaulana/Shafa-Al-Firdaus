@@ -53,7 +53,8 @@
                         </div>
                         <br />
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -74,7 +75,7 @@
         var tanggal_selesai = document.getElementById("tanggal_selesai");
         var status = document.getElementById("status");
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "GetPengumuman?id_pengumuman=" + id_pengumuman;
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -172,7 +173,7 @@
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "UpdatePengumuman"; // Change the endpoint accordingly
         var method = "PUT";
         var input = {
@@ -206,7 +207,9 @@
             },
         });
     }
-
+    function batal() {
+        history.back();
+    }
     document.getElementById("jenis").addEventListener("change", function () {
         // Enable or disable date fields based on the selected jenis value
         var isTeksBerjalan = parseInt(this.value) === 2;

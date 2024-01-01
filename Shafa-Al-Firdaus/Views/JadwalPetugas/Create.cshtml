@@ -44,7 +44,6 @@
                             <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
                             <button type="button" class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
-                      
                     </div>
                 </div>
             </div>
@@ -94,7 +93,7 @@
     loadPetugas();
 
     function loadPetugas() {
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "GetAllPetugasHarian";
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -131,7 +130,7 @@
             return; // Berhenti jika tanggal tidak valid
         }
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "InsertJadwalPetugasHarian"; // Change the endpoint accordingly
         var method = "POST";
         var input = {
