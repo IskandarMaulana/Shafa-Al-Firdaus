@@ -289,3 +289,120 @@
   margin: 0px;
   padding: 10px;
 }
+
+
+/* Style untuk layar dengan lebar kurang dari 1200px */
+@media only screen and (max-width: 1200px) {
+  .main-panel-dashboard {
+    margin-top: 120px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .dashboard-page {
+    margin-top: 50px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .card-jadwal-shalat {
+    max-width: 16rem;
+    margin-right: auto !important;
+    margin-left: auto !important;
+  }
+
+  .card-jadwal-shalat .card-title {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card-jadwal-shalat .card-text {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 4rem;
+    /* text-shadow: 0 0 5px #39A7FF; */
+  }
+}
+
+/* Style untuk layar dengan lebar kurang dari 1024px */
+@media only screen and (max-width: 1024px) {
+  .main-panel-dashboard {
+    margin-top: 100px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .logo-asy-syabab,
+  .logo-shafa {
+    height: 130px; /* Sesuaikan dengan kebutuhan Anda */
+    width: 130px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .card-jadwal-shalat {
+    max-width: 16rem;
+    margin-right: auto !important;
+    margin-left: auto !important;
+  }
+
+  .card-jadwal-shalat .card-title {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card-jadwal-shalat .card-text {
+    margin-top: 20px;
+    font-size: 4rem;
+  }
+}
+
+
+/* Style untuk layar dengan lebar kurang dari 992px */
+@media only screen and (max-width: 992px) {
+  .main-panel-dashboard {
+    margin-top: 80px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .dashboard-page {
+    margin-top: 40px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .logo-asy-syabab,
+  .logo-shafa {
+    height: 120px; /* Sesuaikan dengan kebutuhan Anda */
+    width: 120px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  /* Tambahkan penyesuaian lainnya sesuai kebutuhan */
+}
+
+/* Style untuk layar dengan lebar kurang dari 768px */
+@media only screen and (max-width: 768px) {
+  .main-panel-dashboard {
+    margin-top: 60px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .dashboard-page {
+    margin-top: 30px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .logo-asy-syabab,
+  .logo-shafa {
+    height: 100px; /* Sesuaikan dengan kebutuhan Anda */
+    width: 100px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  /* Tambahkan penyesuaian lainnya sesuai kebutuhan */
+}
+
+/* Style untuk layar dengan lebar kurang dari 576px */
+@media only screen and (max-width: 576px) {
+  .main-panel-dashboard {
+    margin-top: 40px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .dashboard-page {
+    margin-top: 20px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  .logo-asy-syabab,
+  .logo-shafa {
+    height: 80px; /* Sesuaikan dengan kebutuhan Anda */
+    width: 80px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  /* Tambahkan penyesuaian lainnya sesuai kebutuhan */
+}

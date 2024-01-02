@@ -242,7 +242,7 @@
                                         <p class="card-text" id="time-dzuhur"></p>
                                     </div>
                                 </div>
-                                <div class="card card-jadwal card-jadwal-shalat " >
+                                <div class="card card-jadwal card-jadwal-shalat" >
                                     <div class="card-body">
                                         <h5 class="card-title" id="title-ashar">Ashar</h5>
                                         <p class="card-text" id="time-ashar"></p>
@@ -303,7 +303,7 @@
             var countdownMillis = nextAdzanTime - now;
 
             if (countdownMillis <= 0) {
-                //window.location.href = "/Dashboard/BlackScreen";
+                window.location.href = "/Dashboard/BlackScreen";
             }
 
             var hours = Math.floor(countdownMillis / (1000 * 60 * 60));

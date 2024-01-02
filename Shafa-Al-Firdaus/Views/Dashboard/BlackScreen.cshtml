@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Newtonsoft.Json
 @{
     ViewData["Title"] = "Halaman Utama";
     Layout = null;
@@ -45,7 +46,33 @@
         <div id="prayer-message">Sedang Melaksanakan Sholat</div>
     </div>
     <script>
-        var countdownTime = 10 * 60;
+        var jadwalString = '@JsonConvert.SerializeObject(ViewBag.Jadwal)';
+
+        var jadwal = JSON.parse(jadwalString.replace(/&quot;/g, '"'));
+
+        var list = jadwal.data;
+
+        var targetDate = moment().format('DD-MM-YYYY');
+
+        var targetData = null;
+
+        list.forEach(function (item) {
+            var itemDate = item.date.gregorian.date;
+
+            if (itemDate === targetDate) {
+                targetData = item;
+            }
+        });
+
+        var dzuhur = targetData.timings.Dhuhr.replace("(WIB)", "").split(":");
+        var adzanHours = parseInt(dzuhur[0], 10);
+        var adzanMinutes = parseInt(dzuhur[1], 10);
+
+        var currentDate = new Date();
+        var isFriday = currentDate.getDay() === 5;
+        var isDhuhrTime = (currentDate.getHours() === adzanHours) && (currentDate.getMinutes() === adzanMinutes);
+
+        var countdownTime = isFriday && isDhuhrTime ? 40 * 60 : 10 * 60;
 
         function updateCountdown() {
             var minutes = Math.floor(countdownTime / 60);
@@ -56,13 +83,14 @@
             countdownTime--;
 
             if (countdownTime <= 0) {
-                window.location.href = "https://localhost:44355";
+                window.location.href = "/";
             }
         }
 
         function formatTime(time) {
             return time < 10 ? "0" + time : time;
         }
+
         setInterval(updateCountdown, 1000);
     </script>
 </body>
