@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Pengumuman";
 }
 
 
@@ -32,19 +33,19 @@
                         </div>
                         <div class="form-group">
                             <label for="isi" class="control-label">Isi Pengumuman</label>
-                            <input type="text" name="isi" id="isi" class="form-control" required />
+                            <textarea name="isi" id="isi" class="form-control" style="height: auto;min-height: calc(7.5em + 0.75rem + 2px);" required></textarea>
                         </div>
                         <div class="form-group">
                             <label name="tanggal_mulai" class="control-label">Tanggal Mulai</label>
-                            <input name="tanggal_mulai" type="datetime-local" id="tanggal_mulai" class="form-control" />
+                            <input name="tanggal_mulai" type="datetime-local" id="tanggal_mulai" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label name="tanggal_selesai" class="control-label">Tanggal Selesai</label>
-                            <input name="tanggal_selesai" type="datetime-local" id="tanggal_selesai" class="form-control" />
+                            <input name="tanggal_selesai" type="datetime-local" id="tanggal_selesai" class="form-control" required />
                         </div>
                         <div class="form-group" style="display: none;">
                             <label name="status" class="control-label">Status</label>
-                            <select id="status" class="form-control" disabled>
+                            <select id="status" class="form-control" required>
                                 <option value="1">Tayang</option>
                                 <option value="4">Tidak Tayang</option>
                                 <option value="3">Dijadwalkan</option>
@@ -154,22 +155,19 @@
         var today = new Date();
         var selectedDate = new Date(tanggal_mulai);
 
-        if (selectedDate < today) {
-            alert("Tanggal tidak boleh kurang dari hari ini.");
+        if (selectedDate < today && jenis !=='2') {
+            swal("Gagal!","Tanggal tidak boleh kurang dari hari ini.", "error");
             return; // Berhenti jika tanggal tidak valid
         }
 
         // Disable date fields if jenis is 3 (Teks Berjalan)
-        if (jenis === '2') {
+        if (jenis === 2) {
             document.getElementById("tanggal_mulai").disabled = true;
             document.getElementById("tanggal_selesai").disabled = true;
             tanggal_mulai = new Date('01/01/2001'); // Set to null if disabled
             tanggal_selesai = new Date('01/01/2001'); // Set to null if disabled
         }
 
-        console.log(jenis)
-        console.log(tanggal_mulai)
-        console.log(tanggal_selesai)
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
@@ -198,12 +196,12 @@
                 'Authorization': 'Bearer ' + jwtToken
             },
             success: function (data) {
-                alert("Data Pengumuman Berhasil Diubah");
-                window.location.href = "/pengumuman/Index";
+                swal("Berhasil!", "Data Pengumuman Berhasil Diubah", "success").then(() => {
+                    window.location.href = "/Pengumuman/Index";
+                });
             },
             error: function (error) {
-                console.log(error)
-                alert("Gagal menyimpan data Pengumuman.");
+                swal("Gagal!", "Gagal menyimpan data Pengumuman.", "error");
             },
         });
     }

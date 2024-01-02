@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Jadwal Petugas";
+    ViewData["Title"] = "Jadwal Petugas Harian";
 }
 
 <style>
@@ -26,7 +26,7 @@
                             <div class="col-md-12 w-50 h-100 d-flex align-items-start filter-container">
                                 <label for="statusFilter" style="width: 45%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Filter Berdasarkan Status :</label>
                                 <select class="form-control" id="statusFilter" style="width: 55%;height: 100%;font-size: 1rem;">
-                                    <option value="">All</option>
+                                    <option value="">Semua</option>
                                     <option value="2">Terlaksana</option>
                                     <option value="1">Aktif</option>
                                     <option value="0">Tidak Aktif</option>
@@ -62,7 +62,7 @@
 <script>
     loadTable();
 
-    $("#statusFilter, #searchInput").change(function () {
+    $("#statusFilter, #searchInput").on("input", function () {
         $("#tbody").empty();
         loadTable();
     });
@@ -111,11 +111,12 @@
                     if (
                         (statusFilter === "" || item.status.toString() === statusFilter) &&
                         (searchInput === "" ||
-                            nama.toLowerCase().includes(searchInput.toLowerCase()) ||
-                            item.waktu.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.kode.toLowerCase().includes(searchInput.toLowerCase()) ||
                             formattedTanggal.toLowerCase().includes(searchInput.toLowerCase()) ||
+                            item.waktu.toLowerCase().includes(searchInput.toLowerCase()) ||
                             item.tugas.toLowerCase().includes(searchInput.toLowerCase()) ||
-                            getStatusDescription(item.status).toLowerCase().includes(searchInput.toLowerCase())
+                            
+                            statusText.toLowerCase().includes(searchInput.toLowerCase())
                         )
                     ) {
                         $('#tbody').append(newRow);

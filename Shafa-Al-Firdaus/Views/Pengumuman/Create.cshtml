@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Pengumuman";
 }
 
 <div class="content">
@@ -15,11 +16,11 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label name="judul" class="control-label">Judul</label>
-                            <input name="judul" id="judul" class="form-control" />
+                            <input name="judul" id="judul" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label name="jenis" class="control-label">Jenis</label>
-                            <select id="jenis" class="form-control">
+                            <select id="jenis" class="form-control" required>
                                 <option value="">-- Pilih Jenis Pengumuman --</option>
                                 <option value="0">Kegiatan</option>
                                 <option value="1">Pemberitahuan</option>
@@ -28,19 +29,19 @@
                         </div>
                         <div class="form-group">
                             <label name="isi" class="control-label">Isi</label>
-                            <input name="isi" id="isi" class="form-control" />
+                            <textarea name="isi" id="isi" class="form-control" style="height: auto;min-height: calc(7.5em + 0.75rem + 2px);" required></textarea>
                         </div>
                         <div class="form-group">
                             <label name="tanggal_mulai" class="control-label">Tanggal Mulai</label>
-                            <input name="tanggal_mulai" type="datetime-local" id="tanggal_mulai" class="form-control" />
+                            <input name="tanggal_mulai" type="datetime-local" id="tanggal_mulai" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label name="tanggal_selesai" class="control-label">Tanggal Selesai</label>
-                            <input name="tanggal_selesai" type="datetime-local" id="tanggal_selesai" class="form-control" />
+                            <input name="tanggal_selesai" type="datetime-local" id="tanggal_selesai" class="form-control" required />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;">
                             <label name="status" class="control-label">Status</label>
-                            <select id="status" class="form-control">
+                            <select id="status" class="form-control" required>
                                 <option value="">--  --</option>
                                 <option value="1">Tayang</option>
                                 <option value="3">Dijadwalkan</option>
@@ -73,9 +74,9 @@
         var today = new Date();
         var selectedDate = new Date(tanggal_mulai);
 
-        if (selectedDate < today) {
-            alert("Tanggal tidak boleh kurang dari hari ini.");
-            return; // Stop if the date is not valid
+        if (selectedDate < today && jenis !== '2') {
+            swal("Gagal!", "Tanggal tidak boleh kurang dari hari ini.", "error");
+            return; // Berhenti jika tanggal tidak valid
         }
 
         // Disable date fields if jenis is 3 (Teks Berjalan)
@@ -119,8 +120,7 @@
                 });
             },
             error: function (error) {
-                console.log(error)
-                alert("Gagal menyimpan data Pengumuman.");
+                swal("Gagal!", "Gagal menyimpan Data Pengumuman.", "error");
             },
         });
     }

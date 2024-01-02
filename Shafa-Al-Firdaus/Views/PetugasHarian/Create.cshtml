@@ -1,4 +1,8 @@
-﻿<div class="content">
+﻿@{
+    ViewData["Title"] = "Petugas Harian";
+}
+
+<div class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -8,16 +12,16 @@
                     </div>
                     <div class="card-body">
                          <div class="form-group">
-                             @*<label name="kode" class="control-label">Kode</label>
-                             *@<input type="hidden" name="kode" id="kode" class="form-control" readonly />
+                             @*<label name="kode" class="control-label">Kode</label>*@
+                             <input type="hidden" name="kode" id="kode" class="form-control" readonly />
                         </div>
                         <div class="form-group">
                             <label name="nama" class="control-label">Nama</label>
-                            <input name="nama" id="nama" class="form-control" />
+                            <input name="nama" id="nama" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label name="nomor_telepon" class="control-label">Nomor Telepon</label>
-                            <input name="nomor_telepon" id="nomor_telepon" class="form-control" />
+                            <input name="nomor_telepon" id="nomor_telepon" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
@@ -48,7 +52,6 @@
                 'Authorization': 'Bearer ' + jwtToken
             },
             success: function (data) {
-                console.log(data);
                 kode.value = data.data;
             },
         });
@@ -85,7 +88,7 @@
                 });
             },
             error: function () {
-                alert("Gagal menyimpan Data Petugas Harian.");
+                swal("Gagal!", "Gagal menyimpan Data Petugas Harian.", "error");
             },
         });
     }

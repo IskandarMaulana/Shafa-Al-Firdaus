@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Jadwal Petugas Harian";
 }
 
 <div class="content">
@@ -126,7 +127,7 @@
         var selectedDate = new Date(tanggal);
 
         if (selectedDate < today) {
-            swal("Tanggal tidak boleh kurang dari hari ini.");
+            swal("Gagal!", "Tanggal tidak boleh kurang dari hari ini.","error");
             return; // Berhenti jika tanggal tidak valid
         }
 
@@ -157,9 +158,7 @@
                 });
             },
             error: function () {
-                swal("Gagal!", "Menyimpan data Jadwal Petugas Harian gagal ditambahkan", "error").then(() => {
-                    window.location.href = "/JadwalPetugas/Index";
-                });
+                swal("Gagal!", "Gagal menyimpan Data Jadwal Petugas Harian.", "error");
             },
         });
     }

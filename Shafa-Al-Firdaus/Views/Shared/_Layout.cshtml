@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Shafa Al-Firdaus</title>
+    <title>@ViewData["Title"] - Shafa Al-Firdaus</title>
     <!-- plugins:css -->
     @* <link rel="stylesheet" href="~/assets/fonts/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/assets/css/docs.css"> *@
@@ -119,7 +119,7 @@
             <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
-                    <li class="nav-item">
+                    <li class='nav-item @(ViewData["Title"] == "Halaman Utama" ? "active" : "")'>
                         <a class="nav-link" asp-controller="Home" asp-action="Index">
                             <img class="mdi mdi-grid-large menu-icon" src="~/assets/icons/home.png" alt="Dashboard Icon" />
                             <!-- <i class="mdi mdi-grid-large menu-icon"></i> -->
@@ -133,21 +133,21 @@
                             <span class="menu-title">Jadwal Shalat</span>
                         </a>
                     </li> *@
-                    <li class="nav-item">
+                    <li class='nav-item @(ViewData["Title"] == "Petugas Harian" ? "active" : "")'>
                         <a class="nav-link" asp-controller="PetugasHarian" asp-action="Index">
                             <img class="mdi mdi-grid-large menu-icon" src="~/assets/icons/profile.png" alt="Petugas Harian Icon" />
                             <!-- <i class="mdi mdi-grid-large menu-icon"></i> -->
                             <span class="menu-title">Petugas Harian</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class='nav-item @(ViewData["Title"] == "Jadwal Petugas Harian" ? "active" : "")'>
                         <a class="nav-link" asp-controller="JadwalPetugas" asp-action="Index">
                             <img class="mdi mdi-grid-large menu-icon" src="~/assets/icons/note.png" alt="Jadwal Petugas Harian Icon" />
                             <!-- <i class="mdi mdi-grid-large menu-icon"></i> -->
                             <span class="menu-title">Jadwal Petugas Harian</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class='nav-item @(ViewData["Title"] == "Pengumuman" ? "active" : "")'>
                         <a class="nav-link" asp-controller="Pengumuman" asp-action="Index">
                             <img class="mdi mdi-grid-large menu-icon" src="~/assets/icons/megaphone.png" alt="Pengumuman Icon" />
                             <!-- <i class="mdi mdi-grid-large menu-icon"></i> -->

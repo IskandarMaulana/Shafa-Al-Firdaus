@@ -1,5 +1,6 @@
 ﻿@{
     string name = ViewBag.Name;
+    ViewData["Title"] = "Petugas Harian";
 }
 
 <div class="content">
@@ -17,11 +18,11 @@
                         </div>
                         <div class="form-group">
                             <label for="nama" class="control-label">Nama</label>
-                            <input type="text" name="nama" id="nama" class="form-control" />
+                            <input type="text" name="nama" id="nama" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="nomor_telepon" class="control-label">Nomor Telepon</label>
-                            <input type="text" name="nomor_telepon" id="nomor_telepon" class="form-control" />
+                            <input type="text" name="nomor_telepon" id="nomor_telepon" class="form-control" required />
                         </div>
                         <div class="form-group" style="display: none;">
                             <select name="status" id="status" class="form-control" >
