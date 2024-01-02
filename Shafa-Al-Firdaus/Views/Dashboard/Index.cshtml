@@ -52,7 +52,7 @@
 <body class="dashboard-page" style="background-image: url('assets/images/Polytechnic-Astra-2.jpeg');">
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
-            <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-center flex-row bg-transparent" style="height: 170px">
+            <nav class="navbar default-layout default-height col-lg-12 col-12 p-0 fixed-top d-flex align-items-center flex-row bg-transparent">
                 <div class="navbar-dashboard d-flex align-items-top">
                     <ul class="navbar-nav">
                         <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
@@ -83,7 +83,7 @@
                             <p class="title-time-now">Adzan Berikutnya</p>
                         </li>
                         <li class="nav-item pt-2">
-                            <p class="text-time-now" id="time-next">10:20</p>
+                            <p class="text-time-now" id="time-next"></p>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
@@ -299,7 +299,6 @@
         function updateNextAdzanCountdown() {
             var now = new Date();
 
-            // Hitung selisih waktu antara sekarang dan waktu adzan berikutnya
             var countdownMillis = nextAdzanTime - now;
 
             if (countdownMillis <= 0) {
@@ -310,7 +309,6 @@
             var minutes = Math.floor((countdownMillis % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((countdownMillis % (1000 * 60)) / 1000);
 
-            // Tampilkan waktu countdown
             document.getElementById("time-next").innerText = zeroPadding(hours, 2) + ":" + zeroPadding(minutes, 2) + ":" + zeroPadding(seconds, 2);
         }
         updateTime();
