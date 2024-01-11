@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net.Http;
+using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Shafa_Al_Firdaus.Models;
-using System.Net.Http;
-using System.Text;
 
 namespace Shafa_Al_Firdaus.Controllers
 {
     public class DashboardController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+
         public DashboardController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
@@ -25,9 +26,27 @@ namespace Shafa_Al_Firdaus.Controllers
 
             return View();
         }
+
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Iqamah()
+        {
+            var jadwal = await GetJadwalFromWebApi();
+
+            ViewBag.Jadwal = jadwal;
+
+            HttpContext.Session.Remove("JwtToken");
+
+            return View();
+        }
+
         private async Task<JObject> GetJadwalFromWebApi()
         {
-            var endpoint = $"https://api.aladhan.com/v1/calendar/{DateTime.Now.Year}/{DateTime.Now.Month}?latitude=-6.3392749&longitude=107.1601183&method=2&tune=-20,-20,-3,3,2,2,0,15";
+            var endpoint =
+                $"https://api.aladhan.com/v1/calendar/{DateTime.Now.Year}/{DateTime.Now.Month}?latitude=-6.3392749&longitude=107.1601183&method=2&tune=-20,-20,-3,3,2,2,0,15";
 
             using var httpClient = _httpClientFactory.CreateClient();
 
@@ -45,6 +64,7 @@ namespace Shafa_Al_Firdaus.Controllers
 
             return null;
         }
+
         public async Task<IActionResult> BlackScreen()
         {
             var jadwal = await GetJadwalFromWebApi();

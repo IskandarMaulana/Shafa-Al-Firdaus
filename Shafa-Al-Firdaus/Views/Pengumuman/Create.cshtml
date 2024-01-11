@@ -65,7 +65,7 @@
     function simpan() {
         var judul = document.getElementById("judul").value;
         var jenis = parseInt(document.getElementById("jenis").value);
-        var isi = document.getElementById("isi").value;
+        var isi = encodeURIComponent(document.getElementById("isi").value);
         var tanggal_mulai = document.getElementById("tanggal_mulai").value;
         var tanggal_selesai = document.getElementById("tanggal_selesai").value;
         var status = document.getElementById("status").value;
