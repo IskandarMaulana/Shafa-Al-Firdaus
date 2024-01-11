@@ -125,7 +125,7 @@
                 // Set the values in the form
                 judul.value = item.judul;
                 jenis.value = item.jenis;
-                isi.value = item.isi;
+                isi.value = decodeURIComponent(item.isi);
                 tanggal_mulai.value = formattedTanggalMulai;
                 tanggal_selesai.value = formattedTanggalSelesai;
                 status.value = item.status;
