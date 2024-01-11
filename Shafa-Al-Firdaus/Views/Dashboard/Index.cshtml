@@ -50,9 +50,14 @@
 
     <script src="https://momentjs.com/downloads/moment.js"></script>
 
+    <style>
+        body.dashboard-page {
+            background-image: url('@Url.Content("~/assets/images/Polytechnic-Astra-2.jpeg")');
+        }
+    </style>
 </head>
 
-<body class="dashboard-page" style="background-image: url('assets/images/Polytechnic-Astra-2.jpeg');">
+<body class="dashboard-page">
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <nav class="navbar default-layout default-height col-lg-12 col-12 p-0 fixed-top d-flex align-items-center flex-row bg-transparent">
@@ -226,7 +231,7 @@
                     </div>
 
                     <!-- Jadwal Shalat -->
-                    <div class="row w-100 h-18 mx-0">
+                    <div class="row w-100 h-20 mx-0">
                         <div class="jadwal-shalat">
                             <div class="container-jadwal-shalat w-100 d-flex p-0 align-items-center flex-row">
                                 <div class="card card-jadwal card-jadwal-shalat" >
@@ -276,7 +281,7 @@
                         </div>
                     </div>
                     
-                    <div class="row w-100 mx-0 mt-5">
+                    <div class="row w-100 mx-0">
                         <footer class="footer footer-dashboard">
                             <div class="d-sm-flex justify-content-center ">
                                 <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © @DateTime.Now.Year. DKM Masjid Asy-Syabab.</span>
@@ -322,7 +327,7 @@
             
             var countdownMillis = nextAdzanTime - now;
 
-            if (countdownMillis <= 0) {
+            if (countdownMillis < 0) {
                 clearInterval(intervalId);
 
                 var list = jadwal.data;
@@ -568,7 +573,7 @@
                                 "<div class='card card-jadwal card-pengumuman' style='width: 75rem'> " +
                                 "<div class='card-body'>" +
                                 "<h5 class='card-title' id='pengumuman-kegiatan-judul'>" + item.judul + "</h5>" + 
-                                "<p class='card-text' id='pengumuman-kegiatan-isi'>" + item.isi + "</p>" +
+                                "<p class='card-text' id='pengumuman-kegiatan-isi'>" + decodeURIComponent(item.isi.replace(/%0A/g, '<br>')) + "</p>" +
                                 "</div>" +
                                 "</div>" +
                                 "</div>" +
@@ -596,7 +601,7 @@
 
                         if (status === 1 && jenis === 2) {
                             var judul = item.judul;
-                            var isi = item.isi;
+                            var isi = decodeURIComponent(item.isi.replace(/%0A/g, ''));
 
                             runningText += isi + " • ";
                         }

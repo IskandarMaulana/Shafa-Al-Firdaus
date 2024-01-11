@@ -9,8 +9,8 @@
   height: 100%;
 }
 
-.h-18 {
-  height: 18% !important;
+.h-20 {
+  height: 20% !important;
 }
 
 .dashboard-page {
@@ -86,7 +86,7 @@
 }
 
 .slide-jadwal {
-  height: 470px;
+  height: 450px;
 }
 
 .container-jadwal {
@@ -155,7 +155,7 @@
   align-items: top;
 }
 
-.pengumuan {
+.pengumuman {
   align-items: top;
 }
 
@@ -296,7 +296,7 @@
 .card-iqamah .card-title {
   color: #FFF;
   text-align: center;
-  font-size: 11rem;
+  font-size: 10rem;
 }
 
 .card-iqamah .card-text {
@@ -324,7 +324,22 @@
   padding: 10px;
 }
 
+@media only screen and (max-width: 1920px) and (orientation: landscape) and (display-mode: fullscreen) {
+  .slide-jadwal {
+    height: 550px;
+  }
 
+  .pengumuman { 
+    height: 530px;
+  }
+
+  .card-pengumuman { 
+    height: 400px !important;
+  }
+  .h-20 {
+    height: 18% !important;
+  }
+}
 
 
 @media only screen and (max-width: 1800px) {
