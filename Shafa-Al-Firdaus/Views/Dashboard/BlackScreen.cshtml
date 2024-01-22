@@ -75,19 +75,30 @@
         var isDhuhrTime = (currentDate.getHours() === adzanHours) && (currentDate.getMinutes() === adzanMinutes);
 
         var countdownTime = isFriday && isDhuhrTime ? 40 * 60 : 10 * 60;
-
+        var friday = false;
+        if (isFriday && isDhuhrTime) {
+            document.getElementById("prayer-message").innerText = "Harap matikan Handphone saat berada di Masjid";
+            friday = true;
+        }
         function updateCountdown() {
+            var now = new Date();
             var minutes = Math.floor(countdownTime / 60);
             var seconds = countdownTime % 60;
 
-            document.getElementById("countdown").innerHTML = formatTime(minutes) + " : " + formatTime(seconds);
-
+            if (friday) {
+                document.getElementById("countdown").innerHTML = zeroPadding(now.getHours(), 2) + ":" + zeroPadding(now.getMinutes(), 2) + ":" + zeroPadding(now.getSeconds(), 2);
+            } else {
+                document.getElementById("countdown").innerHTML = formatTime(minutes) + " : " + formatTime(seconds);
+            }
             countdownTime--;
 
             if (countdownTime < 0) {
                 clearInterval(timing);
                 window.location.href = "/";
             }
+        }
+        function zeroPadding(num, digit) {
+            return String(num).padStart(digit, '0');
         }
 
         function formatTime(time) {
