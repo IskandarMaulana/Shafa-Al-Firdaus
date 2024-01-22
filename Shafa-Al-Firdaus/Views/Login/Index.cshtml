@@ -65,10 +65,15 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo:wght@400&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" />
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
     <style>
         body.dashboard-page {
             background-image: url('@Url.Content("~/assets/images/Polytechnic-Astra-2.jpeg")');
         }
+
     </style>
 </head>
 
@@ -84,15 +89,11 @@
                                     <div class="col-md-8">
                                         <div class="form-content">
                                             <h4>Selamat Datang</h4>
-                                            <h6 class="fw-light">Silahkan masuk untuk melanjutkan</h6>
+                                            <h6 class="fw-light" style="margin-bottom: 20px;">Silahkan masuk untuk melanjutkan</h6>
 
-                                            @if (!string.IsNullOrEmpty(errorMessage))
-                                            {
-                                                <div class="alert alert-danger">
-                                                    @errorMessage
-                                                </div>
-                                            }
-                                            <form class="pt-3" asp-controller="Login" asp-action="Login" method="post">
+                                            <div id="errorMessageContainer"></div>
+                                            
+                                            <form id="loginForm" class="pt-3" method="post">
                                                 <div class="form-group">
                                                     <input asp-for="Username" class="form-control form-control-lg" placeholder="Nama Pengguna" required />
                                                     <span asp-validation-for="Username" class="text-danger"></span>
@@ -132,5 +133,35 @@
         </div>
     </div>
     <!-- container-scroller -->
+    <script>
+        $(document).ready(function () {
+            $('#errorMessageContainer').hide();
+
+            $('#loginForm').submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '/Login/Login',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            // Display success message and redirect
+                            swal("Berhasil!", data.message, "success").then(() => {
+                                window.location.href = '/Home/Index';
+                            });
+                        } else {
+                            // Display error message
+                            $('#errorMessageContainer').html('<div class="alert alert-danger">' + data.message + '</div>').show();
+                        }
+                    },
+                    error: function () {
+                        // Handle AJAX error if any
+                        swal("Gagal!", "Terjadi kesalahan saat login", "error");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

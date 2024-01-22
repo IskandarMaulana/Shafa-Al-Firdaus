@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Pengumuman";
+    int no = 0;
 }
 <style>
     .table-container {
@@ -22,7 +23,7 @@
                         </div>
                         <div class="row my-4" style="height: 50px">
                             <div class="col-md-12 w-50 h-100 d-flex align-items-start filter-container">
-                                <label for="statusFilter" style="width: 45%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Filter Berdasarkan Status :</label>
+                                <label for="statusFilter" style="width: 30%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Filter Berdasarkan Status :</label>
                                 <select class="form-control" id="statusFilter" style="width: 55%;height: 100%;font-size: 1rem;">
                                     <option value="">Semua</option>
                                     <option value="1">Tayang</option>
@@ -38,9 +39,10 @@
                         </div>
 
                         <div class="table-responsive table-container">
-                            <table class="table table-striped">
+                            <table id="table-data" class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th scope="col">No.</th>
                                         <th scope="col">Judul</th>
                                         <th scope="col">Jenis</th>
                                         <th scope="col">Isi</th>
@@ -61,17 +63,21 @@
 </div>
            
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<!-- ... (previous HTML code) ... -->
 
+@* <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<!-- ... (previous HTML code) ... -->
+<script>
+    $(document).ready(function () {
+        $('#table-data').DataTable();
+    });
+</script> *@
 <script>
 
     function ubahStatus(id) {
-        console.log(id);
-        var confirmed = confirm("Apakah Anda yakin ingin mengubah status menjadi Tidak Aktif?");
-        if (!confirmed) {
-            return;
-        }
-
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateStatusPengumuman?id_pengumuman=" + id + "&newStatus=4";
         var method = "PATCH";
@@ -80,25 +86,35 @@
         };
         var jwtToken = '@ViewBag.Token';
 
-        console.log('Update Data:', updateData);
-
-        $.ajax({
-            url: url,
-            method: method,
-            contentType: "application/json",
-            data: JSON.stringify(updateData),
-            headers: {
-                'Authorization': 'Bearer ' + jwtToken
-            },
-            success: function (data) {
-                console.log('Success:', data);
-                alert("Status berhasil diubah menjadi Tidak Aktif");
-                location.reload();
-
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                console.log('Error: ' + textStatus);
-                alert('Error: ' + textStatus);
+        swal({
+            title: "Ubah Status Pengumuman",
+            text: "Apakah Anda yakin ingin mengubah status menjadi Tidak Tayang?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: url,
+                    method: method,
+                    contentType: "application/json",
+                    headers: {
+                        'Authorization': 'Bearer ' + '@ViewBag.Token'
+                    },
+                    success: function (data) {
+                        if (data.status == 200) {
+                            swal("Berhasil!", "Status berhasil diubah menjadi Tidak Tayang", "success").then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            swal("Gagal", "Gagal mengubah status Pengumuman", "error");
+                        }
+                    },
+                    error: function (errors) {
+                        console.log(errors);
+                        swal("Error", "Terjadi kesalahan saat mengubah Pengumuman", "error");
+                    }
+                });
             }
         });
     }
@@ -131,6 +147,7 @@
                 success: function (data) {
                     var list = data.data;
                     var currentDate = new Date();
+                    var number = 1;
 
                     list.forEach(function (item) {
                         var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
@@ -167,14 +184,12 @@
                                     'Authorization': 'Bearer ' + jwtToken
                                 },
                                 success: function (data) {
-                                    console.log('Status updated successfully:', data);
-                                    console.log('Reloading...');
-                                    location.reload();
-                                    
+                                    swal("Sukses!", data.message, "success").then(() => {
+                                        location.reload();
+                                    });
                                 },
                                 error: function (xhr, textStatus, errorThrown) {
-                                    console.log('Error updating status: ' + textStatus);
-                                    alert('Error updating status: ' + textStatus);
+                                    swal('Gagal!','Gagal mengubah status: ' + textStatus,'error');
                                 }
                             });
 
@@ -184,9 +199,13 @@
 
                        
                         var statusText = getStatusText(item.status);
+                        
 
                         var newRow =
                             "<tr>" +
+                            "<td>" +
+                            number +
+                            "</td>" +
                             "<td>" +
                             item.judul +
                             "</td>" +
@@ -226,6 +245,7 @@
                             )
                         ) {
                             $("#tbody").append(newRow);
+                            number++;
                         }
                     });
                 },
@@ -265,7 +285,7 @@
                 case 5:
                     return "Selesai";
                 default:
-                    return "Unknown";
+                    return "Tidak Valid";
             }
         }
 
@@ -279,8 +299,9 @@
                 method: method,
                 contentType: "application/json",
                 success: function (data) {
-                    alert("Data Berhasil Dihapus");
-                    location.reload();
+                    swal("Berhasil!", "Data berhasil dihapus", "success").then(() => {
+                        location.reload();
+                    });
                 },
             });
         }

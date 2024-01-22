@@ -376,7 +376,7 @@
         function loadJadwalShalat() {
             var jadwalString = '@JsonConvert.SerializeObject(ViewBag.Jadwal)';
 
-            // Ganti HTML entities kembali ke karakter aslinya
+
             var jadwal = JSON.parse(jadwalString.replace(/&quot;/g, '"'));
 
             var imsak = document.getElementById('time-imsak');
@@ -488,7 +488,7 @@
 
                         if (status === 1 && jenis === 2) {
                             var judul = item.judul;
-                            var isi = item.isi;
+                            var isi = decodeURIComponent(item.isi.replace(/%0A/g, ''));
 
                             runningText += isi + " • ";
                         }
