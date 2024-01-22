@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromHours(5);
+    options.IdleTimeout = TimeSpan.FromHours(1);
 });
 
 var app = builder.Build();
@@ -27,9 +27,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
+app.MapControllerRoute(name: "default", pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
 app.Run();

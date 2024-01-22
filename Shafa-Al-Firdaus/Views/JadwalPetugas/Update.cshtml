@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Jadwal Petugas Harian";
 }
 
 <div class="content">
@@ -45,7 +46,7 @@
                         <br />
                         <div class="form-group">
                             <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
-                            <button href="#" class="btn btn-secondary" onclick="batal()">Batal</button>
+                            <button class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -89,8 +90,6 @@
         var tanggal = document.getElementById("tanggal");
         var waktu = document.getElementById("waktu");
         var tugas = document.getElementById("tugas");
-
-        console.log(id_jadwal);
 
         var hostname = "https://localhost:44307/";
         var url = hostname + "GetJadwalPetugasHarian?id_jadwal=" + id_jadwal.value;
@@ -147,7 +146,6 @@
         var jwtToken = '@ViewBag.Token';
 
 
-        var myHostname = "https://localhost:44355/";
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateJadwalPetugasHarian"; // Change the endpoint accordingly
         var method = "PUT";
@@ -171,12 +169,12 @@
             },
             success: function (data) {
                 swal("Sukses!", "Data Jadwal Petugas Harian Berhasil Diubah", "success").then(() => {
-                    window.location.href = myHostname + "JadwalPetugas/Index";
+                    window.location.href = "/JadwalPetugas/Index";
                 });
             },
             error: function () {
                 swal("Gagal!", "Menyimpan data Jadwal Petugas Harian gagal ditambahkan", "error").then(() => {
-                    window.location.href = myHostname + "JadwalPetugas/Index";
+                    window.location.href = "/JadwalPetugas/Index";
                 });
             },
         });

@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Login Page";
     Layout = null;
+    var errorMessage = TempData["ErrorMessage"] as string;
 }
 
 <!DOCTYPE html>
@@ -62,34 +63,48 @@
 
     <link rel="stylesheet" href="~/assets/css/vertical-layout-light/dashboard.css" />
 
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Baloo:wght@400&display=swap" />
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" />
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <style>
+        body.dashboard-page {
+            background-image: url('@Url.Content("~/assets/images/Polytechnic-Astra-2.jpeg")');
+        }
+
+    </style>
 </head>
 
-<body class="dashboard-page" style="background-image: url('assets/images/Polytechnic-Astra-2.jpeg');">
+<body class="dashboard-page">
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper" id="container-login">
             <div class="content-wrapper d-flex align-items-center auth px-0" style="position: relative; overflow: hidden; height: 100vh">
                 <div class="row w-100 mx-0">
                     <div class="col-lg-6 mx-auto">
-                        <div class="auth-form-light text-left py-3 px-4 px-sm-4">
+                        <div class="auth-form-light text-left py-3 px-4 px-sm-4 h-auto">
                             <div class="content-wrapper">
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-content">
                                             <h4>Selamat Datang</h4>
-                                            <h6 class="fw-light">Silahkan masuk untuk melanjutkan</h6>
-                                            <form class="pt-3" asp-controller="Login" asp-action="Login" method="post">
+                                            <h6 class="fw-light" style="margin-bottom: 20px;">Silahkan masuk untuk melanjutkan</h6>
+
+                                            <div id="errorMessageContainer"></div>
+                                            
+                                            <form id="loginForm" class="pt-3" method="post">
                                                 <div class="form-group">
                                                     <input asp-for="Username" class="form-control form-control-lg" placeholder="Nama Pengguna" required />
+                                                    <span asp-validation-for="Username" class="text-danger"></span>
                                                 </div>
                                                 <div class="form-group">
                                                     <input asp-for="Password" type="password" class="form-control form-control-lg" placeholder="Kata Sandi" required />
+                                                    <span asp-validation-for="Password" class="text-danger"></span>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <button type="submit" class="btn btn-block btn-info btn-lg font-weight-medium auth-form-btn">Login</button>
+                                                    <button type="submit" class="btn btn-block btn-info btn-lg font-weight-medium auth-form-btn" style="margin: 1rem 3.2rem;">Masuk</button>
+                                                    <a class="btn btn-block btn-success btn-lg font-weight-medium auth-form-btn" asp-controller="Dashboard" asp-action="Index" style="margin: 1rem 3.2rem;">Kembali</a>
                                                 </div>
                                             </form>
                                         </div>
@@ -118,5 +133,35 @@
         </div>
     </div>
     <!-- container-scroller -->
+    <script>
+        $(document).ready(function () {
+            $('#errorMessageContainer').hide();
+
+            $('#loginForm').submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '/Login/Login',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            // Display success message and redirect
+                            swal("Berhasil!", data.message, "success").then(() => {
+                                window.location.href = '/Home/Index';
+                            });
+                        } else {
+                            // Display error message
+                            $('#errorMessageContainer').html('<div class="alert alert-danger">' + data.message + '</div>').show();
+                        }
+                    },
+                    error: function () {
+                        // Handle AJAX error if any
+                        swal("Gagal!", "Terjadi kesalahan saat login", "error");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

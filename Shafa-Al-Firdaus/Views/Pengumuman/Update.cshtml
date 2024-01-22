@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Pengumuman";
 }
 
 
@@ -32,19 +33,19 @@
                         </div>
                         <div class="form-group">
                             <label for="isi" class="control-label">Isi Pengumuman</label>
-                            <input type="text" name="isi" id="isi" class="form-control" required />
+                            <textarea name="isi" id="isi" class="form-control" style="height: auto;min-height: calc(7.5em + 0.75rem + 2px);" required></textarea>
                         </div>
                         <div class="form-group">
                             <label name="tanggal_mulai" class="control-label">Tanggal Mulai</label>
-                            <input name="tanggal_mulai" type="datetime-local" id="tanggal_mulai" class="form-control" />
+                            <input name="tanggal_mulai" type="datetime-local" id="tanggal_mulai" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label name="tanggal_selesai" class="control-label">Tanggal Selesai</label>
-                            <input name="tanggal_selesai" type="datetime-local" id="tanggal_selesai" class="form-control" />
+                            <input name="tanggal_selesai" type="datetime-local" id="tanggal_selesai" class="form-control" required />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;">
                             <label name="status" class="control-label">Status</label>
-                            <select id="status" class="form-control" disabled>
+                            <select id="status" class="form-control" required>
                                 <option value="1">Tayang</option>
                                 <option value="4">Tidak Tayang</option>
                                 <option value="3">Dijadwalkan</option>
@@ -53,7 +54,8 @@
                         </div>
                         <br />
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                            <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
+                            <button class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -93,34 +95,46 @@
                 var startDate = item.tanggal_mulai; // Replace this with your actual start date
                 var endDate = item.tanggal_selesai;
 
-                var options = {
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: false
-                };
+                var receivedDateMulai = new Date(item.tanggal_mulai);
+                var formattedTanggalMulai =
+                    receivedDateMulai.getFullYear() +
+                    "-" +
+                    ("0" + (receivedDateMulai.getMonth() + 1)).slice(-2) +
+                    "-" +
+                    ("0" + receivedDateMulai.getDate()).slice(-2) +
+                    "T" +
+                    ("0" + receivedDateMulai.getHours()).slice(-2) +
+                    ":" +
+                    ("0" + receivedDateMulai.getMinutes()).slice(-2);
 
-                var formattedTanggal = startDate.toLocaleString('en-US', options).replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+):(\d+)/, '$3/$2/$1 $4:$5');
-                var formattedTanggalend = endDate.toLocaleString('en-US', options).replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+):(\d+)/, '$3/$2/$1 $4:$5');
+                var receivedDateSelesai = new Date(item.tanggal_selesai);
+                var formattedTanggalSelesai =
+                    receivedDateSelesai.getFullYear() +
+                    "-" +
+                    ("0" + (receivedDateSelesai.getMonth() + 1)).slice(-2) +
+                    "-" +
+                    ("0" + receivedDateSelesai.getDate()).slice(-2) +
+                    "T" +
+                    ("0" + receivedDateSelesai.getHours()).slice(-2) +
+                    ":" +
+                    ("0" + receivedDateSelesai.getMinutes()).slice(-2);
 
-                console.log(formattedTanggal);      // Output: 13/12/2023 10:14
-                console.log(formattedTanggalend);   // Output: 13/12/2023 10:14
+                console.log(formattedTanggalMulai);      // Output: 13/12/2023 10:14
+                console.log(formattedTanggalSelesai);   // Output: 13/12/2023 10:14
 
                 // Set the values in the form
                 judul.value = item.judul;
                 jenis.value = item.jenis;
-                isi.value = item.isi;
-                tanggal_mulai.value = formattedTanggal;
-                tanggal_selesai.value = formattedTanggalend;
+                isi.value = decodeURIComponent(item.isi);
+                tanggal_mulai.value = formattedTanggalMulai;
+                tanggal_selesai.value = formattedTanggalSelesai;
                 status.value = item.status;
 
                 // Disable date fields if jenis is 3 (Teks Berjalan)
                 if (item.jenis === 2) {
                     tanggal_mulai.disabled = true;
                     tanggal_selesai.disabled = true;
-
+                    
                 }
             },
         });
@@ -130,7 +144,7 @@
         var id_pengumuman = document.getElementById("id_pengumuman").value;
         var judul = document.getElementById("judul").value;
         var jenis = document.getElementById("jenis").value;
-        var isi = document.getElementById("isi").value;
+        var isi = encodeURIComponent(document.getElementById("isi").value);
         var tanggal_mulai = document.getElementById("tanggal_mulai").value;
         var tanggal_selesai = document.getElementById("tanggal_selesai").value;
         var status = document.getElementById("status").value;
@@ -141,8 +155,8 @@
         var today = new Date();
         var selectedDate = new Date(tanggal_mulai);
 
-        if (selectedDate < today) {
-            alert("Tanggal tidak boleh kurang dari hari ini.");
+        if (selectedDate < today && jenis !=='2') {
+            swal("Gagal!","Tanggal tidak boleh kurang dari hari ini.", "error");
             return; // Berhenti jika tanggal tidak valid
         }
 
@@ -150,15 +164,13 @@
         if (jenis === 2) {
             document.getElementById("tanggal_mulai").disabled = true;
             document.getElementById("tanggal_selesai").disabled = true;
-            tanggal_mulai = null; // Set to null if disabled
-            tanggal_selesai = null; // Set to null if disabled
+            tanggal_mulai = new Date('01/01/2001'); // Set to null if disabled
+            tanggal_selesai = new Date('01/01/2001'); // Set to null if disabled
         }
 
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
-
-        var myHostname = "https://localhost:44355/";
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdatePengumuman"; // Change the endpoint accordingly
         var method = "PUT";
@@ -184,15 +196,18 @@
                 'Authorization': 'Bearer ' + jwtToken
             },
             success: function (data) {
-                alert("Data Pengumuman Berhasil Diubah");
-                window.location.href = myHostname + "pengumuman/Index";
+                swal("Berhasil!", "Data Pengumuman Berhasil Diubah", "success").then(() => {
+                    window.location.href = "/Pengumuman/Index";
+                });
             },
-            error: function () {
-                alert("Gagal menyimpan data Pengumuman.");
+            error: function (error) {
+                swal("Gagal!", "Gagal menyimpan data Pengumuman.", "error");
             },
         });
     }
-
+    function batal() {
+        history.back();
+    }
     document.getElementById("jenis").addEventListener("change", function () {
         // Enable or disable date fields based on the selected jenis value
         var isTeksBerjalan = parseInt(this.value) === 2;

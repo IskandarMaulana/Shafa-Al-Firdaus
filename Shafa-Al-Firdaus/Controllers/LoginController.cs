@@ -48,12 +48,12 @@ namespace Shafa_Al_Firdaus.Controllers
                 //Session
                 HttpContext.Session.SetString("JwtToken", token);
 
-                return RedirectToAction("Index", "Home"); // Redirect to a dashboard or any secure page
+                return Json(new { success = true, message = "Berhasil Login" });
             }
 
             // If authentication fails, return to the login page with an error message
-            TempData["ErrorMessage"] = "Invalid username or password";
-            return RedirectToAction("Index");
+            TempData["ErrorMessage"] = "Nama Pengguna atau Kata Sandi salah";
+            return Json(new { success = false, message = "Nama Pengguna atau Kata Sandi salah" });
         }
 
         private async Task<string> GetJwtTokenFromWebApi(LoginViewModel loginModel)

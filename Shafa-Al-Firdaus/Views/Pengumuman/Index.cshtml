@@ -1,31 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Pengumuman";
+    int no = 0;
 }
 <style>
-     .btn-tambah {
-         float: left;
-         margin-bottom: 10px;
-         margin-right: 10px;
-     }
-
-     .search-container {
-         margin-bottom: 10px;
-     }
-
-     .filter-container {
-         margin-bottom: 20px;
-     }
-
-     .table-container {
-         max-height: 400px; /* Adjust the maximum height as needed */
-         overflow-y: auto;
-     }
-
-     #statusFilter {
-         background-color: #5bc0de;
-         color: #fff;
-         border: 1px solid #5bc0de;
-     }
+    .table-container {
+        max-height: 595px;
+        overflow-y: auto;
+    }
 </style>
 
 <div class="content">
@@ -37,33 +18,31 @@
                         <h4 class="card-title">Pengumuman</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <a class="btn btn-primary btn-tambah" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <div class="filter-container">
-                                    <label for="x">Filter berdasarkan Status:</label>
-                                    <select id="statusFilter" class="form-select">
-                                        <option value="">Semua data</option>
-                                        <option value="1">Tayang</option>
-                                        <option value="4">Tidak Tayang</option>
-                                        <option value="3">Dijadwalkan</option>
-                                        <option value="5">Selesai</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="my-3" style="margin-top: 40px;">
+                            <a class="btn btn-primary" asp-controller="Pengumuman" asp-action="Create">Tambah Data</a>
                         </div>
-
-                        <div class="col-md-12 search-container">
-                            <label for="searchInput"> Mencari Data:</label>
-                            <input type="text" id="searchInput" class="form-control" />
+                        <div class="row my-4" style="height: 50px">
+                            <div class="col-md-12 w-50 h-100 d-flex align-items-start filter-container">
+                                <label for="statusFilter" style="width: 30%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Filter Berdasarkan Status :</label>
+                                <select class="form-control" id="statusFilter" style="width: 55%;height: 100%;font-size: 1rem;">
+                                    <option value="">Semua</option>
+                                    <option value="1">Tayang</option>
+                                    <option value="4">Tidak Tayang</option>
+                                    <option value="3">Dijadwalkan</option>
+                                    <option value="5">Selesai</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 w-50 d-flex align-items-end search-container">
+                                <label for="searchInput" style="width: 10%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Cari :</label>
+                                <input type="text" id="searchInput" class="form-control" style="width: 70%;height: 100%;font-size: 1rem;" />
+                            </div>
                         </div>
 
                         <div class="table-responsive table-container">
-                            <table class="table table-striped">
+                            <table id="table-data" class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th scope="col">No.</th>
                                         <th scope="col">Judul</th>
                                         <th scope="col">Jenis</th>
                                         <th scope="col">Isi</th>
@@ -82,18 +61,23 @@
         </div>
     </div>
 </div>
+           
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<!-- ... (previous HTML code) ... -->
 
+@* <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<!-- ... (previous HTML code) ... -->
+<script>
+    $(document).ready(function () {
+        $('#table-data').DataTable();
+    });
+</script> *@
 <script>
 
     function ubahStatus(id) {
-        console.log(id);
-        var confirmed = confirm("Apakah Anda yakin ingin mengubah status menjadi Tidak Aktif?");
-        if (!confirmed) {
-            return;
-        }
-
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateStatusPengumuman?id_pengumuman=" + id + "&newStatus=4";
         var method = "PATCH";
@@ -102,25 +86,35 @@
         };
         var jwtToken = '@ViewBag.Token';
 
-        console.log('Update Data:', updateData);
-
-        $.ajax({
-            url: url,
-            method: method,
-            contentType: "application/json",
-            data: JSON.stringify(updateData),
-            headers: {
-                'Authorization': 'Bearer ' + jwtToken
-            },
-            success: function (data) {
-                console.log('Success:', data);
-                alert("Status berhasil diubah menjadi Tidak Aktif");
-                location.reload();
-
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                console.log('Error: ' + textStatus);
-                alert('Error: ' + textStatus);
+        swal({
+            title: "Ubah Status Pengumuman",
+            text: "Apakah Anda yakin ingin mengubah status menjadi Tidak Tayang?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: url,
+                    method: method,
+                    contentType: "application/json",
+                    headers: {
+                        'Authorization': 'Bearer ' + '@ViewBag.Token'
+                    },
+                    success: function (data) {
+                        if (data.status == 200) {
+                            swal("Berhasil!", "Status berhasil diubah menjadi Tidak Tayang", "success").then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            swal("Gagal", "Gagal mengubah status Pengumuman", "error");
+                        }
+                    },
+                    error: function (errors) {
+                        console.log(errors);
+                        swal("Error", "Terjadi kesalahan saat mengubah Pengumuman", "error");
+                    }
+                });
             }
         });
     }
@@ -153,6 +147,7 @@
                 success: function (data) {
                     var list = data.data;
                     var currentDate = new Date();
+                    var number = 1;
 
                     list.forEach(function (item) {
                         var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
@@ -168,7 +163,7 @@
                             // Set an interval to reload the page every 60 seconds (adjust as needed)
                             setInterval(function () {
                                 location.reload();
-                            }, 10000);
+                            }, 900000);
                         }
 
                         // Check if the end date is in the past
@@ -189,14 +184,12 @@
                                     'Authorization': 'Bearer ' + jwtToken
                                 },
                                 success: function (data) {
-                                    console.log('Status updated successfully:', data);
-                                    console.log('Reloading...');
-                                    location.reload();
-                                    
+                                    swal("Sukses!", data.message, "success").then(() => {
+                                        location.reload();
+                                    });
                                 },
                                 error: function (xhr, textStatus, errorThrown) {
-                                    console.log('Error updating status: ' + textStatus);
-                                    alert('Error updating status: ' + textStatus);
+                                    swal('Gagal!','Gagal mengubah status: ' + textStatus,'error');
                                 }
                             });
 
@@ -206,17 +199,21 @@
 
                        
                         var statusText = getStatusText(item.status);
+                        
 
                         var newRow =
                             "<tr>" +
+                            "<td>" +
+                            number +
+                            "</td>" +
                             "<td>" +
                             item.judul +
                             "</td>" +
                             "<td>" +
                             jenisText +
                             "</td>" +
-                            "<td class='wrap-column'>" +
-                            item.isi +
+                            "<td class='wrap-column' style='max-width: 30rem; '>" +
+                            decodeURIComponent(item.isi) +
                             "</td>" +
                             "<td>" +
                             formattedTanggalMulai +
@@ -228,10 +225,10 @@
                             statusText +
                             "</td>" +
                             "<td>" +
-                            '<a class="btn btn-secondary" href="/Pengumuman/Update?id=' +
+                            '<a class="btn btn-outline-info btn-icon" href="/Pengumuman/Update?id=' +
                             item.id_pengumuman +
-                            '">Memperbarui</a>' +
-                            '<button class="btn btn-danger" value="' + item.id_pengumuman + '" onclick="ubahStatus(\'' + item.id_pengumuman + '\')">Tidak Tayang</button>' +
+                            '"data-toggle="tooltip" data-placement="top" title="Ubah Data Pengumuman"><i class="bi bi-pencil-square"></i></a>' +
+                            '<button class="btn btn-outline-danger btn-icon" value="' + item.id_pengumuman + '" onclick="ubahStatus(\'' + item.id_pengumuman + '\')" style="margin-left: 10px;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Pengumuman Tidak Ditayangkan"><i class="bi bi-dash-circle-fill"></i></button>' +
                             "</td>" +
                             "</tr>";
 
@@ -248,6 +245,7 @@
                             )
                         ) {
                             $("#tbody").append(newRow);
+                            number++;
                         }
                     });
                 },
@@ -287,7 +285,7 @@
                 case 5:
                     return "Selesai";
                 default:
-                    return "Unknown";
+                    return "Tidak Valid";
             }
         }
 
@@ -301,8 +299,9 @@
                 method: method,
                 contentType: "application/json",
                 success: function (data) {
-                    alert("Data Berhasil Dihapus");
-                    location.reload();
+                    swal("Berhasil!", "Data berhasil dihapus", "success").then(() => {
+                        location.reload();
+                    });
                 },
             });
         }

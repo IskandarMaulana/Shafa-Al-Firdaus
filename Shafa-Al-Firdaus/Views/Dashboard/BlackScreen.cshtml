@@ -1,0 +1,100 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "Halaman Utama";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
+    <title>@ViewData["Title"] - Shafa Al-Firdaus</title>
+    <link rel="shortcut icon" href="~/assets/images/logo-shafa.svg" />
+    <style>
+        body {
+            align-items: center;
+            background-color: black;
+            color: white;
+            font-family: "Arial", sans-serif;
+            font-size: 5em;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #countdown {
+            font-size: 2em;
+        }
+
+        #prayer-message {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+</head>
+<body>
+    <div class="row">
+        <div id="countdown"></div>
+        <div id="prayer-message">Luruskan dan Rapatkan Shaf</div>
+    </div>
+    <script>
+        var jadwalString = '@JsonConvert.SerializeObject(ViewBag.Jadwal)';
+
+        var jadwal = JSON.parse(jadwalString.replace(/&quot;/g, '"'));
+
+        var list = jadwal.data;
+
+        var targetDate = moment().format('DD-MM-YYYY');
+
+        var targetData = null;
+        var timing;
+
+        list.forEach(function (item) {
+            var itemDate = item.date.gregorian.date;
+
+            if (itemDate === targetDate) {
+                targetData = item;
+            }
+        });
+
+        var dzuhur = targetData.timings.Dhuhr.replace("(WIB)", "").split(":");
+        var adzanHours = parseInt(dzuhur[0], 10);
+        var adzanMinutes = parseInt(dzuhur[1], 10);
+
+        var currentDate = new Date();
+        var isFriday = currentDate.getDay() === 5;
+        var isDhuhrTime = (currentDate.getHours() === adzanHours) && (currentDate.getMinutes() === adzanMinutes);
+
+        var countdownTime = isFriday && isDhuhrTime ? 40 * 60 : 10 * 60;
+
+        function updateCountdown() {
+            var minutes = Math.floor(countdownTime / 60);
+            var seconds = countdownTime % 60;
+
+            document.getElementById("countdown").innerHTML = formatTime(minutes) + " : " + formatTime(seconds);
+
+            countdownTime--;
+
+            if (countdownTime < 0) {
+                clearInterval(timing);
+                window.location.href = "/";
+            }
+        }
+
+        function formatTime(time) {
+            return time < 10 ? "0" + time : time;
+        }
+
+        timing = setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

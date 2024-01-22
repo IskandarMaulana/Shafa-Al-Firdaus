@@ -1,37 +1,57 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Petugas Harian";
 }
 
+<style>
+    .table-container {
+        max-height: 595px;
+        overflow-y: auto;
+    }
+</style>
 
-
-<div class="card">
-    <div class="card-body">
-        <div class="my-3" style="margin-top: 40px;">
-            <a class="btn btn-primary" asp-controller="PetugasHarian" asp-action="Create">Tambah Data</a>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Petugas Harian</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="my-3" style="margin-top: 40px;">
+                            <a class="btn btn-primary" asp-controller="PetugasHarian" asp-action="Create">Tambah Data</a>
+                        </div>
+                        <div class="row my-4" style="height: 50px">
+                            <div class="col-md-12 w-50 h-100 d-flex align-items-start filter-container">
+                                <label for="statusFilter" style="width: 45%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Filter Berdasarkan Status :</label>
+                                <select class="form-control" id="statusFilter" style="width: 55%;height: 100%;font-size: 1rem;">
+                                    <option value="">Semua</option>
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Tidak Aktif</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 w-50 d-flex align-items-end search-container">
+                                <label for="searchInput" style="width: 10%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Cari :</label>
+                                <input type="text" id="searchInput" class="form-control" style="width: 70%;height: 100%;font-size: 1rem;" />
+                            </div>
+                        </div>
+                        <div class="table-responsive table-container">
+                            <table class="table table-stripped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nama Petugas</th>
+                                        <th scope="col">Nomor Telepon</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-12 filter-container">
-            <label for="statusFilter">Filter by Status:</label>
-            <select id="statusFilter">
-                <option value="">All</option>
-                <option value="1">Aktif</option>
-                <option value="0">Tidak Aktif</option>
-            </select>
-        </div>
-        <div class="col-md-12 search-container">
-            <label for="searchInput"> Search:</label>
-            <input type="text" id="searchInput" class="form-control" />
-        </div>
-        <table class="table table-stripped">
-            <thead>
-                <tr>
-                    <th scope="col">Nama Petugas</th>
-                    <th scope="col">Nomor Telepon</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-        </table>
     </div>
 </div>
 
@@ -67,8 +87,8 @@
                         '<td>' + item.nomor_telepon + '</td>' +
                         '<td>' + statusText + '</td>' +
                         '<td>' +
-                        '<a class="btn btn-secondary" href="PetugasHarian/Update/' + item.kode + '">Update</a>' +
-                        '<a class="btn btn-danger" onclick="ubahStatus(\'' + item.kode + '\')">Menonaktifkan</a>' +
+                        '<a class="btn btn-outline-info btn-icon" href="/PetugasHarian/Update/' + item.kode + '" data-toggle="tooltip" data-placement="top" title="Ubah Data Petugas"><i class="bi bi-pencil-square"></i></a>' +
+                        '<a class="btn btn-outline-danger btn-icon" onclick="ubahStatus(\'' + item.kode + '\')" style="margin-left: 10px;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Nonaktifkan Petugas"><i class="bi bi-dash-circle-fill"></i></a>' +
                         '</td>' +
                         '</tr>';
 

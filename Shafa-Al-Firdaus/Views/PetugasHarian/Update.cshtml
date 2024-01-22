@@ -1,5 +1,6 @@
 ﻿@{
     string name = ViewBag.Name;
+    ViewData["Title"] = "Petugas Harian";
 }
 
 <div class="content">
@@ -17,22 +18,21 @@
                         </div>
                         <div class="form-group">
                             <label for="nama" class="control-label">Nama</label>
-                            <input type="text" name="nama" id="nama" class="form-control" />
+                            <input type="text" name="nama" id="nama" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="nomor_telepon" class="control-label">Nomor Telepon</label>
-                            <input type="text" name="nomor_telepon" id="nomor_telepon" class="form-control" />
+                            <input type="text" name="nomor_telepon" id="nomor_telepon" class="form-control" required />
                         </div>
-                        <div class="form-group">
-                            <label for="status" class="control-label">Status</label>
-                            <select name="status" id="status" class="form-control" value="1">
-                                <option>Aktif</option>
+                        <div class="form-group" style="display: none;">
+                            <select name="status" id="status" class="form-control" >
+                                <option value="1">Aktif</option>
                             </select>
                         </div>
                         <br/>
                         <div class="form-group">
                             <button type="button" class="btn btn-primary" onclick="simpan()" style="margin-right: 10px;">Simpan</button>
-                            <button href="#" class="btn btn-secondary" onclick="batal()">Batal</button>
+                            <button class="btn btn-secondary" onclick="batal()">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                 'Authorization': 'Bearer ' + jwtToken
             },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 var item = data.data
                 kode.value = item.kode
                 nama.value = item.nama
@@ -74,6 +74,7 @@
         var nama = document.getElementById("nama").value;
         var nomor_telepon = document.getElementById("nomor_telepon").value;
         var status = document.getElementById("status").value;
+
         var hostname = "https://localhost:44307/";
         var url = hostname + "UpdatePetugasHarian";
         var method = "PUT";
@@ -99,11 +100,17 @@
             },
             success: function (data, textStatus, xhr) {
                 if (xhr.status === 200) {
-                    alert("Data Petugas Harian Berhasil Disimpan/Updated");
+                    swal("Berhasil", "Data Petugas Harian berhasil diubah", "success").then(() => {
+                        window.location.href = "/PetugasHarian/Index";
+                    });
                 } else {
                     alert("Gagal menyimpan/memperbarui Data Petugas Harian. Kode Status: " + xhr.status);
                 }
             },
+            error : function(error) {
+                console.log(error);
+                swal("Kesalahan", "Gagal menyimpan Data Petugas Harian", "error")
+            }
         });
     }
 

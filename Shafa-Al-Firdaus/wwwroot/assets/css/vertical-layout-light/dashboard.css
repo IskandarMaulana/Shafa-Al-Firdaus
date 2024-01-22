@@ -6,7 +6,11 @@
 #carouselDashboard {
   display: flex;
   align-items: center;
-  height: 65vh;
+  height: 100%;
+}
+
+.h-20 {
+  height: 20% !important;
 }
 
 .dashboard-page {
@@ -15,10 +19,14 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100%;
+  height: 100vh;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+}
+
+.default-height{
+  height: 190px !important;
 }
 
 .footer-login {
@@ -43,14 +51,30 @@
 
 .title-asy-syabab {
   margin-top: 10px;
-  margin-bottom: 10px;
   text-align: center;
   font-family: "Roboto", sans-serif;
+  font-weight: bold;
   color: white;
 }
 
+.title-time-now {
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.text-time-now {
+  color: #FFF;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px #7762ff;
+  text-align: center;
+}
+
 .main-panel-dashboard {
-  margin-top: 150px;
+  margin-top: 190px;
   width: 100%;
   height: calc(100vh - 150px);
   display: flex;
@@ -61,10 +85,18 @@
   height: 100%;
 }
 
+.slide-jadwal {
+  height: 450px;
+}
+
 .container-jadwal {
   margin-top: 3rem;
 }
 
+.container-jadwal-shalat{
+  width: inherit;
+  height: 100%;
+}
 .carousel-inner {
   height: inherit;
 }
@@ -82,22 +114,37 @@
   margin-top: 10px;
   margin-right: auto;
   margin-left: auto;
-  background-color: #004fe356;
+  background-color: #32417b62;
   backdrop-filter: blur(10px);
   border: 2px solid rgb(255 255 255 / 40%);
 }
 
+.card-jadwal-shalat {
+  background-image: linear-gradient(135deg, #80ACF4, #28467C);;
+  box-shadow: 0 6px 16px rgba(1, 114, 176, 0.9), inset 0 0 15px #88daf7;
+  height: 100%;
+  width: auto;
+  min-width: 16rem;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
 .card-jadwal-shalat .card-title {
-  color: white;
+  color: #FFF;
   text-align: center;
-  font-size: 40px;
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
 .card-jadwal-shalat .card-text {
-  color: white;
+  color: #fffb0d;
+  font-weight: 1000;
   margin-top: 20px;
   text-align: center;
-  font-size: 40px;
+  font-size: 5rem;
+  /* text-shadow: 0 0 5px #39A7FF; */
 }
 
 .jadwal-shalat {
@@ -108,11 +155,12 @@
   align-items: top;
 }
 
-.pengumuan {
+.pengumuman {
   align-items: top;
 }
 
 .card-jadwal-petugas {
+  background-color: #1365df57;
 }
 
 .card-jadwal-petugas .card-body {
@@ -121,16 +169,18 @@
 }
 
 .card-jadwal-petugas .card-title {
-  color: white;
+  color: #DFF6FF;
   text-align: center;
   font-size: 30px;
+  margin-bottom: 0.5rem;
 }
 
 .card-jadwal-petugas .card-text {
-  color: white;
-  margin-top: 20px;
+  color: #DFF6FF;
+  margin-top: 0.5rem;
   text-align: center;
   font-size: 30px;
+  font-weight: 800;
 }
 
 .icon-jadwal-petugas {
@@ -146,6 +196,7 @@
 }
 
 .jadwal-body .nama-petugas {
+  height: 2rem;
   white-space: nowrap; 
   will-change: transform;
   animation: marquee 15s linear infinite; 
@@ -154,16 +205,6 @@
 .jadwal-body .card-title-tugas {
   font-size: 20px;
 }
-
-/* @keyframes marquee {
-  0% {
-    transform: translateX(100%); 
-  }
-
-  100% {
-    transform: translateX(-100%);
-  }
-} */
 
 @keyframes marquee {
   from {
@@ -177,18 +218,21 @@
 @keyframes pause {
   0%,
   100% {
-    transform: translateX(0); /* Posisi tetap saat animasi berhenti */
+    transform: translateX(0); 
   }
 }
 
 .jadwal-divider {
   height: 2px;
+  margin: 0.5rem;
   background-color: #fff;
 }
 
 .card-pengumuman {
-  min-height: 34rem;
+  min-height: 340px;
   height: auto !important;
+  max-height: 500px;
+  background-color: #1365df57;
 }
 
 .card-pengumuman .card-body {
@@ -197,13 +241,13 @@
 }
 
 .card-pengumuman .card-title {
-  color: white;
+  color: #DFF6FF;
   text-align: center;
   font-size: 30px;
 }
 
 .card-pengumuman .card-text {
-  color: white;
+  color: #DFF6FF;
   margin-top: 20px;
   text-align: center;
   font-size: 30px;
@@ -211,11 +255,11 @@
 }
 
 .card-running-text {
-  width: 85rem;
+  width: 100rem;
   height: auto;
   margin-top: 10px;
   margin-bottom: 10px;
-  background-color: #1967f754;
+  background-color: #32417b62;
   backdrop-filter: blur(10px);
   border: 2px solid rgb(255 255 255 / 40%);
   margin-left: auto;
@@ -230,8 +274,37 @@
 
 .card-running-text .card-body .card-text {
   color: white;
-  font-size: 20px;
+  font-size: 50px;
+  font-weight: 900;
   white-space: nowrap;
+}
+
+.card-iqamah {
+  width: 75rem !important;
+  /* margin-top: 75px; */
+  min-height: 340px;
+  height: auto !important;
+  max-height: 500px;
+  background-color: #1365df57;
+}
+
+.card-iqamah .card-body {
+  /* padding: 1rem;
+  display: flex; */
+}
+
+.card-iqamah .card-title {
+  color: #FFF;
+  text-align: center;
+  font-size: 10rem;
+}
+
+.card-iqamah .card-text {
+  color: #FFF;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 5rem;
+  line-height: 1.5;
 }
 
 .school-address {
@@ -239,14 +312,126 @@
   font-weight: bold;
   font-size: 20px;
   white-space: nowrap;
-  margin-top: 30px;
+  margin-top: 0px;
 }
 
 .footer-dashboard {
   background-color: transparent;
   color: black;
-  font-size: 15px;
+  font-size: 20px;
   text-align: center;
   margin: 0px;
   padding: 10px;
+}
+
+@media only screen and (max-width: 1920px) and (orientation: landscape) and (display-mode: fullscreen) {
+  .slide-jadwal {
+    height: 550px;
+  }
+
+  .pengumuman { 
+    height: 530px;
+  }
+
+  .card-pengumuman { 
+    height: 400px !important;
+  }
+  .h-20 {
+    height: 18% !important;
+  }
+}
+
+
+@media only screen and (max-width: 1800px) {
+  .main-panel-dashboard {
+    margin-top: 100px;
+  }
+
+  .default-height{
+    height: 100px !important;
+  }
+
+  .logo-asy-syabab,
+  .logo-shafa {
+    height: 100px; 
+    width: 100px; 
+  }
+
+  .title-asy-syabab {
+    font-size: 30px;
+  }
+
+  .title-time-now{
+    font-size: 1rem;
+  }
+  
+  .text-time-now {
+    font-size: 2rem;
+  }
+
+  .card-jadwal-shalat {
+    max-width: 16rem;
+  }
+
+  .card-jadwal-shalat .card-title {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card-jadwal-shalat .card-text {
+    margin-top: 20px;
+    font-size: 4rem;
+  }
+}
+
+
+@media only screen and (max-width: 992px) {
+  .main-panel-dashboard {
+    margin-top: 80px; 
+  }
+
+  .dashboard-page {
+    margin-top: 40px; 
+  }
+
+  .logo-asy-syabab,
+  .logo-shafa {
+    height: 120px; 
+    width: 120px; 
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+  .main-panel-dashboard {
+    margin-top: 60px; 
+  }
+
+  .dashboard-page {
+    margin-top: 30px; 
+  }
+
+  .logo-asy-syabab,
+  .logo-shafa {
+    height: 100px; 
+    width: 100px; 
+  }
+
+}
+
+@media only screen and (max-width: 576px) {
+  .main-panel-dashboard {
+    margin-top: 40px; 
+  }
+
+  .dashboard-page {
+    margin-top: 20px; 
+  }
+
+  .logo-asy-syabab,
+  .logo-shafa {
+    height: 80px; 
+    width: 80px; 
+  }
+
 }
