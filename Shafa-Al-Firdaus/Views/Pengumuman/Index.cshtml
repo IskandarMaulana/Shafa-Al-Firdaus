@@ -7,6 +7,11 @@
         max-height: 595px;
         overflow-y: auto;
     }
+
+    .table-striped td th {
+        font-size: 1.3rem;
+        line-height: normal;
+    } 
 </style>
 
 <div class="content">
@@ -23,8 +28,8 @@
                         </div>
                         <div class="row my-4" style="height: 50px">
                             <div class="col-md-12 w-50 h-100 d-flex align-items-start filter-container">
-                                <label for="statusFilter" style="width: 30%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Filter Berdasarkan Status :</label>
-                                <select class="form-control" id="statusFilter" style="width: 55%;height: 100%;font-size: 1rem;">
+                                <label for="statusFilter" style="width: 30%;height: 100%;display: flex;align-items: center;font-size: 1.3rem;">Filter Berdasarkan Status :</label>
+                                <select class="form-control" id="statusFilter" style="width: 55%;height: 100%;font-size: 1.3rem;">
                                     <option value="">Semua</option>
                                     <option value="1">Tayang</option>
                                     <option value="4">Tidak Tayang</option>
@@ -33,8 +38,8 @@
                                 </select>
                             </div>
                             <div class="col-md-12 w-50 d-flex align-items-end search-container">
-                                <label for="searchInput" style="width: 10%;height: 100%;display: flex;align-items: center;font-size: 1rem;">Cari :</label>
-                                <input type="text" id="searchInput" class="form-control" style="width: 70%;height: 100%;font-size: 1rem;" />
+                                <label for="searchInput" style="width: 10%;height: 100%;display: flex;align-items: center;font-size: 1.3rem;">Cari :</label>
+                                <input type="text" id="searchInput" class="form-control" style="width: 70%;height: 100%;font-size: 1.3rem;" />
                             </div>
                         </div>
 
@@ -42,14 +47,14 @@
                             <table id="table-data" class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">No.</th>
-                                        <th scope="col">Judul</th>
-                                        <th scope="col">Jenis</th>
-                                        <th scope="col">Isi</th>
-                                        <th scope="col">Tanggal Mulai</th>
-                                        <th scope="col">Tanggal Selesai</th>
-                                        <th scope="col">Status</th> 
-                                        <th scope="col">Aksi</th>
+                                        <th scope="col" style="font-size: 1.3rem;">No.</th>
+                                        <th scope="col" style="font-size: 1.3rem;">Judul</th>
+                                        <th scope="col" style="font-size: 1.3rem;">Jenis</th>
+                                        <th scope="col" style="font-size: 1.3rem;">Isi</th>
+                                        <th scope="col" style="font-size: 1.3rem;">Tanggal Mulai</th>
+                                        <th scope="col" style="font-size: 1.3rem;">Tanggal Selesai</th>
+                                        <th scope="col" style="font-size: 1.3rem;">Status</th>
+                                        <th scope="col" style="font-size: 1.3rem;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody"></tbody>
@@ -203,28 +208,28 @@
 
                         var newRow =
                             "<tr>" +
-                            "<td>" +
+                            "<td class='wrap-column' style='max-width: 50rem;font-size: 1.3rem;'>" +
                             number +
                             "</td>" +
-                            "<td>" +
+                            "<td class='wrap-column' style='max-width: 50rem;font-size: 1.3rem;'>" +
                             item.judul +
                             "</td>" +
-                            "<td>" +
+                            "<td class='wrap-column' style='max-width: 30rem; font-size: 1.3rem;'>" +
                             jenisText +
                             "</td>" +
-                            "<td class='wrap-column' style='max-width: 30rem; '>" +
+                            "<td class='wrap-column' style='max-width: 100rem; font-size: 1.3rem;'>" +
                             decodeURIComponent(item.isi) +
                             "</td>" +
-                            "<td>" +
+                            "<td class='wrap-column' style='max-width: 60rem; font-size: 1.3rem;'>" +
                             formattedTanggalMulai +
                             "</td>" +
-                            "<td>" +
+                            "<td class='wrap-column' style='max-width: 60rem; font-size: 1.3rem;'>" +
                             formattedTanggalSelesai +
                             "</td>" +
-                            "<td>" +
+                            "<td class='wrap-column' style='max-width: 30rem;font-size: 1.3rem;'>" +
                             statusText +
                             "</td>" +
-                            "<td>" +
+                            "<td class='wrap-column' style='max-width: 80rem; font-size: 1.3rem;'>" +
                             '<a class="btn btn-outline-info btn-icon" href="/Pengumuman/Update?id=' +
                             item.id_pengumuman +
                             '"data-toggle="tooltip" data-placement="top" title="Ubah Data Pengumuman"><i class="bi bi-pencil-square"></i></a>' +
