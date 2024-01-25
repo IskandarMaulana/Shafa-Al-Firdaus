@@ -476,7 +476,7 @@
 /*      ========================= JADWAL PETUGAS HARIAN ================================ */
 
         function loadJadwalPetugas() {
-            var hostname = "https://localhost:44307/";
+            var hostname = "http://10.5.0.123:9091/";
             var url = hostname + "GetViewJadwalPetugas";
             var method = "GET";
 
@@ -548,7 +548,7 @@
             
             var isiRunningText= document.getElementById("pengumuman-running-text");
 
-            var hostname = "https://localhost:44307/";
+            var hostname = "http://10.5.0.123:9091/";
             var url = hostname + "GetViewPengumuman";
             var method = "GET";
 
@@ -568,7 +568,6 @@
                         if (status === 1 && jenis === 0) {
                             var newItem =
                                 "<div class='carousel-item pengumuman' id='pengumuman-kegiatan' data-bs-interval='10000'> " +
-                                "<h2 class='title-jadwal'>Pengumuman</h2> " +
                                 "<div class='container d-flex p-0 align-items-center flex-row'> " +
                                 "<div class='card card-jadwal card-pengumuman' style='width: 75rem'> " +
                                 "<div class='card-body'>" +
@@ -585,7 +584,6 @@
                         if (status === 1 && jenis === 1) {
                             var newItem =
                                 "<div class='carousel-item pengumuman' id = 'pengumuman-pemberitahuan' data-bs-interval='10000' >" +
-                                "<h2 class='title-jadwal' > Pengumuman </h2>" +
                                 "<div class='container d-flex p-0 align-items-center flex-row' >" +
                                 "<div class='card card-jadwal card-pengumuman' style = 'width: 75rem' > " +
                                 "<div class='card-body' >" +

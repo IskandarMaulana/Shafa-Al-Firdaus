@@ -64,7 +64,7 @@
     });
 
     function loadTable() {
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "GetAllPetugasHarian";
         var method = "GET";
         var statusFilter = $("#statusFilter").val();
@@ -114,7 +114,7 @@
             return;
         }
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "UpdateStatusPetugasHarian?kode=" + id + "&newStatus=0";
         var method = "PATCH";
         var jwtToken = '@ViewBag.Token';

@@ -2,17 +2,7 @@
     ViewData["Title"] = "Pengumuman";
     int no = 0;
 }
-<style>
-    .table-container {
-        max-height: 595px;
-        overflow-y: auto;
-    }
-
-    .table-striped td th {
-        font-size: 1.3rem;
-        line-height: normal;
-    } 
-</style>
+<link rel="stylesheet" href="~/assets/css/vertical-layout-light/pengumuman.css" />
 
 <div class="content">
     <div class="container-fluid">
@@ -32,9 +22,9 @@
                                 <select class="form-control" id="statusFilter" style="width: 55%;height: 100%;font-size: 1.3rem;">
                                     <option value="">Semua</option>
                                     <option value="1">Tayang</option>
-                                    <option value="4">Tidak Tayang</option>
-                                    <option value="3">Dijadwalkan</option>
-                                    <option value="5">Selesai</option>
+                                    <option value="0">Tidak Tayang</option>
+                                    <option value="2">Dijadwalkan</option>
+                                    <option value="3">Selesai</option>
                                 </select>
                             </div>
                             <div class="col-md-12 w-50 d-flex align-items-end search-container">
@@ -47,14 +37,14 @@
                             <table id="table-data" class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="font-size: 1.3rem;">No.</th>
-                                        <th scope="col" style="font-size: 1.3rem;">Judul</th>
-                                        <th scope="col" style="font-size: 1.3rem;">Jenis</th>
-                                        <th scope="col" style="font-size: 1.3rem;">Isi</th>
-                                        <th scope="col" style="font-size: 1.3rem;">Tanggal Mulai</th>
-                                        <th scope="col" style="font-size: 1.3rem;">Tanggal Selesai</th>
-                                        <th scope="col" style="font-size: 1.3rem;">Status</th>
-                                        <th scope="col" style="font-size: 1.3rem;">Aksi</th>
+                                        <th scope="col">No.</th>
+                                        <th scope="col" class="judul">Judul</th>
+                                        <th scope="col" class="jenis">Jenis</th>
+                                        <th scope="col" class="isi">Isi</th>
+                                        <th scope="col" class="tanggal-mulai">Tanggal Mulai</th>
+                                        <th scope="col" class="tanggal-selesai">Tanggal Selesai</th>
+                                        <th scope="col" class="status">Status</th>
+                                        <th scope="col" class="aksi">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody"></tbody>
@@ -83,11 +73,11 @@
 <script>
 
     function ubahStatus(id) {
-        var hostname = "https://localhost:44307/";
-        var url = hostname + "UpdateStatusPengumuman?id_pengumuman=" + id + "&newStatus=4";
+        var hostname = "http://10.5.0.123:9091/";
+        var url = hostname + "UpdateStatusPengumuman?id_pengumuman=" + id + "&newStatus=0";
         var method = "PATCH";
         var updateData = {
-            status: '4'
+            status: '0'
         };
         var jwtToken = '@ViewBag.Token';
 
@@ -134,7 +124,7 @@
         });
 
         function loadTable() {
-            var hostname = "https://localhost:44307/";
+            var hostname = "http://10.5.0.123:9091/";
             var url = hostname + "GetAllPengumuman";
             var method = "GET";
 
@@ -164,7 +154,7 @@
                         var jenisText = getJenisText(item.jenis);
                         var statusText = getStatusText(item.status);
 
-                        if (item.status === 5) {
+                        if (item.status === 3) {
                             // Set an interval to reload the page every 60 seconds (adjust as needed)
                             setInterval(function () {
                                 location.reload();
@@ -175,11 +165,11 @@
                         // Check if the end date is in the past and the announcement type is "Kegiatan" or "Pemberitahuan"
                         if (
                             new Date(item.tanggal_selesai) < currentDate &&
-                            item.status !== 5 &&
+                            item.status !== 3 &&
                             (item.jenis === 0 || item.jenis === 1)
                         ) {
                             // Make an asynchronous request to update the status in the database
-                            var updateStatusUrl = "https://localhost:44307/UpdateStatusPengumuman?id_pengumuman=" + item.id_pengumuman + "&newStatus=5";
+                            var updateStatusUrl = "http://10.5.0.123:9091/UpdateStatusPengumuman?id_pengumuman=" + item.id_pengumuman + "&newStatus=3";
 
                             $.ajax({
                                 url: updateStatusUrl,
@@ -199,37 +189,38 @@
                             });
 
                             // Update the status in memory (optional)
-                            item.status = 5;
+                            item.status = 3;
                         }
 
                        
                         var statusText = getStatusText(item.status);
                         
+                        console.log(item);
 
                         var newRow =
                             "<tr>" +
-                            "<td class='wrap-column' style='max-width: 50rem;font-size: 1.3rem;'>" +
+                            "<td>" +
                             number +
                             "</td>" +
-                            "<td class='wrap-column' style='max-width: 50rem;font-size: 1.3rem;'>" +
+                            "<td class='wrap-column judul'>" +
                             item.judul +
                             "</td>" +
-                            "<td class='wrap-column' style='max-width: 30rem; font-size: 1.3rem;'>" +
+                            "<td class='wrap-column jenis'>" +
                             jenisText +
                             "</td>" +
-                            "<td class='wrap-column' style='max-width: 100rem; font-size: 1.3rem;'>" +
+                            "<td class='wrap-column isi'>" +
                             decodeURIComponent(item.isi) +
                             "</td>" +
-                            "<td class='wrap-column' style='max-width: 60rem; font-size: 1.3rem;'>" +
+                            "<td class='wrap-column tangggal-mulai'>" +
                             formattedTanggalMulai +
                             "</td>" +
-                            "<td class='wrap-column' style='max-width: 60rem; font-size: 1.3rem;'>" +
+                            "<td class='wrap-column tanggal-selesai'>" +
                             formattedTanggalSelesai +
                             "</td>" +
-                            "<td class='wrap-column' style='max-width: 30rem;font-size: 1.3rem;'>" +
+                            "<td class='wrap-column status'>" +
                             statusText +
                             "</td>" +
-                            "<td class='wrap-column' style='max-width: 80rem; font-size: 1.3rem;'>" +
+                            "<td class='aksi'>" +
                             '<a class="btn btn-outline-info btn-icon" href="/Pengumuman/Update?id=' +
                             item.id_pengumuman +
                             '"data-toggle="tooltip" data-placement="top" title="Ubah Data Pengumuman"><i class="bi bi-pencil-square"></i></a>' +
@@ -283,11 +274,11 @@
             switch (status) {
                 case 1:
                     return "Tayang";
-                case 4:
+                case 0:
                     return "Tidak Tayang";
-                case 3:
+                case 2:
                     return "Dijadwalkan";
-                case 5:
+                case 3:
                     return "Selesai";
                 default:
                     return "Tidak Valid";
@@ -295,7 +286,7 @@
         }
 
         function hapus(id) {
-            var hostname = "https://localhost:44307/";
+            var hostname = "http://10.5.0.123:9091/";
             var url = hostname + "DeletePengumuman?id_pengumuman=" + id;
             var method = "DELETE";
 

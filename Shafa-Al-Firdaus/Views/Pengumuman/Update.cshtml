@@ -47,9 +47,9 @@
                             <label name="status" class="control-label">Status</label>
                             <select id="status" class="form-control" required>
                                 <option value="1">Tayang</option>
-                                <option value="4">Tidak Tayang</option>
-                                <option value="3">Dijadwalkan</option>
-                                <option value="5">Selesai</option>
+                                <option value="0">Tidak Tayang</option>
+                                <option value="2">Dijadwalkan</option>
+                                <option value="3">Selesai</option>
                             </select>
                         </div>
                         <br />
@@ -76,7 +76,7 @@
         var tanggal_selesai = document.getElementById("tanggal_selesai");
         var status = document.getElementById("status");
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "GetPengumuman?id_pengumuman=" + id_pengumuman;
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -171,7 +171,7 @@
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "UpdatePengumuman"; // Change the endpoint accordingly
         var method = "PUT";
         var input = {
@@ -283,7 +283,7 @@
         selectedDate.setHours(0, 0, 0, 0);
 
         if (selectedDate > today) {
-            document.getElementById("status").value = "3"; // "Dijadwalkan"
+            document.getElementById("status").value = "2"; // "Dijadwalkan"
             document.getElementById("status").disabled = true; // Disable status dropdown
         } else {
             document.getElementById("status").disabled = false; // Enable status dropdown

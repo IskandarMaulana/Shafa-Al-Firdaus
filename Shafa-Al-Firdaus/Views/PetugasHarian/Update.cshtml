@@ -46,7 +46,7 @@
 
     function loadPetugas() {
         
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "GetPetugasHarian?kode=" + '@name';
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -75,7 +75,7 @@
         var nomor_telepon = document.getElementById("nomor_telepon").value;
         var status = document.getElementById("status").value;
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "UpdatePetugasHarian";
         var method = "PUT";
         var jwtToken = '@ViewBag.Token';

@@ -273,33 +273,48 @@
         var isMaghribTime = (currentDate.getHours() === maghribHours) && (currentDate.getMinutes() === maghribMinutes);
         var isIshaTime = (currentDate.getHours() === isyaHours) && (currentDate.getMinutes() === isyaMinutes);
 
-        var countdownTime;
+        var incomeIqamah = new Date();
 
         if (isFriday && isDhuhrTime) {
-            countdownTime = 40 * 60;
+            incomeIqamah.setHours(subuhHours);
+            incomeIqamah.setMinutes(subuhMinutes + 40);
+            incomeIqamah.setSeconds(1);
         } else if (isFajrTime) {
-            countdownTime = 6 * 60;
+            incomeIqamah.setHours(subuhHours);
+            incomeIqamah.setMinutes(subuhMinutes + 6);
+            incomeIqamah.setSeconds(1);
         } else if (isDhuhrTime) {
-            countdownTime = 6 * 60;
+            incomeIqamah.setHours(dzuhurHours);
+            incomeIqamah.setMinutes(dzuhurMinutes + 6);
+            incomeIqamah.setSeconds(1);
         } else if (isAsrTime) {
-            countdownTime = 5 * 60;
+            incomeIqamah.setHours(asharHours);
+            incomeIqamah.setMinutes(asharMinutes + 5);
+            incomeIqamah.setSeconds(1);
         } else if (isMaghribTime) {
-            countdownTime = 5 * 60;
+            incomeIqamah.setHours(maghribHours);
+            incomeIqamah.setMinutes(maghribMinutes + 5);
+            incomeIqamah.setSeconds(1);
         } else if (isIshaTime) {
-            countdownTime = 6 * 60;
+            incomeIqamah.setHours(isyaHours);
+            incomeIqamah.setMinutes(isyaMinutes + 6);
+            incomeIqamah.setSeconds(1);
         } else {
-            countdownTime = 6 * 60;
+            incomeIqamah.setMinutes(incomeIqamah.getMinutes() + 6);
+            incomeIqamah.setSeconds(1);
         }
 
         function updateCountdown() {
-            var minutes = Math.floor(countdownTime / 60);
-            var seconds = countdownTime % 60;
+            var now = new Date();
+            var countdownToIqamah = incomeIqamah - now;
 
-            document.getElementById("countdown-iqamah").innerHTML = formatTime(minutes) + " : " + formatTime(seconds);
+            var hours = Math.floor(countdownToIqamah / (1000 * 60 * 60));
+            var minutes = Math.floor((countdownToIqamah % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((countdownToIqamah % (1000 * 60)) / 1000);
 
-            countdownTime--;
+            document.getElementById("countdown-iqamah").innerText =  zeroPadding(minutes, 2) + ":" + zeroPadding(seconds, 2);
 
-            if (countdownTime < 0) {
+            if (countdownToIqamah <= 0) {
                 clearInterval(iqamah);
                 window.location.href = "/Dashboard/BlackScreen";
             }
@@ -469,7 +484,7 @@
 
             var isiRunningText = document.getElementById("pengumuman-running-text");
 
-            var hostname = "https://localhost:44307/";
+            var hostname = "http://10.5.0.123:9091/";
             var url = hostname + "GetViewPengumuman";
             var method = "GET";
 

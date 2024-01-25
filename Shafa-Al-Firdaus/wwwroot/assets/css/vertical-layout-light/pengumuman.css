@@ -1,0 +1,32 @@
+.table-container {
+    max-height: 595px;
+    overflow-y: auto;
+}
+
+.table td, .table thead th {
+    font-size: 1.2rem;
+    line-height: normal;
+}
+.table thead th {
+    text-align: center;
+}
+
+.judul {
+    max-width: 30rem;
+}
+.jenis {
+    max-width: 20rem;
+}
+.isi {
+    max-width: 60rem;
+}
+.tanggal-mulai {
+    max-width: 30rem;
+}
+
+.tanggal-selesai {
+    max-width: 30rem;
+}
+.status {
+    max-width: 30rem;
+}

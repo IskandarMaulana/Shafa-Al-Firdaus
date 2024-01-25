@@ -68,7 +68,7 @@
     });
 
     function loadTable() {
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "GetAllJadwalPetugasHarian";
         var method = "GET";
         var statusFilter = $("#statusFilter").val();
@@ -148,7 +148,7 @@
     function updateBatal(id_jadwal) {
         var status = '0';
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
         var method = "PUT";
         var jwtToken = '@ViewBag.Token';
@@ -189,7 +189,7 @@
     function updateTerlaksana(id_jadwal) {
         var status = '2';
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "UpdateStatus?id_jadwal=" + id_jadwal + "&status=" + status;
         var method = "PUT";
         var jwtToken = '@ViewBag.Token';

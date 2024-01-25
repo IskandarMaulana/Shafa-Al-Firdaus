@@ -44,7 +44,7 @@
                             <select id="status" class="form-control" required>
                                 <option value="">--  --</option>
                                 <option value="1">Tayang</option>
-                                <option value="3">Dijadwalkan</option>
+                                <option value="2">Dijadwalkan</option>
                             </select>
                         </div>
                         <br />
@@ -72,13 +72,18 @@
 
 
         var today = new Date();
+        today.setSeconds(0);
         var selectedDate = new Date(tanggal_mulai);
+        var tanggaldone = new Date(tanggal_selesai);
 
         if (selectedDate < today && jenis !== '2') {
             swal("Gagal!", "Tanggal tidak boleh kurang dari hari ini.", "error");
             return; // Berhenti jika tanggal tidak valid
         }
-
+        if (tanggaldone <= selectedDate) {
+            swal("Gagal!", "Tanggal selesai tidak boleh kurang dari tanggal mulai.", "error");
+            return; // Stop if the date is not valid
+        }
         // Disable date fields if jenis is 3 (Teks Berjalan)
         if (jenis === 2) {
             document.getElementById("tanggal_mulai").disabled = true;
@@ -90,7 +95,7 @@
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
-        var hostname = "https://localhost:44307/";
+        var hostname = "http://10.5.0.123:9091/";
         var url = hostname + "InsertPengumuman";
         var method = "POST";
         var input = {
@@ -181,7 +186,7 @@
         selectedDate.setHours(0, 0, 0, 0);
 
         if (selectedDate > today) {
-            document.getElementById("status").value = "3"; // "Dijadwalkan"
+            document.getElementById("status").value = "2"; // "Dijadwalkan"
             document.getElementById("status").disabled = true; // Disable status dropdown
         } else {
             document.getElementById("status").disabled = false; // Enable status dropdown
