@@ -58,7 +58,7 @@ namespace Shafa_Al_Firdaus.Controllers
 
         private async Task<string> GetJwtTokenFromWebApi(LoginViewModel loginModel)
         {
-            var apiBaseUrl = "http://10.5.0.123:9091";
+            var apiBaseUrl = "https://localhost:44307";
             var endpoint = $"{apiBaseUrl}/api/token/submit";
 
             using var httpClient = _httpClientFactory.CreateClient();

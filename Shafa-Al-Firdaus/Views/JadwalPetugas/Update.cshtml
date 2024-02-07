@@ -61,7 +61,7 @@
     loadJadwalPetugas();
 
     function loadPetugas() {
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "GetAllPetugasHarian"
         var method = "GET"
         var jwtToken = '@ViewBag.Token';
@@ -91,7 +91,7 @@
         var waktu = document.getElementById("waktu");
         var tugas = document.getElementById("tugas");
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "GetJadwalPetugasHarian?id_jadwal=" + id_jadwal.value;
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -146,7 +146,7 @@
         var jwtToken = '@ViewBag.Token';
 
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "UpdateJadwalPetugasHarian"; // Change the endpoint accordingly
         var method = "PUT";
         var input = {

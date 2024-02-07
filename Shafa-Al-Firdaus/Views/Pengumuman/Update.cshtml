@@ -76,7 +76,7 @@
         var tanggal_selesai = document.getElementById("tanggal_selesai");
         var status = document.getElementById("status");
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "GetPengumuman?id_pengumuman=" + id_pengumuman;
         var method = "GET";
         var jwtToken = '@ViewBag.Token';
@@ -150,16 +150,19 @@
         var status = document.getElementById("status").value;
 
 
-
+        var selectedDate = new Date(tanggal_mulai);
+        var tanggaldone = new Date(tanggal_selesai);
 
         var today = new Date();
-        var selectedDate = new Date(tanggal_mulai);
 
         if (selectedDate < today && jenis !=='2') {
             swal("Gagal!","Tanggal tidak boleh kurang dari hari ini.", "error");
             return; // Berhenti jika tanggal tidak valid
         }
-
+        if (tanggaldone <= selectedDate) {
+            swal("Gagal!", "Tanggal selesai tidak boleh kurang dari tanggal mulai.", "error");
+            return; // Stop if the date is not valid
+        }
         // Disable date fields if jenis is 3 (Teks Berjalan)
         if (jenis === 2) {
             document.getElementById("tanggal_mulai").disabled = true;
@@ -171,7 +174,7 @@
         // Disable status dropdown and set value to "Dijadwalkan"
         document.getElementById("status").disabled = true;
 
-        var hostname = "http://10.5.0.123:9091/";
+        var hostname = "https://localhost:44307/";
         var url = hostname + "UpdatePengumuman"; // Change the endpoint accordingly
         var method = "PUT";
         var input = {
