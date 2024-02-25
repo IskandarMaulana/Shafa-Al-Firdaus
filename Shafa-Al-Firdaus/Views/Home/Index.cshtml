@@ -1,7 +1,100 @@
 ﻿@{
     ViewData["Title"] = "Halaman Utama";
-}
 
+    var cultureInfo = new System.Globalization.CultureInfo("id-ID");
+    var formattedDate = DateTime.Now.ToString("MMMM yyyy", cultureInfo);
+}
+<style>
+    .jadwal-active {
+        background-color: #80b3ff;
+    }
+</style>
 <div class="text-center">
     <h1 class="display-4">Selamat Datang DKM</h1>
 </div>
+<link rel="stylesheet" href="~/assets/css/vertical-layout-light/pengumuman.css" />
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Jadwal Shalat @formattedDate</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="table-responsive table-container">
+                            <table id="table-data" class="table table-striped">
+                                <thead>
+                                    <tr style="text-align:center">
+                                        <th style="width:5%;" scope="col">No.</th>
+                                        <th style="width:15%;" scope="col" class="tanggal">Tanggal</th>
+                                        <th style="width:10%;" scope="col" class="imsak">Imsak</th>
+                                        <th style="width:10%;" scope="col" class="subuh">Subuh</th>
+                                        <th style="width:10%;" scope="col" class="terbit">Terbit</th>
+                                        <th style="width:10%;" scope="col" class="dzuhur">Dzuhur</th>
+                                        <th style="width:10%;" scope="col" class="ashar">Ashar</th>
+                                        <th style="width:10%;" scope="col" class="maghrib">Maghrib</th>
+                                        <th style="width:10%;" scope="col" class="isya">Isya</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/Home/GetJadwalFromWebApi",
+            method: "GET",
+            contentType: "application/json",
+            headers: { 'Authorization': ' Bearer ' + '@ViewBag.JwtToken' },
+            success: function (data) {
+                var jadwal = JSON.parse(data);
+                var list = jadwal.data;
+                var now = new Date();
+
+                var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                var formatter = new Intl.DateTimeFormat('id-ID', options);
+                
+                var no = 1;
+                list.forEach(function (item) {
+                    var dateParts = item.date.gregorian.date.split('-');
+                    var dateToFormat = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+
+                    var formattedDate = formatter.format(dateToFormat);
+                    var isActive = dateToFormat.getDate() === now.getDate() &&
+                        dateToFormat.getMonth() === now.getMonth() &&
+                        dateToFormat.getFullYear() === now.getFullYear();
+
+                    var activeClass = isActive ? "jadwal-active" : "";
+                    var newRow =
+                    "<tr class='" + activeClass + "' style='text-align:center'>" +
+                        "<td>" + no + "</td>" +
+                        "<td>" + formattedDate + "</td>" +
+                        "<td>" + item.timings.Imsak + "</td>" +
+                        "<td>" + item.timings.Fajr + "</td>" +
+                        "<td>" + item.timings.Sunrise + "</td>" +
+                        "<td>" + item.timings.Dhuhr + "</td>" +
+                        "<td>" + item.timings.Asr + "</td>" +
+                        "<td>" + item.timings.Maghrib + "</td>" +
+                        "<td>" + item.timings.Isha + "</td>" +
+                    "</tr>";
+
+                    $('#tbody').append(newRow);
+                    no++;
+                });
+            },
+            error: function (data) {
+                console.log(data.message);
+            }
+        });
+    });
+</script>

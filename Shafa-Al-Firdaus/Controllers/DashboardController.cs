@@ -46,7 +46,7 @@ namespace Shafa_Al_Firdaus.Controllers
         private async Task<JObject> GetJadwalFromWebApi()
         {
             var endpoint =
-                $"https://api.aladhan.com/v1/calendar/{DateTime.Now.Year}/{DateTime.Now.Month}?latitude=-6.3392749&longitude=107.1601183&method=2&tune=-20,-20,-3,3,2,2,0,15";
+                $"https://api.aladhan.com/v1/calendar/{DateTime.Now.Year}/{DateTime.Now.Month}?latitude=-6.3488574&longitude=107.14689&method=20";
 
             using var httpClient = _httpClientFactory.CreateClient();
 
